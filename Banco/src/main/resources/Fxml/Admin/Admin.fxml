@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="client_parent" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <left>
+        <fx:include maxHeight="1000.0" source="AdminMenu.fxml" />
+    </left>
+
+    <center>
+        <fx:include source="Clients.fxml" />
+    </center>
+
+</BorderPane>
