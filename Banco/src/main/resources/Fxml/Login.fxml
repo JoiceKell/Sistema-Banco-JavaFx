@@ -39,64 +39,86 @@
             <Insets left="40.0" right="40.0" top="20.0" />
          </VBox.margin>
       </VBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+      <VBox prefHeight="100.0" prefWidth="100.0">
          <children>
-            <TextField fx:id="cpf_fld" promptText="CPF" style="-fx-background-color: transparent; -fx-border-color: gold; -fx-border-width: 0px 0px 1px 0px; -fx-text-fill: #00fee5;;" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <FontAwesomeIconView fill="WHITE" glyphName="USER" size="20.0">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </FontAwesomeIconView>
-         </children>
-         <VBox.margin>
-            <Insets left="40.0" right="40.0" top="20.0" />
-         </VBox.margin>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
-         <children>
-            <PasswordField fx:id="password_fld" prefHeight="30.0" prefWidth="445.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: gold; -fx-border-width: 0px 0px 1px 0px; -fx-text-fill: #00fee5;">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-            </PasswordField>
-            <FontAwesomeIconView fill="WHITE" glyphName="LOCK" size="20.0" />
-         </children>
-         <VBox.margin>
-            <Insets left="40.0" right="40.0" top="20.0" />
-         </VBox.margin>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
-         <VBox.margin>
-            <Insets left="40.0" right="40.0" />
-         </VBox.margin>
-         <children>
-            <Label fx:id="error_lbl" textFill="RED">
-               <effect>
-                  <Glow />
-               </effect>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
+            <Label fx:id="usuario_lbl" text="CPF: " textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="40.0" top="20.0" />
+               </VBox.margin>
             </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="cpf_fld" promptText="CPF" style="-fx-background-color: transparent; -fx-border-color: gold; -fx-border-width: 0px 0px 1px 0px; -fx-text-fill: #00fee5;;" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <FontAwesomeIconView fill="WHITE" glyphName="USER" size="20.0">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </FontAwesomeIconView>
+               </children>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
          </children>
-      </HBox>
-      <Button fx:id="login_btn" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: gold; -fx-border-color: gold;" text="ENTRAR">
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
+      </VBox>
+      <VBox prefHeight="100.0" prefWidth="100.0">
+         <children>
+            <Label text="Senha" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="40.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <PasswordField fx:id="password_fld" prefHeight="30.0" prefWidth="445.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: gold; -fx-border-width: 0px 0px 1px 0px; -fx-text-fill: #00fee5;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </PasswordField>
+                  <FontAwesomeIconView fill="WHITE" glyphName="LOCK" size="20.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="error_lbl" textFill="RED">
+                     <effect>
+                        <Glow />
+                     </effect>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="login_btn" alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: gold; -fx-border-color: gold;" text="ENTRAR">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </VBox>

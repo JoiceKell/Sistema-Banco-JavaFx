@@ -32,111 +32,39 @@ public class Cliente {
         this.contaPoupanca = new SimpleObjectProperty<>(this, "Conta Poupança", contaPoupanca);
     }
 
-    public String getCpf() {
-        return cpf.get();
-    }
-
     public StringProperty cpfProperty() {
         return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf.set(cpf);
-    }
-
-    public String getNome() {
-        return nome.get();
     }
 
     public StringProperty nomeProperty() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome.set(nome);
-    }
-
-    public String getSobrenome() {
-        return sobrenome.get();
-    }
-
     public StringProperty sobrenomeProperty() {
         return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome.set(sobrenome);
-    }
-
-    public String getEmail() {
-        return email.get();
     }
 
     public StringProperty emailProperty() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email.set(email);
-    }
-
-    public String getTelefone() {
-        return telefone.get();
-    }
-
     public StringProperty telefoneProperty() {
         return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone.set(telefone);
-    }
-
-    public LocalDate getDtNascimento() {
-        return dtNascimento.get();
     }
 
     public ObjectProperty<LocalDate> dtNascimentoProperty() {
         return dtNascimento;
     }
 
-    public void setDtNascimento(LocalDate dtNascimento) {
-        this.dtNascimento.set(dtNascimento);
-    }
-
-    public Endereco getEndereco() {
-        return endereco.get();
-    }
-
     public ObjectProperty<Endereco> enderecoProperty() {
         return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco.set(endereco);
-    }
-
-    public ContaEspecial getContaCorrente() {
-        return contaCorrente.get();
     }
 
     public ObjectProperty<ContaEspecial> contaCorrenteProperty() {
         return contaCorrente;
     }
 
-    public void setContaCorrente(ContaEspecial contaCorrente) {
-        this.contaCorrente.set(contaCorrente);
-    }
-
-    public ContaPoupanca getContaPoupanca() {
-        return contaPoupanca.get();
-    }
-
     public ObjectProperty<ContaPoupanca> contaPoupancaProperty() {
         return contaPoupanca;
-    }
-
-    public void setContaPoupanca(ContaPoupanca contaPoupanca) {
-        this.contaPoupanca.set(contaPoupanca);
     }
 }

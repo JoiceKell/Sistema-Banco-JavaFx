@@ -26,8 +26,7 @@ public class DatabaseDriver {
         ResultSet resultSet = null;
         try {
             statement = this.conexao.createStatement();
-            resultSet = statement.executeQuery("Select * from Cliente where CPF='"+cpf+"' and Senha='"+senha+"';");
-
+            resultSet = statement.executeQuery("SELECT * FROM Cliente WHERE CPF='"+cpf+"' AND Senha='"+senha+"';");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -37,6 +36,18 @@ public class DatabaseDriver {
     /**
      *  Admin Section
      */
+
+    public ResultSet getAdminData(String username, String senha) {
+        Statement statement;
+        ResultSet resultSet = null;
+        try {
+            statement = this.conexao.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Funcionario WHERE username='"+username+"' AND senha='"+senha+"';");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
 
     /**
      * Utility Methods

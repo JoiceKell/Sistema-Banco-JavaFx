@@ -32,7 +32,7 @@
          </Text>
       </VBox>
       <VBox alignment="CENTER_LEFT" styleClass="menu_container" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="250.0">
-         <Button fx:id="dashboard_btn" maxWidth="190.0" mnemonicParsing="false" text="Clientes">
+         <Button fx:id="reportClients_btn" maxWidth="190.0" mnemonicParsing="false" text="Clientes">
             <graphic>
                <FontAwesomeIconView glyphName="LIST" size="20" />
             </graphic>

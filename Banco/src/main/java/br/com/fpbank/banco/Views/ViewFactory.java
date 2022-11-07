@@ -108,8 +108,8 @@ public class ViewFactory {
 
     public void showAdminWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/Admin.fxml"));
-        AdminController controller = new AdminController();
-        loader.setController(controller);
+        AdminController adminController = new AdminController();
+        loader.setController(adminController);
         createStage(loader);
     }
 

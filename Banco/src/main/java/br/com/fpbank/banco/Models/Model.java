@@ -15,13 +15,13 @@ public class Model {
     private static Model model;
     private final ViewFactory viewFactory;
     private final DatabaseDriver databaseDriver;
-    private AccountType loginAccountType = AccountType.CLIENTE;
 
     //Client Data Section
     private final Cliente cliente;
     private boolean clientLoginSuccessFlag;
 
     //Admin Data Section
+    private boolean adminLoginSuccessFlag;
 
     private Model(){
         this.viewFactory = new ViewFactory();
@@ -30,6 +30,7 @@ public class Model {
         this.clientLoginSuccessFlag = false;
         this.cliente = new Cliente("", "", "", "", "", null, null, null, null);
         //Admin Data Section
+        this.adminLoginSuccessFlag = false;
     }
 
     public static synchronized Model getInstance() {
@@ -44,14 +45,6 @@ public class Model {
     }
 
     public DatabaseDriver getDatabaseDriver() { return databaseDriver; }
-
-    public AccountType getLoginAccountType() {
-        return  loginAccountType;
-    }
-
-    public void  setLoginAccountType(AccountType loginAccountType) {
-        this.loginAccountType = loginAccountType;
-    }
 
     /**
      * Client Method Section
@@ -68,15 +61,36 @@ public class Model {
 
         ResultSet resultSet = databaseDriver.getClientData(cpf, senha);
         try {
-            if(resultSet.isBeforeFirst()) {
-                this.cliente.nomeProperty().set(resultSet.getString("Nome"));
-                this.cliente.sobrenomeProperty().set(resultSet.getString("Sobrenome"));
-                String[] dateParts = resultSet.getString("Date").split("-");
-                LocalDate data = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
-                this.cliente.getContaCorrente().dtCriacaoProperty().set(data);
+            if (resultSet.isBeforeFirst()){
                 this.clientLoginSuccessFlag = true;
             }
+                //this.cliente.nomeProperty().set(resultSet.getString("Nome"));
+//                this.cliente.sobrenomeProperty().set(resultSet.getString("Sobrenome"));
+//                String[] dateParts = resultSet.getString("Date").split("-");
+//                LocalDate data = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
+//                this.cliente.getContaCorrente().dtCriacaoProperty().set(data);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Admin Method Section
+     */
+
+    public boolean getAdminLoginSuccessFlag() {return this.adminLoginSuccessFlag;}
+
+    public void setAdminLoginSuccessFlag(boolean adminLoginSuccessFlag) {
+        this.adminLoginSuccessFlag = adminLoginSuccessFlag;
+    }
+
+    public void evaluateAdminCred(String username, String senha) {
+        ResultSet resultSet = databaseDriver.getAdminData(username, senha);
+        try {
+            if (resultSet.isBeforeFirst()){
+                this.adminLoginSuccessFlag = true;
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
