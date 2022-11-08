@@ -9,14 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AccountsController implements Initializable {
-    public Label ch_acc_num;
-    public Label transaction_limit;
-    public Label ch_acc_date;
-    public Label ch_acc_bal;
-    public Label sv_acc_num;
-    public Label withdrawal_limit;
-    public Label sv_acc_date;
-    public Label sv_acc_bal;
     public TextField phone_fld;
     public TextField email_fld;
     public TextField street_fld;

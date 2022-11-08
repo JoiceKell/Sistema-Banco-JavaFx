@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="550.0" style="-fx-background-color: #2F2F2F; -fx-border-color: gold;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="550.0" style="-fx-background-color: #2F2F2F; -fx-border-color: gold;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.RegisterController">
    <children>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField maxWidth="227.0" prefHeight="26.0" prefWidth="227.0" promptText="Nome" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_name" maxWidth="227.0" prefHeight="26.0" prefWidth="227.0" promptText="Nome" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -23,7 +23,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField prefHeight="26.0" prefWidth="222.0" promptText="Sobrenome" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
+            <TextField fx:id="fld_lastName" prefHeight="26.0" prefWidth="222.0" promptText="Sobrenome" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -37,7 +37,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField maxWidth="226.0" prefHeight="26.0" prefWidth="226.0" promptText="CPF" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_cpf" maxWidth="226.0" prefHeight="26.0" prefWidth="226.0" promptText="CPF" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
@@ -45,7 +45,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <DatePicker prefHeight="26.0" prefWidth="224.0" promptText="Data de Nascimento" style="-fx-background-color: #514869;" />
+            <DatePicker fx:id="dtp_birth" prefHeight="26.0" prefWidth="224.0" promptText="Data de Nascimento" style="-fx-background-color: #514869;" />
          </children>
          <VBox.margin>
             <Insets right="10.0" />
@@ -53,7 +53,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField maxWidth="228.0" prefHeight="26.0" prefWidth="199.0" promptText="Telefone" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;;" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_phone" maxWidth="228.0" prefHeight="26.0" prefWidth="199.0" promptText="Telefone" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;;" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -61,7 +61,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField maxWidth="228.0" prefHeight="26.0" prefWidth="225.0" promptText="E-mail" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
+            <TextField fx:id="fld_email" maxWidth="228.0" prefHeight="26.0" prefWidth="225.0" promptText="E-mail" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -84,7 +84,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField maxWidth="332.0" prefHeight="26.0" prefWidth="332.0" promptText="Rua" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_street" maxWidth="332.0" prefHeight="26.0" prefWidth="332.0" promptText="Rua" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -92,7 +92,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField maxWidth="210.0" prefHeight="26.0" prefWidth="117.0" promptText="Nº" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
+            <TextField fx:id="fld_number" maxWidth="210.0" prefHeight="26.0" prefWidth="117.0" promptText="Nº" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -100,7 +100,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField maxWidth="200.0" prefHeight="26.0" prefWidth="215.0" promptText="CEP" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_zipCode" maxWidth="200.0" prefHeight="26.0" prefWidth="215.0" promptText="CEP" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -108,7 +108,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField maxWidth="250.0" prefHeight="26.0" prefWidth="250.0" promptText="Complemento" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800;">
+            <TextField fx:id="fld_addInfo" maxWidth="250.0" prefHeight="26.0" prefWidth="250.0" promptText="Complemento" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800;">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -116,7 +116,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField maxWidth="201.0" prefHeight="26.0" prefWidth="201.0" promptText="Cidade" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_city" maxWidth="201.0" prefHeight="26.0" prefWidth="201.0" promptText="Cidade" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -124,7 +124,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField maxWidth="210.0" prefHeight="26.0" prefWidth="66.0" promptText="UF" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
+            <TextField fx:id="fld_state" maxWidth="210.0" prefHeight="26.0" prefWidth="66.0" promptText="UF" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -132,7 +132,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField maxWidth="210.0" prefHeight="26.0" prefWidth="171.0" promptText="Bairro" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
+            <TextField fx:id="fld_district" maxWidth="210.0" prefHeight="26.0" prefWidth="171.0" promptText="Bairro" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -157,7 +157,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <CheckBox mnemonicParsing="false" text="Add Conta Poupança" textFill="GOLD" HBox.hgrow="ALWAYS">
+                  <CheckBox fx:id="cb_savingAcc" mnemonicParsing="false" text="Add Conta Poupança" textFill="GOLD" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -169,7 +169,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <CheckBox mnemonicParsing="false" text="Add Conta Corrente Especial" textFill="#ffd400" />
+                  <CheckBox fx:id="cb_checkingA" mnemonicParsing="false" text="Add Conta Corrente Especial" textFill="#ffd400" />
                </children>
                <HBox.margin>
                   <Insets />
@@ -184,7 +184,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField alignment="CENTER" maxWidth="148.0" prefHeight="26.0" prefWidth="148.0" promptText="Saldo CP" style="-fx-background-color: transparent; -fx-border-color: #77ffc0; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="fld_savingAccBal" alignment="CENTER" maxWidth="148.0" prefHeight="26.0" prefWidth="148.0" promptText="Saldo CP" style="-fx-background-color: transparent; -fx-border-color: #77ffc0; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -196,7 +196,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField alignment="CENTER" maxWidth="162.0" prefHeight="26.0" prefWidth="186.0" promptText="Saldo CC" style="-fx-background-color: transparenttransparent; -fx-border-color: #77ffc0; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
+                  <TextField fx:id="fld_checkingAccBal" alignment="CENTER" maxWidth="162.0" prefHeight="26.0" prefWidth="186.0" promptText="Saldo CC" style="-fx-background-color: transparenttransparent; -fx-border-color: #77ffc0; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -210,7 +210,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField maxWidth="200.0" prefHeight="30.0" prefWidth="206.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_password" maxWidth="200.0" prefHeight="30.0" prefWidth="206.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -218,7 +218,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField maxWidth="200.0" prefHeight="26.0" prefWidth="222.0" promptText="Confirmar Senha" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
+            <TextField fx:id="fld_confirmPassword" maxWidth="200.0" prefHeight="26.0" prefWidth="222.0" promptText="Confirmar Senha" style="-fx-background-color: transparent; -fx-border-color: #FFD700; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -227,7 +227,8 @@
             <Insets top="10.0" />
          </VBox.margin>
       </HBox>
-      <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: gold; -fx-border-color: gold;" text="CADASTRA-SE" textFill="#77ffc0">
+      <Label fx:id="lbl_error" textFill="RED" />
+      <Button fx:id="bt_Register" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: gold; -fx-border-color: gold;" text="CADASTRA-SE" textFill="#77ffc0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
