@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="accounts_view_container" stylesheets="@../../Styles/Accounts.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.AccountsController">
+   <VBox alignment="CENTER" layoutX="395.0" layoutY="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="1076.0" style="-fx-background-color: #2F2F2F;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="100.0">
+      <children>
+         <HBox alignment="CENTER" maxWidth="900.0" prefHeight="40.0" prefWidth="900.0" style="-fx-border-color: gold; -fx-border-width: 1px 0px 1px 0px;">
+            <children>
+               <Label id="sombra" prefHeight="23.0" prefWidth="117.0" text="DADOS:" textFill="GOLD">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+               <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="386.0" HBox.hgrow="ALWAYS">
+                  <children>
+                     <CheckBox alignment="CENTER_RIGHT" mnemonicParsing="false" textFill="WHITE" />
+                  </children>
+                  <HBox.margin>
+                     <Insets right="20.0" />
+                  </HBox.margin>
+               </HBox>
+            </children>
+            <VBox.margin>
+               <Insets bottom="10.0" left="10.0" top="20.0" />
+            </VBox.margin>
+            <padding>
+               <Insets bottom="10.0" top="10.0" />
+            </padding>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+            <children>
+               <TextField fx:id="phone_fld" maxWidth="300.0" minWidth="400.0" prefHeight="26.0" prefWidth="300.0" promptText="Telefone" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </TextField>
+               <TextField fx:id="email_fld" maxWidth="300.0" minWidth="400.0" prefHeight="26.0" prefWidth="300.0" promptText="E-mail" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;">
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
+            </children>
+         </HBox>
+         <HBox alignment="CENTER_LEFT" maxWidth="900.0" prefHeight="40.0" prefWidth="900.0" style="-fx-border-color: gold; -fx-border-width: 1px 0px 1px 0px;">
+            <children>
+               <Label prefHeight="22.0" prefWidth="129.0" text="ENDEREÇO:" textFill="GOLD">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Label>
+               <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="370.0" HBox.hgrow="ALWAYS">
+                  <children>
+                     <CheckBox alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="18.0" prefWidth="0.0" textFill="WHITE" />
+                  </children>
+                  <HBox.margin>
+                     <Insets right="20.0" />
+                  </HBox.margin>
+               </HBox>
+            </children>
+            <VBox.margin>
+               <Insets bottom="10.0" left="10.0" top="20.0" />
+            </VBox.margin>
+            <padding>
+               <Insets bottom="10.0" top="10.0" />
+            </padding>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+            <children>
+               <TextField fx:id="street_fld" maxWidth="210.0" minWidth="460.0" prefHeight="26.0" prefWidth="196.0" promptText="Rua" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </TextField>
+               <TextField fx:id="number_fld" maxWidth="100.0" minWidth="130.0" prefHeight="26.0" prefWidth="99.0" promptText="Nº" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;">
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
+               <TextField fx:id="zipCode_fld" maxWidth="161.0" minWidth="200.0" prefHeight="26.0" prefWidth="159.0" promptText="CEP" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </TextField>
+            </children>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+            <children>
+               <TextField fx:id="city_fld" maxWidth="140.0" minWidth="220.0" prefHeight="26.0" prefWidth="201.0" promptText="Cidade" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </TextField>
+               <TextField fx:id="state_fld" maxWidth="50.0" prefHeight="26.0" prefWidth="66.0" promptText="UF" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;">
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </TextField>
+               <TextField fx:id="district_fld" maxWidth="130.0" minWidth="200.0" prefHeight="26.0" prefWidth="171.0" promptText="Bairro" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;">
+                  <HBox.margin>
+                     <Insets left="10.0" right="10.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
+               <TextField fx:id="complemento_fld" maxWidth="140.0" minWidth="310.0" prefHeight="26.0" prefWidth="250.0" promptText="Complemento" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;">
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
+            </children>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+         </HBox>
+         <HBox alignment="CENTER_LEFT" maxWidth="900.0" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: gold; -fx-border-width: 1px 0px 1px 0px;">
+            <children>
+               <Label prefHeight="23.0" prefWidth="84.0" text="SENHA:" textFill="GOLD">
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin>
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Label>
+               <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="386.0" HBox.hgrow="ALWAYS">
+                  <children>
+                     <CheckBox alignment="CENTER_RIGHT" mnemonicParsing="false" textFill="WHITE" />
+                  </children>
+                  <HBox.margin>
+                     <Insets right="20.0" />
+                  </HBox.margin>
+               </HBox>
+            </children>
+            <VBox.margin>
+               <Insets left="10.0" top="20.0" />
+            </VBox.margin>
+            <padding>
+               <Insets bottom="10.0" top="10.0" />
+            </padding>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+            <children>
+               <TextField fx:id="password_fld" maxWidth="300.0" minWidth="300.0" prefHeight="26.0" prefWidth="300.0" promptText="Senha" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </TextField>
+               <TextField fx:id="confirmPassword_fld" maxWidth="300.0" minWidth="300.0" prefHeight="26.0" prefWidth="300.0" promptText="Confirmar Senha" style="-fx-background-color: transparent; -fx-border-color: #ff0760; -fx-border-width: 0px 0px 2px 0px; -fx-font-weight: 800;">
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
+            </children>
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+            <children>
+               <Button fx:id="update_btn" mnemonicParsing="false" text="ATUALIZAR" textFill="#77ffc0">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+               </Button>
+               <Button fx:id="disable_btn" mnemonicParsing="false" text="DESATIVAR" />
+            </children>
+            <VBox.margin>
+               <Insets bottom="20.0" left="20.0" right="20.0" top="40.0" />
+            </VBox.margin>
+         </HBox>
+         <Label text="Error" textFill="#f75757" />
+      </children>
+      <effect>
+         <DropShadow />
+      </effect>
+   </VBox>
+   <Text id="titleMyAccount" fill="#00fee5" layoutX="556.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MEUS DADOS">
+      <font>
+         <Font name="System Bold" size="30.0" />
+      </font>
+   </Text>
+</AnchorPane>

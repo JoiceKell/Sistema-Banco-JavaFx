@@ -1,0 +1,24 @@
+.register {
+    -fx-background-color:  transparent;
+    -fx-border-color:  #FFD700;
+    -fx-border-width:  0px 0px 1px 0px;
+    -fx-font-weight: 800;
+    -fx-text-fill:  #00fee5;
+}
+
+.erro {
+    -fx-background-color:  transparent;
+    -fx-border-color:  red;
+    -fx-border-width:  0px 0px 1px 0px;
+    -fx-font-weight: 800;
+    -fx-text-fill:  red;
+}
+
+.textFild1 {
+    -fx-pref-height: 30;
+    -fx-background-color:  #3F3F3F;
+    -fx-text-fill:  #00fee5;
+    -fx-border-color: gold;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-effect: dropshadow(three-pass-box, #000000, 3, 0, 0, 0);
+}
