@@ -136,6 +136,7 @@ public class ViewFactory {
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/Logo2.png"))));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
     }
