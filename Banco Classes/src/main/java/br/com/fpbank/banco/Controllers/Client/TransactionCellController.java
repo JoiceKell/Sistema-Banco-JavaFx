@@ -1,5 +1,6 @@
 package br.com.fpbank.banco.Controllers.Client;
 
+import br.com.fpbank.banco.Models.Entities.Movimentacao;
 import br.com.fpbank.banco.Models.Transaction;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.Initializable;
@@ -18,17 +19,23 @@ public class TransactionCellController implements Initializable {
     public Label sender_lbl;
     public Label receiver_lbl;
     public Label amount_lbl;
+    public Label lbl_tipoMovimentacao;
+    public Label fld_NomeRemetente;
+    public Label fld_NomeDestinatario;
     public Button message_btn;
 
-    private final Transaction transaction;
+    private final Movimentacao transaction;
 
-    public TransactionCellController(Transaction transaction) {
+    public TransactionCellController(Movimentacao transaction) {
         this.transaction = transaction;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        sender_lbl.textProperty().bind(transaction.remetenteProperty());
+        receiver_lbl.textProperty().bind(transaction.destinatarioProperty());
+        amount_lbl.textProperty().bind(transaction.montanteProperty().asString());
+        trans_date_lbl.textProperty().bind(transaction.dtMovimentacaoProperty().asString());
     }
 
 }

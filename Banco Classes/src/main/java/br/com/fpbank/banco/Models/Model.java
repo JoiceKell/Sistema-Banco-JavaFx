@@ -1,11 +1,10 @@
 package br.com.fpbank.banco.Models;
 
 import br.com.fpbank.banco.Models.Entities.Cliente;
-import br.com.fpbank.banco.Models.Entities.ContaEspecial;
-import br.com.fpbank.banco.Models.Entities.ContaPoupanca;
-import br.com.fpbank.banco.Models.Entities.Endereco;
-import br.com.fpbank.banco.Views.AccountType;
+import br.com.fpbank.banco.Models.Entities.Movimentacao;
 import br.com.fpbank.banco.Views.ViewFactory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +18,8 @@ public class Model {
     //Client Data Section
     private final Cliente cliente;
     private boolean clientLoginSuccessFlag;
+    private final ObservableList<Movimentacao> latestTransactions;
+    private final ObservableList<Movimentacao> allTransactions;
 
     //Admin Data Section
     private boolean adminLoginSuccessFlag;
@@ -28,7 +29,11 @@ public class Model {
         this.databaseDriver = new DatabaseDriver();
         //Client Data Section
         this.clientLoginSuccessFlag = false;
-        this.cliente = new Cliente("", "", "", "", "", null, null, null, null, null);
+        this.cliente = new Cliente("", "", "", 0,"", "", null, null, null, null, null);
+
+        this.latestTransactions = FXCollections.observableArrayList();
+        this.allTransactions = FXCollections.observableArrayList();
+
         //Admin Data Section
         this.adminLoginSuccessFlag = false;
     }
@@ -59,21 +64,93 @@ public class Model {
 
     public void evaluateClientCred(String cpf, String senha) {
 
+        String endereco = "";
+
         ResultSet resultSet = databaseDriver.getClientData(cpf, senha);
         try {
+
             if (resultSet.isBeforeFirst()) {
 
-                //this.cliente.nomeProperty().set(resultSet.getString("Nome"));
-                //this.cliente.sobrenomeProperty().set(resultSet.getString("Sobrenome"));
-                // String[] dateParts = resultSet.getString("Date").split("-");
-                // LocalDate data = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
-                // this.cliente.getContaCorrente().dtCriacaoProperty().set(data);
+                while(resultSet.next()){
+                    this.cliente.cpfProperty().set(resultSet.getString("cpf"));
+                    this.cliente.nomeProperty().set(resultSet.getString("nome"));
+                    this.cliente.sobrenomeProperty().set(resultSet.getString("sobrenome"));
+                    this.cliente.idadeProperty().set(Integer.parseInt(resultSet.getString("idade")));
+                    this.cliente.dtNascimentoProperty().set(LocalDate.parse(resultSet.getString("dtNascimento")));
+                    this.cliente.emailProperty().set(resultSet.getString("email"));
+                    this.cliente.telefoneProperty().set(resultSet.getString("telefone"));
+                    this.cliente.senhaProperty().set(resultSet.getString("senha"));
+
+                    endereco = resultSet.getString("endereco");
+
+                    if(resultSet.getString("tipoConta").equals("Corrente")){
+                        this.cliente.criarContaCorrenteEspecial(Integer.parseInt(resultSet.getString("numAgencia")), resultSet.getString("numConta"),
+                                Double.parseDouble(resultSet.getString("saldo")), resultSet.getString("tipoConta"), resultSet.getString("status"),
+                                Double.parseDouble(resultSet.getString("limite")), LocalDate.parse(resultSet.getString("dtAbertura")));
+                    } else {
+                        this.cliente.criarContaPoupanca((Integer.parseInt(resultSet.getString("numAgencia"))), resultSet.getString("numConta"),
+                                Double.parseDouble(resultSet.getString("saldo")), resultSet.getString("tipoConta"), resultSet.getString("status"),
+                                LocalDate.parse(resultSet.getString("dtAbertura")));
+                    }
+                }
+
+                String[] end = endereco.split(", ");
+                System.out.println("Teste: "+ end[0]);
+
+                this.cliente.obterEndereco(end[0], Integer.parseInt(end[1]), end[2], end[3], end[4], end[5], end[6]);
+
                 this.clientLoginSuccessFlag = true;
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
     }
+
+    private void prepareTransactions(ObservableList<Movimentacao> transactions) {
+        ResultSet resultSet = null;
+        try {
+            resultSet = databaseDriver.getTransactions(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaCorrente().numContaProperty().get());
+        } catch (Exception e){
+            try {
+                resultSet = databaseDriver.getTransactions(this.cliente.getContaPoupanca().numContaProperty().get(), null);
+            } catch (Exception k) {
+                resultSet = databaseDriver.getTransactions(this.cliente.getContaCorrente().numContaProperty().get(), null);
+            }
+        }
+
+        try {
+            while (resultSet.next()) {
+                String remetente = resultSet.getString("contaNumContaOrigem");
+                String destinatario = resultSet.getString("contaNumContaDestino");
+                double montante = resultSet.getDouble("montante");
+                String[] dateParts = resultSet.getString("dtMovimentacao").split("-");
+                LocalDate data = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
+                String tipoMovimentacao = resultSet.getString("tipoMovimentacao");
+                String mensagem = resultSet .getString("mensagem");
+                transactions.add(new Movimentacao(remetente, destinatario, montante, data, tipoMovimentacao, mensagem));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setLatestTransactions() {
+        prepareTransactions(this.latestTransactions);
+    }
+
+    public ObservableList<Movimentacao> getLatestTransactions() {
+        return latestTransactions;
+    }
+
+    public void setAllTransactions() {
+        prepareTransactions(this.allTransactions);
+    }
+
+    public ObservableList<Movimentacao> getAllTransactions() {
+        return allTransactions;
+    }
+
+
 
     public static void printSQLException(SQLException ex) {
 

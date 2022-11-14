@@ -17,9 +17,15 @@ public class ContaEspecial extends Conta{
         this.juros = new SimpleDoubleProperty(this, "Juros", juros);
     }
 
-    public ContaEspecial(String numConta, double saldo, String tipoConta, LocalDate dtCriacao) {
+    public ContaEspecial(String numConta, double saldo, String tipoConta, double limite, LocalDate dtCriacao) {
         super(numConta, saldo, tipoConta, dtCriacao);
-        this.limite = new SimpleDoubleProperty(this, "Limite", 0.00);
+        this.limite = new SimpleDoubleProperty(this, "Limite", limite);
+        this.juros = new SimpleDoubleProperty(this, "Juros", 0.00);
+    }
+
+    public ContaEspecial(int numAgencia, String numConta, double saldo, String tipoConta, String status, double limite, LocalDate dtCriacao){
+        super(numAgencia, numConta, saldo, tipoConta, status, dtCriacao);
+        this.limite = new SimpleDoubleProperty(this, "Limite", limite);
         this.juros = new SimpleDoubleProperty(this, "Juros", 0.00);
     }
 

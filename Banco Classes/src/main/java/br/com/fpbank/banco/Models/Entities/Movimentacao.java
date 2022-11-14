@@ -7,63 +7,43 @@ import java.time.LocalDate;
 public class Movimentacao {
 
     // Atributos
-    private final IntegerProperty idMovimentacao;
     private final ObjectProperty<LocalDate> dtMovimentacao;
-    private final DoubleProperty valor;
+    private final DoubleProperty montante;
     private final StringProperty tipoMovimentacao;
+    private final StringProperty mensagem;
+    private final StringProperty remetente;
+    private final StringProperty destinatario;
 
-    public Movimentacao(int idMovimentacao, LocalDate dtMovimentacao, double valor, String tipoMovimentacao) {
-        this.idMovimentacao = new SimpleIntegerProperty(this, "ID da movimentacao", idMovimentacao);
+    public Movimentacao(String remetente, String destinatario, double montante, LocalDate dtMovimentacao, String tipoMovimentacao, String mensagem) {
         this.dtMovimentacao = new SimpleObjectProperty<>(this, "Data da Movimentacao", dtMovimentacao);
-        this.valor = new SimpleDoubleProperty(this, "Valor", valor);
+        this.montante = new SimpleDoubleProperty(this, "Valor", montante);
         this.tipoMovimentacao = new SimpleStringProperty(this, "Tipo da Movimentacao", tipoMovimentacao);
-    }
-
-    public int getIdMovimentacao() {
-        return idMovimentacao.get();
-    }
-
-    public IntegerProperty idMovimentacaoProperty() {
-        return idMovimentacao;
-    }
-
-    public void setIdMovimentacao(int idMovimentacao) {
-        this.idMovimentacao.set(idMovimentacao);
-    }
-
-    public LocalDate getDtMovimentacao() {
-        return dtMovimentacao.get();
+        this.mensagem = new SimpleStringProperty(this, "Mensagem", mensagem);
+        this.remetente = new SimpleStringProperty(this, "Remetente", remetente);
+        this.destinatario = new SimpleStringProperty(this, "Destinatário", destinatario);
     }
 
     public ObjectProperty<LocalDate> dtMovimentacaoProperty() {
         return dtMovimentacao;
     }
 
-    public void setDtMovimentacao(LocalDate dtMovimentacao) {
-        this.dtMovimentacao.set(dtMovimentacao);
-    }
-
-    public double getValor() {
-        return valor.get();
-    }
-
-    public DoubleProperty valorProperty() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor.set(valor);
-    }
-
-    public String getTipoMovimentacao() {
-        return tipoMovimentacao.get();
+    public DoubleProperty montanteProperty() {
+        return montante;
     }
 
     public StringProperty tipoMovimentacaoProperty() {
         return tipoMovimentacao;
     }
 
-    public void setTipoMovimentacao(String tipoMovimentacao) {
-        this.tipoMovimentacao.set(tipoMovimentacao);
+    public StringProperty mensagemProperty() {
+        return mensagem;
+    }
+
+    public StringProperty remetenteProperty() {
+        return remetente;
+    }
+
+    public StringProperty destinatarioProperty() {
+        return destinatario;
     }
 }

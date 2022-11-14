@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -56,7 +57,7 @@ public class RegisterController implements Initializable {
     }
 
     private void createClient() {
-        this.cliente = new Cliente("", "", "", "", "", "", null, null, null, null);
+        this.cliente = new Cliente("", "", "", 0,"", "", "", null, null, null, null);
         //Create Client
         this.cliente.nomeProperty().set(fld_name.getText());
         this.cliente.sobrenomeProperty().set(fld_lastName.getText());
@@ -81,6 +82,7 @@ public class RegisterController implements Initializable {
         }
 
         this.cliente.dtNascimentoProperty().set(dtp_birth.getValue());
+        this.cliente.idadeProperty().set(calcularIdade(this.cliente.dtNascimentoProperty().get()));
         this.cliente.telefoneProperty().set(fld_phone.getText());
         this.cliente.emailProperty().set(fld_email.getText());
 
@@ -98,9 +100,9 @@ public class RegisterController implements Initializable {
                 ", "+this.cliente.getEndereco().cidadeProperty().get()+", "+this.cliente.getEndereco().estadoProperty().get()+
                 ", "+cliente.getEndereco().bairroProperty().get();
 
-        Model.getInstance().getDatabaseDriver().createClient(this.cliente.nomeProperty().get(), this.cliente.sobrenomeProperty().get(),
-                this.cliente.cpfProperty().get(), this.cliente.dtNascimentoProperty().get(), this.cliente.telefoneProperty().get(),
-                this.cliente.emailProperty().get(), this.cliente.senhaProperty().get(), endereco) ;
+        Model.getInstance().getDatabaseDriver().createClient(this.cliente.cpfProperty().get(), this.cliente.nomeProperty().get(), this.cliente.sobrenomeProperty().get(),
+                this.cliente.idadeProperty().get(), this.cliente.dtNascimentoProperty().get(), this.cliente.emailProperty().get(), this.cliente.telefoneProperty().get(),
+                this.cliente.senhaProperty().get(), endereco);
 
         // Create Checking account
         if(createCheckingAccountFlag) {
@@ -170,6 +172,10 @@ public class RegisterController implements Initializable {
         return resultado;
     }
 
+    public int calcularIdade(final LocalDate aniversario) {
+        return Period.between(aniversario, LocalDate.now()).getYears();
+    }
+
     private void createAccount(String accountType) {
 
         // Generate Account Number
@@ -177,11 +183,11 @@ public class RegisterController implements Initializable {
 
         //Create the checking account
         if(accountType.equals("Corrente")) {
-            this.cliente.criarContaCorrenteEspecial(geradorNumConta(), Double.parseDouble(fld_checkingAccBal.getText()), "Corrente", LocalDate.now());
-            Model.getInstance().getDatabaseDriver().createCheckingAccount(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().saldoProperty().get(), this.cliente.getContaCorrente().tipoContaProperty().get(), this.cliente.cpfProperty().get());
+            this.cliente.criarContaCorrenteEspecial(geradorNumConta(), Double.parseDouble(fld_checkingAccBal.getText()), "Corrente", 500.00, LocalDate.now());
+            Model.getInstance().getDatabaseDriver().createCheckingAccount(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().saldoProperty().get(), this.cliente.getContaCorrente().tipoContaProperty().get(), this.cliente.getContaCorrente().limiteProperty().get(), this.cliente.getContaCorrente().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
         } else {
             this.cliente.criarContaPoupanca(geradorNumConta(), Double.parseDouble(fld_savingAccBal.getText()), "Poupança", LocalDate.now());
-            Model.getInstance().getDatabaseDriver().createSavingsAccount(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().saldoProperty().get(), this.cliente.getContaPoupanca().tipoContaProperty().get(), this.cliente.cpfProperty().get());
+            Model.getInstance().getDatabaseDriver().createSavingsAccount(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().saldoProperty().get(), this.cliente.getContaPoupanca().tipoContaProperty().get(), this.cliente.getContaPoupanca().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
         }
     }
 

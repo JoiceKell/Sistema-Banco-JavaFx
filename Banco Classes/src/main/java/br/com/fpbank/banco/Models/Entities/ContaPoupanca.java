@@ -25,6 +25,12 @@ public class ContaPoupanca extends Conta {
         this.rendimento = new SimpleDoubleProperty(this, "Rendimento", 0.00);
     }
 
+    public ContaPoupanca(int numAgencia, String numConta, double saldo, String tipoConta, String status, LocalDate dtCriacao){
+        super(numAgencia, numConta, saldo, tipoConta, status, dtCriacao);
+        this.aniversario = new SimpleObjectProperty<>(this, "Aniversario da Conta", null);
+        this.rendimento = new SimpleDoubleProperty(this, "Rendimento", 0.00);
+    }
+
     public LocalDate getAniversario() {
         return aniversario.get();
     }

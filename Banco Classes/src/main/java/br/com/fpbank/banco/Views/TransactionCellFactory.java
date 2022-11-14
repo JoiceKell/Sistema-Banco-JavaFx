@@ -1,13 +1,14 @@
 package br.com.fpbank.banco.Views;
 
 import br.com.fpbank.banco.Controllers.Client.TransactionCellController;
+import br.com.fpbank.banco.Models.Entities.Movimentacao;
 import br.com.fpbank.banco.Models.Transaction;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
 
-public class TransactionCellFactory extends ListCell<Transaction> {
+public class TransactionCellFactory extends ListCell<Movimentacao> {
     @Override
-    protected void updateItem(Transaction transaction, boolean empty) {
+    protected void updateItem(Movimentacao transaction, boolean empty) {
         super.updateItem(transaction, empty);
         if(empty) {
             setText(null);

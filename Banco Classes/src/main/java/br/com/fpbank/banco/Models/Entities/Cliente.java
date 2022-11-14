@@ -9,6 +9,7 @@ public class Cliente {
     private final StringProperty cpf;
     private final StringProperty nome;
     private final StringProperty sobrenome;
+    private final IntegerProperty idade;
     private final StringProperty email;
     private final StringProperty senha;
     private final StringProperty telefone;
@@ -17,12 +18,11 @@ public class Cliente {
     private final ObjectProperty<ContaEspecial> contaCorrente;
     private final ObjectProperty<ContaPoupanca> contaPoupanca;
 
-
-
-    public Cliente(String cpf, String nome, String sobrenome, String email, String senha, String telefone, LocalDate dtNascimento, Endereco endereco, ContaEspecial contaCorrente, ContaPoupanca contaPoupanca) {
+    public Cliente(String cpf, String nome, String sobrenome, int idade, String email, String senha, String telefone, LocalDate dtNascimento, Endereco endereco, ContaEspecial contaCorrente, ContaPoupanca contaPoupanca) {
         this.cpf = new SimpleStringProperty(this, "CPF", cpf);
         this.nome = new SimpleStringProperty(this, "Nome", nome);
         this.sobrenome = new SimpleStringProperty(this, "Sobrenome", sobrenome);
+        this.idade = new SimpleIntegerProperty(this, "Idade", idade);
         this.email = new SimpleStringProperty(this, "E-mail", email);
         this.senha = new SimpleStringProperty(this, "Senha", senha);
         this.telefone = new SimpleStringProperty(this, "Telefone", telefone);
@@ -42,6 +42,10 @@ public class Cliente {
 
     public StringProperty sobrenomeProperty() {
         return sobrenome;
+    }
+
+    public IntegerProperty idadeProperty() {
+        return idade;
     }
 
     public StringProperty emailProperty() {
@@ -131,12 +135,20 @@ public class Cliente {
         this.enderecoProperty().set(new Endereco(cep, num, rua, bairro, cidade, estado, complemento));
     }
 
-    public void criarContaCorrenteEspecial(String numConta, double saldo, String tipoConta, LocalDate dtCriacao){
-        this.contaCorrenteProperty().set(new ContaEspecial(numConta, saldo, tipoConta, dtCriacao));
+    public void criarContaCorrenteEspecial(String numConta, double saldo, String tipoConta, double limite, LocalDate dtCriacao){
+        this.contaCorrenteProperty().set(new ContaEspecial(numConta, saldo, tipoConta, limite,  dtCriacao));
+    }
+
+    public void criarContaCorrenteEspecial(int numAgencia, String numConta, double saldo, String tipoConta, String status, double limite, LocalDate dtCriacao){
+        this.contaCorrenteProperty().set(new ContaEspecial(numAgencia, numConta, saldo, tipoConta, status, limite,  dtCriacao));
     }
 
     public void criarContaPoupanca(String numConta, double saldo, String tipoConta, LocalDate dtCriacao){
         this.contaPoupancaProperty().set(new ContaPoupanca(numConta, saldo, tipoConta, dtCriacao));
+    }
+
+    public void criarContaPoupanca(int numAgencia, String numConta, double saldo, String tipoConta, String status, LocalDate dtCriacao){
+        this.contaPoupancaProperty().set(new ContaPoupanca(numAgencia, numConta, saldo, tipoConta, status,  dtCriacao));
     }
 
 }

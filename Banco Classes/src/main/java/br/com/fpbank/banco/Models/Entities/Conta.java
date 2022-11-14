@@ -12,25 +12,25 @@ public abstract class Conta {
     private final DoubleProperty saldo;
     private final StringProperty tipoConta;
     private final StringProperty statusConta;
-    private final ObjectProperty<LocalDate> dtCriacao;
+    private final ObjectProperty<LocalDate> dtAbertura;
 
-    public Conta(int numAgencia, String numConta, double saldo, String tipoConta, String statusConta, LocalDate dtCriacao) {
+    public Conta(int numAgencia, String numConta, double saldo, String tipoConta, String statusConta, LocalDate dtAbertura) {
         this.numAgencia = new SimpleIntegerProperty(this, "Numero da Agencia", numAgencia);
         this.numConta = new SimpleStringProperty(this, "Numero da Conta", numConta);
         this.saldo = new SimpleDoubleProperty(this, "Saldo",saldo);
         this.tipoConta = new SimpleStringProperty(this, "Tipo de Conta", tipoConta);
         this.statusConta = new SimpleStringProperty(this, "Status da Conta", statusConta);
-        this.dtCriacao = new SimpleObjectProperty<>(this, "Data de Criação", dtCriacao);
+        this.dtAbertura = new SimpleObjectProperty<>(this, "Data de Criação", dtAbertura);
     }
 
-    public Conta(String numConta, double saldo, String tipoConta, LocalDate dtCriacao) {
+    public Conta(String numConta, double saldo, String tipoConta, LocalDate dtAbertura) {
         this.numAgencia = new SimpleIntegerProperty(this, "Numero da Agencia", 0);
         this.statusConta = new SimpleStringProperty(this, "Status da Conta", "");
 
         this.numConta = new SimpleStringProperty(this, "Numero da Conta", numConta);
         this.saldo = new SimpleDoubleProperty(this, "Saldo", saldo);
         this.tipoConta = new SimpleStringProperty(this, "Tipo de Conta", tipoConta);
-        this.dtCriacao = new SimpleObjectProperty<>(this, "Data de Criação", dtCriacao);
+        this.dtAbertura = new SimpleObjectProperty<>(this, "Data de Criação", dtAbertura);
     }
 
     public IntegerProperty numAgenciaProperty() {
@@ -48,8 +48,12 @@ public abstract class Conta {
     public StringProperty statusContaProperty() {
         return statusConta;
     }
-    public ObjectProperty<LocalDate> dtCriacaoProperty() {
-        return dtCriacao;
+    public ObjectProperty<LocalDate> dtAberturaProperty() {
+        return dtAbertura;
+    }
+
+    public void setSaldo(double montante) {
+        this.saldo.set(montante);
     }
 
 }
