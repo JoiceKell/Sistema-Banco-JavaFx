@@ -86,9 +86,9 @@
 .new_trans_container {
     -fx-background-radius: 10 10 10 10;
     -fx-background-color:  #2F2F2F;
-    -fx-padding: 20 10 20 10;
+    -fx-padding: 15 10 20 10;
     -fx-spacing: 10;
-    -fx-alignment: center_left;
+    -fx-alignment: bottom_left;
     -fx-effect: dropshadow(two-pass-box, #ff0760, 4, 4, 0, 0);
 }
 
@@ -98,6 +98,7 @@
 }
 
 .new_trans_container TextField {
+    -fx-text-fill: #00fee5;
     -fx-pref-height: 40;
     -fx-background-color:  #3F3F3F;
     -fx-border-color: gold;
@@ -116,7 +117,7 @@
     /*-fx-background-color: linear-gradient(to right, #132A13, #253F25);*/
     -fx-background-color:  transparent;
     -fx-pref-width: 230;
-    -fx-font-size: 1.5em;
+    -fx-font-size: 1.2em;
     -fx-font-family: "Calibri Light";
     -fx-text-fill: gold;
     -fx-border-color: gold;

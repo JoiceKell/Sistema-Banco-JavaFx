@@ -78,7 +78,7 @@ public class DatabaseDriver {
 
 
     // Method to either add or subtract from balance given operation
-    public void updateBalance(String numConta, double montante, String operacao) {
+    public void updateBalanceContaPoupanca(String numConta, double montante, String operacao) {
         Statement statement;
         ResultSet resultSet;
 
@@ -88,10 +88,37 @@ public class DatabaseDriver {
             double novoSaldo = 0.00;
 
             if (operacao.equals("ADD")) {
-                novoSaldo = resultSet.getDouble("saldo") + montante;
-                statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "';");
+                if(resultSet.next()) {
+                    novoSaldo = resultSet.getDouble("saldo") + montante;
+                    statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "';");
+                }
             } else {
-                if (resultSet.getDouble("saldo") >= montante) {
+                if (resultSet.next() && resultSet.getDouble("saldo") >= montante) {
+                    novoSaldo = resultSet.getDouble("saldo") - montante;
+                    statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "' ;");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateBalanceContaCorrente(String numConta, double montante, String operacao) {
+        Statement statement;
+        ResultSet resultSet;
+
+        try {
+            statement = this.conexao.createStatement();
+            resultSet = statement.executeQuery("Select * from Conta where tipoConta = 'Corrente' and numConta = '"+numConta+"' ");
+            double novoSaldo = 0.00;
+
+            if (operacao.equals("ADD")) {
+                if(resultSet.next()) {
+                    novoSaldo = resultSet.getDouble("saldo") + montante;
+                    statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "';");
+                }
+            } else {
+                if (resultSet.next() && resultSet.getDouble("saldo") >= montante) {
                     novoSaldo = resultSet.getDouble("saldo") - montante;
                     statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "' ;");
                 }
@@ -108,8 +135,8 @@ public class DatabaseDriver {
             statement = this.conexao.createStatement();
             LocalDate dataTransacao = LocalDate.now();
             statement.executeUpdate("insert into " +
-                    "Movimentacao(idMovimentacao, contaNumContaOrigem, contaNumContaDestino, montante, dtMovimentacao, tipoMovimentacao, mensagem) " +
-                    "values ('9', '"+remetente+"', '"+destinatario+"', '"+montante+"', '"+dataTransacao+"', '"+tipoMovimentacao+"', '"+mensagem+"'); ");
+                    "Movimentacao(contaNumContaOrigem, contaNumContaDestino, montante, dtMovimentacao, tipoMovimentacao, mensagem) " +
+                    "values ('"+remetente+"', '"+destinatario+"', '"+montante+"', '"+dataTransacao+"', '"+tipoMovimentacao+"', '"+mensagem+"'); ");
         } catch (SQLException e) {
             e.printStackTrace();
         }

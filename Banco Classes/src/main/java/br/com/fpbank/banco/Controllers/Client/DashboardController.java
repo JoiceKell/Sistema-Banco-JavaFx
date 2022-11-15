@@ -27,14 +27,31 @@ public class DashboardController implements Initializable {
     public TextField amount_fld;
     public TextArea message_fld;
     public Button send_money_btn;
+    public RadioButton rb_poupanca;
+    public RadioButton rb_corrente;
+
+    private boolean transferirDeContaCorrenteFlag = false;
+    private boolean transferirDeContaPoupancaFlag = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        send_money_btn.setOnAction(event -> onSendMoney());
         bindData();
         initLatestTransactionsList();
         transaction_listview.setItems(Model.getInstance().getLatestTransactions());
         transaction_listview.setCellFactory(e -> new TransactionCellFactory());
-        send_money_btn.setOnAction(event -> onSendMoney());
+
+        rb_poupanca.selectedProperty().addListener((observableValue, oldVal, newVal) -> {
+            if(newVal) {
+                transferirDeContaPoupancaFlag = true;
+            }
+        });
+
+        rb_corrente.selectedProperty().addListener((observableValue, oldVal, newVal) -> {
+            if(newVal) {
+                transferirDeContaCorrenteFlag = true;
+            }
+        });
     }
 
     private void bindData() {
@@ -71,31 +88,94 @@ public class DashboardController implements Initializable {
     }
 
     private void onSendMoney() {
-        String destinatario = payee_fld.getText();
-        double valor = Double.parseDouble(amount_fld.getText());
-        String mensagem = message_fld.getText();
 
-        String remetente = Model.getInstance().getCliente().getContaPoupanca().numContaProperty().get();
-        ResultSet resultSet = Model.getInstance().getDatabaseDriver().searchClient(destinatario);
-
-        try {
-            if(resultSet.isBeforeFirst()) {
-                Model.getInstance().getDatabaseDriver().updateBalance(destinatario, valor, "ADD");
-            }
-        } catch (Exception e){
-            e.printStackTrace();
+        if(rb_poupanca.isSelected()) {
+            transferir("Poupanca");
         }
 
-        //Subtract from sender's saving account
-        Model.getInstance().getDatabaseDriver().updateBalance(remetente, valor, "SUB");
-        //Update the savings account balance in the client object
-        Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(remetente));
-        //Record new transaction
-        Model.getInstance().getDatabaseDriver().newTransaction(remetente, destinatario, valor, "Transferencia", mensagem);
-        // Clear the fields
-        payee_fld.setText("");
-        amount_fld.setText("");
-        message_fld.setText("");
+        if(rb_corrente.isSelected()) {
+            transferir("Corrente");
+        }
     }
 
+    private void transferir(String tipoConta) {
+
+        String destinatario = null;
+        double valor = 0.00;
+        String mensagem = null;
+        String remetente = null;
+
+        if(tipoConta.equals("Poupanca")) {
+            destinatario = payee_fld.getText();
+            valor = Double.parseDouble(amount_fld.getText());
+            mensagem = message_fld.getText();
+
+            remetente = Model.getInstance().getCliente().getContaPoupanca().numContaProperty().get();
+            ResultSet resultSet = Model.getInstance().getDatabaseDriver().searchClient(destinatario);
+
+            try {
+                if(resultSet.isBeforeFirst()) {
+                    Model.getInstance().getDatabaseDriver().updateBalanceContaPoupanca(destinatario, valor, "ADD");
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //Subtract from sender's saving account
+            Model.getInstance().getDatabaseDriver().updateBalanceContaPoupanca(remetente, valor, "SUB");
+            //Update the savings account balance in the client object
+
+            Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(remetente));
+            String saldo = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
+            savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+
+            //Record new transaction
+            Model.getInstance().getDatabaseDriver().newTransaction(remetente, destinatario, valor, "Transferencia", mensagem);
+
+            System.out.println("Testandoooooooooooooooo: "+Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
+
+            // Clear the fields
+            payee_fld.setText("");
+            amount_fld.setText("");
+            message_fld.setText("");
+
+        } else {
+            destinatario = payee_fld.getText();
+            valor = Double.parseDouble(amount_fld.getText());
+            mensagem = message_fld.getText();
+
+            remetente = Model.getInstance().getCliente().getContaCorrente().numContaProperty().get();
+            ResultSet resultSet = Model.getInstance().getDatabaseDriver().searchClient(destinatario);
+
+            try {
+                if(resultSet.isBeforeFirst()) {
+                    Model.getInstance().getDatabaseDriver().updateBalanceContaCorrente(destinatario, valor, "ADD");
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            //Subtract from sender's saving account
+            Model.getInstance().getDatabaseDriver().updateBalanceContaCorrente(remetente, valor, "SUB");
+            //Update the savings account balance in the client object
+
+            Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(remetente));
+            String saldo1 = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
+            checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo1.replace(".", ",")));
+
+//            Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(remetente));
+//            String saldo2 = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
+//            savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo2.replace(".", ",")));
+
+            //Record new transaction
+            Model.getInstance().getDatabaseDriver().newTransaction(remetente, destinatario, valor, "Transferencia", mensagem);
+
+            System.out.println("Testandoooooooooooooooo: "+Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
+
+            // Clear the fields
+            payee_fld.setText("");
+            amount_fld.setText("");
+            message_fld.setText("");
+        }
+    }
 }

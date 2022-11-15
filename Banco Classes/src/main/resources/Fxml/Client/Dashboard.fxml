@@ -2,21 +2,24 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="796.0" prefWidth="1007.0" styleClass="dashboard" stylesheets="@../../Styles/Dashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.DashboardController">
+<AnchorPane prefHeight="796.0" prefWidth="1201.0" styleClass="dashboard" stylesheets="@../../Styles/Dashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.DashboardController">
    <Text fx:id="user_name" fill="#00fee5" layoutX="21.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="user_name" text="Olá, Nome" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="42.599998474121094" />
    <Label fx:id="login_date" styleClass="date_lbl" text="Hoje, dd/mm/yyyy" textFill="WHITE" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="40.0" />
-   <HBox alignment="CENTER" layoutX="304.0" layoutY="143.0" prefHeight="180.0" prefWidth="629.0" styleClass="accounts_view" AnchorPane.leftAnchor="304.0" AnchorPane.topAnchor="143.0">
+   <HBox alignment="CENTER" layoutX="319.0" layoutY="143.0" prefHeight="180.0" prefWidth="629.0" styleClass="accounts_view" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="143.0">
       <AnchorPane prefHeight="150.0" prefWidth="295.0">
          <styleClass>
             <String fx:value="account" />
@@ -61,8 +64,32 @@
          </HBox>
       </children>
    </HBox>
-   <ListView fx:id="transaction_listview" layoutX="129.0" layoutY="416.0" prefHeight="366.0" prefWidth="737.0" styleClass="transaction_listview" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="129.0" />
-   <VBox alignment="CENTER" layoutX="887.0" layoutY="416.0" prefHeight="366.0" prefWidth="256.0" styleClass="new_trans_container" AnchorPane.bottomAnchor="14.0">
+   <ListView fx:id="transaction_listview" layoutX="80.0" layoutY="415.0" prefHeight="366.0" prefWidth="737.0" styleClass="transaction_listview" AnchorPane.bottomAnchor="14.600000000000023" AnchorPane.leftAnchor="80.0" />
+   <VBox alignment="CENTER" layoutX="881.0" layoutY="415.6" prefHeight="366.0" prefWidth="330.0" styleClass="new_trans_container" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="830.0" AnchorPane.rightAnchor="80.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="286.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="145.0">
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+               <children>
+                  <RadioButton fx:id="rb_poupanca" mnemonicParsing="false" selected="true" text="Conta Poupança" textFill="GOLD">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tipoConta" />
+                     </toggleGroup>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <RadioButton fx:id="rb_corrente" mnemonicParsing="false" text="Conta Corrente" textFill="GOLD" toggleGroup="$tipoConta">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </RadioButton>
+         </children>
+      </HBox>
       <Label text="Beneficiário:" textFill="#00fee5">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -71,10 +98,15 @@
       <Label text="Valor:" textFill="#00fee5" />
       <TextField fx:id="amount_fld" promptText="Valor da Tranferência:" />
       <Label text="Messagem: (Opcional)" textFill="#00fee5" />
-      <TextArea fx:id="message_fld" prefHeight="70.0" prefWidth="200.0" />
-      <Button fx:id="send_money_btn" mnemonicParsing="false" text="TRANSFERIR" textFill="GOLD">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Button>
+      <TextArea fx:id="message_fld" prefHeight="70.0" prefWidth="200.0" style="-fx-text-fill: #00fee5; -fx-background-color: #3F3F3F;" />
+      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="235.0" VBox.vgrow="NEVER">
+         <children>
+            <Button fx:id="send_money_btn" alignment="CENTER" maxWidth="118.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="118.0" text="TRANSFERIR" textFill="GOLD">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
    </VBox>
 </AnchorPane>

@@ -43,6 +43,7 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bt_Register.setOnAction(event -> createClient());
+
         cb_checkingA.selectedProperty().addListener((observableValue, oldVal, newVal) -> {
             if(newVal) {
                 createCheckingAccountFlag = true;
@@ -54,6 +55,7 @@ public class RegisterController implements Initializable {
                 createSavingsAccountFlag = true;
             }
         } );
+
     }
 
     private void createClient() {
