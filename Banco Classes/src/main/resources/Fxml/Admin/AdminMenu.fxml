@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="250.0" styleClass="main_menu_container" stylesheets="@../../Styles/ClientMenu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Admin.AdminMenuController">
+<VBox maxHeight="-Infinity" minHeight="830.0" minWidth="-Infinity" prefHeight="830.0" prefWidth="250.0" styleClass="main_menu_container" stylesheets="@../../Styles/ClientMenu.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Admin.AdminMenuController">
    <AnchorPane maxWidth="250.0" prefHeight="820.0" prefWidth="186.0" styleClass="left_container">
       <VBox prefHeight="200.0" prefWidth="160.0" styleClass="title_container" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <ImageView fitHeight="110.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
@@ -39,6 +39,11 @@
             <VBox.margin>
                <Insets />
             </VBox.margin>
+         </Button>
+         <Button fx:id="btn_Transferencias" maxWidth="190.0" mnemonicParsing="false" text="Transferências">
+            <graphic>
+               <FontAwesomeIconView glyphName="LIST" size="20" />
+            </graphic>
          </Button>
          <Button fx:id="logout_btn" maxWidth="200.0" mnemonicParsing="false" text="Sair">
             <graphic>

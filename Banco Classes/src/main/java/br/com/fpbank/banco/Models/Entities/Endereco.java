@@ -16,7 +16,7 @@ public class Endereco {
     private final StringProperty estado;
     private final StringProperty complemento;
 
-    public Endereco(String cep, int num, String rua, String bairro, String cidade, String estado, String complemento) {
+    public Endereco(String rua, int num, String cep, String complemento, String cidade, String estado, String bairro) {
         this.cep = new SimpleStringProperty(this, "CEP", cep);
         this.num = new SimpleIntegerProperty(this, "Numero", num);
         this.rua = new SimpleStringProperty(this, "Rua", rua);

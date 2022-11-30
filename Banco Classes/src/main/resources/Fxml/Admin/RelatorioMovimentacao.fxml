@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1400.0" styleClass="clients_container" stylesheets="@../../Styles/Clients.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Admin.RelatorioMovimentacaoController">
+   <children>
+      <Text layoutX="570.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIMENTAÇÕES" AnchorPane.leftAnchor="570.0" AnchorPane.topAnchor="47.0" />
+      <ListView fx:id="movimentacao_listview" layoutX="14.0" layoutY="31.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../../Styles/Clients.css" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="100.0" />
+   </children>
+</AnchorPane>

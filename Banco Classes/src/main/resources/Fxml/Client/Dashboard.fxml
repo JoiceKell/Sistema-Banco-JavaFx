@@ -25,24 +25,24 @@
             <String fx:value="account" />
             <String fx:value="account_gradient" />
          </styleClass>
-         <Label fx:id="checking_bal" layoutX="14.0" layoutY="23.0" styleClass="account_balance" text="R$ --" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />
-         <Label layoutX="14.0" layoutY="82.0" styleClass="account_number" text="**** **** ****" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="14.0" />
-         <Label fx:id="checking_acc_num" layoutX="88.0" layoutY="118.0" styleClass="account_number" text="XXXXX-X" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="138.0" />
-         <VBox layoutX="181.0" layoutY="15.0" prefHeight="100.0" prefWidth="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="14.0" />
-         <FontAwesomeIconView glyphName="BANK" layoutX="258.0" layoutY="29.0" size="30" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
-         <Text layoutX="14.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conta Corrente" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
-      </AnchorPane>
-      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="295.0">
-         <styleClass>
-            <String fx:value="account" />
-            <String fx:value="account_gradient" />
-         </styleClass>
          <Label fx:id="savings_bal" layoutX="14.0" layoutY="23.0" styleClass="account_balance" text="R$ --" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />
          <Label layoutX="14.0" layoutY="82.0" styleClass="account_number" text="**** **** ****" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="14.0" />
          <Label fx:id="savings_acc_num" layoutX="88.0" layoutY="118.0" styleClass="account_number" text="XXXXX-X" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="138.0" />
          <VBox layoutX="181.0" layoutY="15.0" prefHeight="100.0" prefWidth="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="14.0" />
          <FontAwesomeIconView glyphName="BANK" layoutX="258.0" layoutY="29.0" size="30" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
          <Text layoutX="14.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conta Poupança" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
+      </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="295.0">
+         <styleClass>
+            <String fx:value="account" />
+            <String fx:value="account_gradient" />
+         </styleClass>
+         <Label fx:id="checking_bal" layoutX="14.0" layoutY="23.0" styleClass="account_balance" text="R$ --" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />
+         <Label layoutX="14.0" layoutY="82.0" styleClass="account_number" text="**** **** ****" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="14.0" />
+         <Label fx:id="checking_acc_num" layoutX="88.0" layoutY="118.0" styleClass="account_number" text="XXXXX-X" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="138.0" />
+         <VBox layoutX="181.0" layoutY="15.0" prefHeight="100.0" prefWidth="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="14.0" />
+         <FontAwesomeIconView glyphName="BANK" layoutX="258.0" layoutY="29.0" size="30" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
+         <Text layoutX="14.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conta Corrente" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
       </AnchorPane>
    </HBox>
    <HBox alignment="CENTER" layoutX="133.0" layoutY="373.0" prefHeight="40.0" prefWidth="1002.0" AnchorPane.bottomAnchor="387.0">
@@ -68,21 +68,17 @@
    <VBox alignment="CENTER" layoutX="881.0" layoutY="415.6" prefHeight="366.0" prefWidth="330.0" styleClass="new_trans_container" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="830.0" AnchorPane.rightAnchor="80.0">
       <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="286.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="145.0">
+            <RadioButton fx:id="rb_poupanca" mnemonicParsing="false" text="Conta Poupança" textFill="GOLD">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="tipoConta" />
+               </toggleGroup>
                <HBox.margin>
-                  <Insets left="15.0" />
+                  <Insets right="5.0" />
                </HBox.margin>
-               <children>
-                  <RadioButton fx:id="rb_poupanca" mnemonicParsing="false" selected="true" text="Conta Poupança" textFill="GOLD">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="tipoConta" />
-                     </toggleGroup>
-                  </RadioButton>
-               </children>
-            </HBox>
+            </RadioButton>
             <RadioButton fx:id="rb_corrente" mnemonicParsing="false" text="Conta Corrente" textFill="GOLD" toggleGroup="$tipoConta">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -99,14 +95,22 @@
       <TextField fx:id="amount_fld" promptText="Valor da Tranferência:" />
       <Label text="Messagem: (Opcional)" textFill="#00fee5" />
       <TextArea fx:id="message_fld" prefHeight="70.0" prefWidth="200.0" style="-fx-text-fill: #00fee5; -fx-background-color: #3F3F3F;" />
-      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="235.0" VBox.vgrow="NEVER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
+            <Label id="erro" fx:id="lbl_erro" textFill="RED">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Label>
             <Button fx:id="send_money_btn" alignment="CENTER" maxWidth="118.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="118.0" text="TRANSFERIR" textFill="GOLD">
                <font>
                   <Font name="System Bold" size="10.0" />
                </font>
             </Button>
          </children>
-      </HBox>
+      </VBox>
    </VBox>
 </AnchorPane>

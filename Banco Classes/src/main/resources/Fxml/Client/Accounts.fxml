@@ -4,7 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,16 +17,44 @@
 <AnchorPane prefHeight="750.0" prefWidth="1000.0" styleClass="accounts_view_container" stylesheets="@../../Styles/Accounts.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.AccountsController">
    <VBox alignment="CENTER" layoutX="395.0" layoutY="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="1076.0" style="-fx-background-color: #2F2F2F;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="100.0">
       <children>
+         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <RadioButton fx:id="rb_contaPoupanca" mnemonicParsing="false" text="Conta Poupança" textFill="#00fee5">
+                  <HBox.margin>
+                     <Insets right="20.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+                  <toggleGroup>
+                     <ToggleGroup fx:id="tipoConta" />
+                  </toggleGroup>
+               </RadioButton>
+               <RadioButton fx:id="rb_contaCorrente" mnemonicParsing="false" text="Conta Corrente" textFill="#00fee5" toggleGroup="$tipoConta">
+                  <HBox.margin>
+                     <Insets right="20.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </RadioButton>
+               <Button fx:id="bt_desativar" mnemonicParsing="false" prefHeight="24.0" prefWidth="110.0" text="DESATIVAR" />
+               <Label id="erroDesativar" fx:id="lbl_erroDesativar" alignment="CENTER" prefHeight="18.0" prefWidth="190.0" textFill="red" />
+            </children>
+            <VBox.margin>
+               <Insets top="20.0" />
+            </VBox.margin>
+         </HBox>
          <HBox alignment="CENTER" maxWidth="900.0" prefHeight="40.0" prefWidth="900.0" style="-fx-border-color: gold; -fx-border-width: 1px 0px 1px 0px;">
             <children>
-               <Label id="sombra" prefHeight="23.0" prefWidth="117.0" text="DADOS:" textFill="GOLD">
+               <Label prefHeight="23.0" prefWidth="117.0" text="DADOS:" textFill="GOLD">
                   <font>
                      <Font name="System Bold" size="18.0" />
                   </font>
                </Label>
                <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="386.0" HBox.hgrow="ALWAYS">
                   <children>
-                     <CheckBox alignment="CENTER_RIGHT" mnemonicParsing="false" textFill="WHITE" />
+                     <CheckBox fx:id="cb_dados" alignment="CENTER_RIGHT" mnemonicParsing="false" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets right="20.0" />
@@ -63,7 +93,7 @@
                </Label>
                <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="370.0" HBox.hgrow="ALWAYS">
                   <children>
-                     <CheckBox alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="18.0" prefWidth="0.0" textFill="WHITE" />
+                     <CheckBox fx:id="cb_endereco" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="18.0" prefWidth="0.0" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets right="20.0" />
@@ -156,7 +186,7 @@
                </Label>
                <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="386.0" HBox.hgrow="ALWAYS">
                   <children>
-                     <CheckBox alignment="CENTER_RIGHT" mnemonicParsing="false" textFill="WHITE" />
+                     <CheckBox fx:id="cb_senha" alignment="CENTER_RIGHT" mnemonicParsing="false" textFill="WHITE" />
                   </children>
                   <HBox.margin>
                      <Insets right="20.0" />
@@ -191,7 +221,7 @@
          </HBox>
          <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
             <children>
-               <Button fx:id="update_btn" mnemonicParsing="false" text="ATUALIZAR" textFill="#77ffc0">
+               <Button fx:id="bt_atualizar" mnemonicParsing="false" text="ATUALIZAR" textFill="#77ffc0">
                   <font>
                      <Font name="System Bold" size="12.0" />
                   </font>
@@ -199,13 +229,12 @@
                      <Insets right="10.0" />
                   </HBox.margin>
                </Button>
-               <Button fx:id="disable_btn" mnemonicParsing="false" text="DESATIVAR" />
             </children>
             <VBox.margin>
                <Insets bottom="20.0" left="20.0" right="20.0" top="40.0" />
             </VBox.margin>
          </HBox>
-         <Label text="Error" textFill="#f75757" />
+         <Label fx:id="lbl_erro" textFill="#f75757" />
       </children>
       <effect>
          <DropShadow />

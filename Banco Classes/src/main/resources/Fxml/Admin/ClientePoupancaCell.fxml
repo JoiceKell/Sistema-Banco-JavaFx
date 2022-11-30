@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="50.0" prefWidth="2000.0" styleClass="client_cell_container" stylesheets="@../../Styles/ClientCell.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox layoutX="50.0" layoutY="5.0" prefHeight="40.0" prefWidth="1900.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0">
+            <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Status Conta" />
+                      <Label fx:id="lbl_StatusConta" alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Status Conta" />
+               </children>
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Nº Conta" />
+                  <Label fx:id="lbl_NumConta" alignment="CENTER" styleClass="acc_display_lbl" text="Nº Conta" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Nº Agencia" />
+                      <Label fx:id="lbl_NumAgencia" alignment="CENTER" styleClass="acc_display_lbl" text="Nº Agencia" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Dt. Abertura" />
+                      <Label fx:id="lbl_DtAbertura" alignment="CENTER" styleClass="acc_display_lbl" text="Dt. Abertura" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" styleClass="acc_display_lbl" text="Cliente" />
+                      <Label fx:id="lbl_Nome" alignment="CENTER" maxWidth="200.0" prefHeight="18.0" prefWidth="200.0" styleClass="acc_display_lbl" text="Cliente" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="CPF" />
+                      <Label fx:id="lbl_Cpf" styleClass="acc_display_lbl" text="CPF" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Dt. Nascimento" />
+                      <Label fx:id="lbl_DtNasc" alignment="CENTER" styleClass="acc_display_lbl" text="Dt. Nascimento" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Idade" />
+                      <Label fx:id="lbl_Idade" alignment="CENTER" maxWidth="30.0" prefWidth="30.0" styleClass="acc_display_lbl" text="Idade" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="E-mail" />
+                      <Label fx:id="lbl_Email" alignment="CENTER" maxWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="E-mail" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Telefone" />
+                      <Label fx:id="lbl_Telefone" alignment="CENTER" maxWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Telefone" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Saldo" />
+                      <Label fx:id="lbl_Saldo" alignment="CENTER" maxWidth="50.0" prefWidth="50.0" styleClass="acc_display_lbl" text="Saldo" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Tipo Conta" />
+                      <Label fx:id="lbl_TipoConta" alignment="CENTER" maxWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Tipo Conta" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" styleClass="acc_display_lbl" text="Cheque Especial" />
+                      <Label fx:id="lbl_ChequeEspecial" alignment="CENTER" styleClass="acc_display_lbl" text="Cheque Especial" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" styleClass="acc_display_lbl" text="Endereço" />
+                      <Label fx:id="lbl_Endereco" alignment="CENTER" maxWidth="700.0" minWidth="700.0" prefWidth="700.0" styleClass="acc_display_lbl" text="Endereço" />
+               </children>
+            </VBox>
+            </children>
+        </HBox>
+      <FontAwesomeIconView glyphName="USER" size="20" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="14.0" />
+    </children>
+</AnchorPane>

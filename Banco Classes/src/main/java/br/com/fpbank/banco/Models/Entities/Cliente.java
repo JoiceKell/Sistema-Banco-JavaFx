@@ -32,6 +32,62 @@ public class Cliente {
         this.contaPoupanca = new SimpleObjectProperty<>(this, "Conta Poupança", contaPoupanca);
     }
 
+    public Cliente(String cpf, String nome, int idade, String email, String telefone, LocalDate dtNascimento, Endereco endereco, ContaEspecial contaCorrente, ContaPoupanca contaPoupanca) {
+        this.cpf = new SimpleStringProperty(this, "CPF", cpf);
+        this.nome = new SimpleStringProperty(this, "Nome", nome);
+        this.sobrenome = new SimpleStringProperty(this, "Sobrenome", null);
+        this.idade = new SimpleIntegerProperty(this, "Idade", idade);
+        this.email = new SimpleStringProperty(this, "E-mail", email);
+        this.senha = new SimpleStringProperty(this, "Senha", null);
+        this.telefone = new SimpleStringProperty(this, "Telefone", telefone);
+        this.dtNascimento = new SimpleObjectProperty<>(this, "Data de Nascimento", dtNascimento);
+        this.endereco = new SimpleObjectProperty<>(this, "Endereco", endereco);
+        this.contaCorrente = new SimpleObjectProperty<>(this, "Conta Corrente", contaCorrente);
+        this.contaPoupanca = new SimpleObjectProperty<>(this, "Conta Poupança", contaPoupanca);
+    }
+
+    public Cliente(String cpf, String nome, String sobrenome, int idade, String email, String telefone, LocalDate dtNascimento, Endereco endereco, ContaEspecial contaCorrente, ContaPoupanca contaPoupanca) {
+        this.cpf = new SimpleStringProperty(this, "CPF", cpf);
+        this.nome = new SimpleStringProperty(this, "Nome", nome);
+        this.sobrenome = new SimpleStringProperty(this, "Sobrenome", sobrenome);
+        this.idade = new SimpleIntegerProperty(this, "Idade", idade);
+        this.email = new SimpleStringProperty(this, "E-mail", email);
+        this.senha = new SimpleStringProperty(this, "Senha", null);
+        this.telefone = new SimpleStringProperty(this, "Telefone", telefone);
+        this.dtNascimento = new SimpleObjectProperty<>(this, "Data de Nascimento", dtNascimento);
+        this.endereco = new SimpleObjectProperty<>(this, "Endereco", endereco);
+        this.contaCorrente = new SimpleObjectProperty<>(this, "Conta Corrente", contaCorrente);
+        this.contaPoupanca = new SimpleObjectProperty<>(this, "Conta Poupança", contaPoupanca);
+    }
+
+    public Cliente(String cpf, String nome, String sobrenome, int idade, String email, String telefone, LocalDate dtNascimento, Endereco endereco) {
+        this.cpf = new SimpleStringProperty(this, "CPF", cpf);
+        this.nome = new SimpleStringProperty(this, "Nome", nome);
+        this.sobrenome = new SimpleStringProperty(this, "Sobrenome", sobrenome);
+        this.idade = new SimpleIntegerProperty(this, "Idade", idade);
+        this.email = new SimpleStringProperty(this, "E-mail", email);
+        this.senha = new SimpleStringProperty(this, "Senha", null);
+        this.telefone = new SimpleStringProperty(this, "Telefone", telefone);
+        this.dtNascimento = new SimpleObjectProperty<>(this, "Data de Nascimento", dtNascimento);
+        this.endereco = new SimpleObjectProperty<>(this, "Endereco", endereco);
+        this.contaCorrente = new SimpleObjectProperty<>(this, "Conta Corrente", null);
+        this.contaPoupanca = new SimpleObjectProperty<>(this, "Conta Poupança", null);
+    }
+
+    public Cliente(String cpf, String nome, String sobrenome, int idade, String email, String senha, String telefone, LocalDate dtNascimento) {
+        this.cpf = new SimpleStringProperty(this, "CPF", cpf);
+        this.nome = new SimpleStringProperty(this, "Nome", nome);
+        this.sobrenome = new SimpleStringProperty(this, "Sobrenome", sobrenome);
+        this.idade = new SimpleIntegerProperty(this, "Idade", idade);
+        this.email = new SimpleStringProperty(this, "E-mail", email);
+        this.senha = new SimpleStringProperty(this, "Senha", senha);
+        this.telefone = new SimpleStringProperty(this, "Telefone", telefone);
+        this.dtNascimento = new SimpleObjectProperty<>(this, "Data de Nascimento", dtNascimento);
+        this.endereco = new SimpleObjectProperty<>(this, "Endereco", null);
+        this.contaCorrente = new SimpleObjectProperty<>(this, "Conta Corrente", null);
+        this.contaPoupanca = new SimpleObjectProperty<>(this, "Conta Poupança", null);
+    }
+
     public StringProperty cpfProperty() {
         return cpf;
     }

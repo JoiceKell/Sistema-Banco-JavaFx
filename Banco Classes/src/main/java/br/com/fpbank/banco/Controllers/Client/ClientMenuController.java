@@ -52,6 +52,7 @@ public class ClientMenuController implements Initializable {
         Stage stage = (Stage) dashboard_btn.getScene().getWindow();
         // Close the client Window
         Model.getInstance().getViewFactory().closeStage(stage);
+
         // Show login Window
         stage = new Stage();
         Model.getInstance().getViewFactory().showMainMenu(stage);

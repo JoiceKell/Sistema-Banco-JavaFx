@@ -10,14 +10,13 @@
 }
 
 .client_cell_container HBox {
-    -fx-spacing: 15;
     -fx-alignment: Center_left;
 }
 
 .client_cell_container HBox Label {
     -fx-text-fill: #444444;
     -fx-font-family: "Calibri Light";
-    -fx-font-size: 1.5em;
+    -fx-font-size: 2.0em;
 }
 
 .acc_display_lbl {

@@ -28,10 +28,11 @@ public class LoginController implements Initializable {
         acc_selector.setItems(FXCollections.observableArrayList(AccountType.CLIENTE, AccountType.ADMINISTRADOR));
         acc_selector.setValue(Model.getInstance().getViewFactory().getLoginAccountType());
         acc_selector.valueProperty().addListener(observable -> setAcc_selector());
-        login_btn.setOnAction(event -> onLogin());
+        login_btn.setOnAction(event -> acessarConta());
     }
 
-    private void onLogin() {
+    public void acessarConta() {
+
         Stage stage = (Stage) error_lbl.getScene().getWindow();
 
         if(Model.getInstance().getViewFactory().getLoginAccountType() == AccountType.CLIENTE){

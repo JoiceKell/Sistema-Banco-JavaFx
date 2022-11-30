@@ -13,6 +13,7 @@ public class AdminMenuController implements Initializable {
 
     public Button reportClients_btn;
     public Button logout_btn;
+    public Button btn_Transferencias;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -21,6 +22,7 @@ public class AdminMenuController implements Initializable {
 
     private void addListeners() {
         reportClients_btn.setOnAction(event -> onReport());
+        btn_Transferencias.setOnAction(event -> onRelatorioMovimentacao());
         logout_btn.setOnAction(event -> {
             try {
                 onLogout();
@@ -31,7 +33,11 @@ public class AdminMenuController implements Initializable {
     }
 
     private void onReport() {
-        Model.getInstance().getViewFactory().getAdminSelectedMenuItem().set(AdminMenuOptions.REPORT);
+        Model.getInstance().getViewFactory().getAdminSelectedMenuItem().set(AdminMenuOptions.RELATORIO_CLIENTE);
+    }
+
+    private void onRelatorioMovimentacao() {
+        Model.getInstance().getViewFactory().getAdminSelectedMenuItem().set(AdminMenuOptions.RELATORIO_MOVIMENTACAO);
     }
 
     private void onLogout() throws Exception {
@@ -45,5 +51,4 @@ public class AdminMenuController implements Initializable {
         // Set Admin Login Succes Flag To False
         Model.getInstance().setAdminLoginSuccessFlag(false);
     }
-
 }

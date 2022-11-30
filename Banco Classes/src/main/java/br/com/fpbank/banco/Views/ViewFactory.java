@@ -2,14 +2,22 @@ package br.com.fpbank.banco.Views;
 
 import br.com.fpbank.banco.Controllers.Admin.AdminController;
 import br.com.fpbank.banco.Controllers.Client.ClientController;
+import br.com.fpbank.banco.Controllers.Client.DashboardController;
+import br.com.fpbank.banco.Models.Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 
 import javafx.stage.Stage;
@@ -28,6 +36,7 @@ public class ViewFactory {
     // Admin Views
     private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
     private AnchorPane reportClientView;
+    private AnchorPane relatorioMovimentacaoView;
 
     public ViewFactory() {
         this.loginAccountType = AccountType.CLIENTE;
@@ -106,11 +115,42 @@ public class ViewFactory {
         return reportClientView;
     }
 
+    public AnchorPane getRelatorioMovimentacaoView() {
+        if(relatorioMovimentacaoView == null) {
+            try{
+                System.out.println("Entrou aqui");
+                relatorioMovimentacaoView = new FXMLLoader(getClass().getResource("/Fxml/Admin/RelatorioMovimentacao.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return relatorioMovimentacaoView;
+    }
+
     public void showAdminWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/Admin.fxml"));
         AdminController adminController = new AdminController();
         loader.setController(adminController);
         createStage(loader);
+    }
+
+    public void showMessageWindow(String nome, String mensagemTexto) {
+        StackPane pane = new StackPane();
+        VBox vBox = new VBox(5);
+        vBox.setAlignment(Pos.CENTER);
+        Label remetente = new Label(nome);
+        Label mensagem = new Label(mensagemTexto);
+        vBox.getChildren().addAll(remetente, mensagem);
+        pane.getChildren().add(vBox);
+        Scene scene = new Scene(pane, 300, 100);
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/Logo2.png"))));
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Mensagem");
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     private void createStage(FXMLLoader loader) {
@@ -136,6 +176,7 @@ public class ViewFactory {
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/Logo2.png"))));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
     }

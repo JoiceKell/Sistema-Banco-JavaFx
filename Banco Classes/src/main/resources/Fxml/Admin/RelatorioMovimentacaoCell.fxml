@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="50.0" prefWidth="850.0" styleClass="client_cell_container" stylesheets="@../../Styles/MovimentacaoCell.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox layoutX="102.0" layoutY="5.0" prefHeight="40.0" prefWidth="708.0" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="5.0">
+            <children>
+                <Label fx:id="lbl_nome" maxWidth="190.0" prefHeight="18.0" prefWidth="180.0" styleClass="acc_display_lbl" text="Nome">
+               <HBox.margin>
+                  <Insets left="50.0" right="20.0" />
+               </HBox.margin></Label>
+                <Label fx:id="lbl_contaOrigem" prefHeight="18.0" prefWidth="60.0" styleClass="acc_display_lbl" text="contaOrigem">
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </HBox.margin></Label>
+                <Label fx:id="lbl_contaDestino" prefHeight="18.0" prefWidth="60.0" styleClass="acc_display_lbl" text="contaDestino">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin></Label>
+                <Label fx:id="lbl_valor" prefHeight="18.0" prefWidth="50.0" styleClass="acc_display_lbl" text="valor">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin></Label>
+                <Label fx:id="lbl_dtMovimentacao" prefHeight="18.0" prefWidth="90.0" styleClass="acc_display_lbl" text="dtMovimentacao">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin></Label>
+                <Label fx:id="lbl_tipoMovimentacao" prefWidth="90.0" styleClass="acc_display_lbl" text="tipoMovimentacao">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin></Label>
+            </children>
+        </HBox>
+      <VBox alignment="CENTER" layoutX="4.0" prefHeight="51.0" prefWidth="58.0" AnchorPane.leftAnchor="40.0">
+         <children>
+            <FontAwesomeIconView fx:id="in_icon" glyphName="LONG_ARROW_RIGHT" size="17" />
+            <FontAwesomeIconView fx:id="out_icon" glyphName="LONG_ARROW_LEFT" size="17" />
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>

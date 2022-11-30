@@ -1,5 +1,8 @@
 package br.com.fpbank.banco.Models.Entities;
 
+import br.com.fpbank.banco.Controllers.Client.DashboardController;
+import br.com.fpbank.banco.Controllers.Client.LoginController;
+import br.com.fpbank.banco.Controllers.Client.RegisterController;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
@@ -56,4 +59,11 @@ public abstract class Conta {
         this.saldo.set(montante);
     }
 
+    abstract void abrirConta();
+    abstract void acessarConta();
+    abstract void alterarDados();
+    abstract double apresentarSaldo();
+    abstract void desativarConta();
+    abstract void emitirExtrato();
+    abstract void transferirValor();
 }

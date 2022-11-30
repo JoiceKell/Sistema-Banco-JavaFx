@@ -1,42 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1290.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="830.0" minWidth="1285.0" prefHeight="830.0" prefWidth="1230.0" styleClass="clients_container" stylesheets="@../../Styles/Clients.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Admin.ClientsController">
    <children>
-      <ScrollPane prefHeight="815.0" prefWidth="1238.0">
-         <VBox.margin>
-            <Insets bottom="10.0" right="20.0" top="15.0" />
-         </VBox.margin>
-         <content>
-            <TableView prefHeight="810.0" prefWidth="1380.0">
-               <columns>
-                  <TableColumn prefWidth="91.19997864961624" text="Status Conta" />
-                  <TableColumn prefWidth="75.0" text="Nº Conta" />
-                  <TableColumn prefWidth="59.999969482421875" text="Nome" />
-                  <TableColumn prefWidth="76.00001525878906" text="Sobrenome" />
-                  <TableColumn prefWidth="75.0" text="CPF" />
-                  <TableColumn prefWidth="75.0" text="DtNasc" />
-                  <TableColumn prefWidth="75.0" text="E-mail" />
-                  <TableColumn prefWidth="75.0" text="Telefone" />
-                  <TableColumn prefWidth="75.0" text="Saldo" />
-                  <TableColumn prefWidth="75.0" text="Tipo Conta" />
-                  <TableColumn prefWidth="96.7999267578125" text="Cheque Especial" />
-                  <TableColumn prefWidth="75.0" text="Rua" />
-                  <TableColumn prefWidth="75.0" text="Nº" />
-                  <TableColumn prefWidth="75.0" text="CEP" />
-                  <TableColumn prefWidth="75.0" text="Bairro" />
-                  <TableColumn prefWidth="87.9998779296875" text="Complemento" />
-                  <TableColumn prefWidth="62.4000244140625" text="Cidade" />
-                  <TableColumn prefWidth="75.0" text="UF" />
-               </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
+      <Text layoutX="516.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CLIENTES CONTA POUPANÇA" AnchorPane.leftAnchor="516.0" AnchorPane.topAnchor="20.799999237060547" />
+      <ListView fx:id="clientes_listviewContaPoupanca" layoutX="20.0" layoutY="54.0" prefHeight="350.0" prefWidth="1195.0" stylesheets="@../../Styles/Clients.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <ListView fx:id="clientes_listviewContaCorrente" layoutX="20.0" layoutY="458.0" prefHeight="350.0" prefWidth="1195.0" stylesheets="@../../Styles/Clients.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <Text layoutX="529.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CLIENTES CONTA CORRENTE" />
    </children>
-</VBox>
+</AnchorPane>

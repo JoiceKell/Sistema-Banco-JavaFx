@@ -15,6 +15,10 @@
     -fx-font-family: "Calibri Light";
 }
 
+#erro {
+    -fx-font-size: 1.3em;
+}
+
 .section_title {
     -fx-font-size: 2.5em;
     -fx-font-weight: 800;

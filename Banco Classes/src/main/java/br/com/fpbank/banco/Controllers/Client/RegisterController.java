@@ -1,6 +1,8 @@
 package br.com.fpbank.banco.Controllers.Client;
 
 import br.com.fpbank.banco.Models.Entities.Cliente;
+import br.com.fpbank.banco.Models.Entities.Conta;
+import br.com.fpbank.banco.Models.Entities.ContaEspecial;
 import br.com.fpbank.banco.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -42,7 +44,9 @@ public class RegisterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bt_Register.setOnAction(event -> createClient());
+        Conta conta = new ContaEspecial(0, null, 0.00, null, null, null, 0.00);
+
+        bt_Register.setOnAction(event -> abrirConta());
 
         cb_checkingA.selectedProperty().addListener((observableValue, oldVal, newVal) -> {
             if(newVal) {
@@ -58,7 +62,7 @@ public class RegisterController implements Initializable {
 
     }
 
-    private void createClient() {
+    public void abrirConta() {
         this.cliente = new Cliente("", "", "", 0,"", "", "", null, null, null, null);
         //Create Client
         this.cliente.nomeProperty().set(fld_name.getText());
@@ -187,9 +191,14 @@ public class RegisterController implements Initializable {
         if(accountType.equals("Corrente")) {
             this.cliente.criarContaCorrenteEspecial(geradorNumConta(), Double.parseDouble(fld_checkingAccBal.getText()), "Corrente", 500.00, LocalDate.now());
             Model.getInstance().getDatabaseDriver().createCheckingAccount(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().saldoProperty().get(), this.cliente.getContaCorrente().tipoContaProperty().get(), this.cliente.getContaCorrente().limiteProperty().get(), this.cliente.getContaCorrente().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
+            if (fld_checkingAccBal.getText() != "" || fld_checkingAccBal.getText() != "0" || fld_checkingAccBal.getText() != "0.00" ) {
+                Model.getInstance().getDatabaseDriver().newTransaction(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().numContaProperty().get(), Double.parseDouble(fld_checkingAccBal.getText()), "Depósito", null);
+            }
         } else {
             this.cliente.criarContaPoupanca(geradorNumConta(), Double.parseDouble(fld_savingAccBal.getText()), "Poupança", LocalDate.now());
             Model.getInstance().getDatabaseDriver().createSavingsAccount(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().saldoProperty().get(), this.cliente.getContaPoupanca().tipoContaProperty().get(), this.cliente.getContaPoupanca().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
+            if (fld_savingAccBal.getText() != "" || fld_savingAccBal.getText() != "0" || fld_savingAccBal.getText() != "0.00" ) {
+                Model.getInstance().getDatabaseDriver().newTransaction(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().numContaProperty().get(), Double.parseDouble(fld_savingAccBal.getText()), "Depósito", null);            }
         }
     }
 
