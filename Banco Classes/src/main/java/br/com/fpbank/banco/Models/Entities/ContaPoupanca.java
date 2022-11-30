@@ -19,6 +19,41 @@ public class ContaPoupanca extends Conta {
         this.aniversario = new SimpleIntegerProperty(this, "Aniversario da Conta", 0);
     }
 
+    @Override
+    void abrirConta() {
+
+    }
+
+    @Override
+    void acessarConta() {
+
+    }
+
+    @Override
+    void alterarDados() {
+
+    }
+
+    @Override
+    double apresentarSaldo() {
+        return 0;
+    }
+
+    @Override
+    void desativarConta() {
+
+    }
+
+    @Override
+    void emitirExtrato() {
+
+    }
+
+    @Override
+    void transferirValor() {
+
+    }
+
     public ContaPoupanca(int numAgencia, String numConta, double saldo, String tipoConta, String status, LocalDate dtCriacao){
         super(numAgencia, numConta, saldo, tipoConta, status, dtCriacao);
         this.aniversario = new SimpleIntegerProperty(this, "Aniversario da Conta", 0);
