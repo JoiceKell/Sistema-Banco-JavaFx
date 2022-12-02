@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
-
+    public static DashboardController dashboardController;
     public Text user_name;
     public Label login_date;
     public Label checking_bal;
@@ -42,16 +42,15 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        padrao();
-        send_money_btn.setOnAction(event -> onTransferir());
         bindData();
+        dashboardController = this;
+        send_money_btn.setOnAction(event -> onTransferir());
         initLatestTransactionsList();
         transaction_listview.setItems(Model.getInstance().getLatestTransactions());
         transaction_listview.setCellFactory(e -> new TransactionCellFactory());
-
     }
 
-    private void bindData() {
+    public void bindData() {
         String saldo = "";
 
         System.out.println(Model.getInstance().getCliente().nomeProperty().get());
@@ -62,7 +61,7 @@ public class DashboardController implements Initializable {
             System.out.println("Poupança: " + Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get());
             System.out.println("Corrente: " + Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get());
 
-            if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Ativa") && (Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Ativa") && Model.getInstance().getCliente().contaCorrenteProperty().equals(Model.getInstance().getCliente().contaPoupancaProperty()))) {
+            if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Ativa") && (Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Ativa"))) {
 //                System.out.println("Entrou 1");
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
                 savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
@@ -70,12 +69,16 @@ public class DashboardController implements Initializable {
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
                 checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
                 checking_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
-            } else if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Ativa") && Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Desativada")) {
+            }
+
+            if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Ativa") && Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Desativada")) {
                 System.out.println("Entrou 2");
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
                 savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
                 savings_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
-            } else if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Desativada") && Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Ativa")) {
+            }
+
+            if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Desativada") && Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Ativa")) {
                 System.out.println("Entrou 3");
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
                 checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
@@ -95,10 +98,22 @@ public class DashboardController implements Initializable {
     }
 
     public void padrao() {
-        savings_bal.textProperty().set("R$ --");
-        savings_acc_num.textProperty().set("XXXXX-X");
-        checking_bal.textProperty().set("R$ --");
-        checking_acc_num.textProperty().set("XXXXX-X");
+        String saldo = "";
+
+        System.out.println(Model.getInstance().getCliente().nomeProperty().get());
+        user_name.textProperty().bind(Bindings.concat("Olá, ").concat(Model.getInstance().getCliente().nomeProperty()));
+        login_date.setText("Hoje, " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+        try {
+            saldo = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
+            savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+            savings_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
+        } catch (Exception a) {
+            saldo = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
+            checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+            checking_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
+        }
+
     }
 
     private void initLatestTransactionsList() {
@@ -134,6 +149,7 @@ public class DashboardController implements Initializable {
         String status = null;
         String nome = null;
         String sobrenome = null;
+        String cpf = null;
 
         Alert confirma = new Alert(Alert.AlertType.CONFIRMATION);
         confirma.setTitle("Confirmar Transferencia");
@@ -154,6 +170,7 @@ public class DashboardController implements Initializable {
                     limite = resultSet.getDouble("limite");
                     nome = resultSet.getString("nome");
                     sobrenome = resultSet.getString("sobrenome");
+                    cpf = resultSet.getString("clienteCpf");
                 }
 
             } catch (Exception e) {
@@ -177,6 +194,7 @@ public class DashboardController implements Initializable {
                             double finalValor = valor;
                             String finalMensagem = mensagem;
 
+                            String finalCpf = cpf;
                             result.ifPresent(password -> {
 
                                 if (password.equals(Model.getInstance().getCliente().senhaProperty().get())) {
@@ -193,7 +211,7 @@ public class DashboardController implements Initializable {
                                         savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
 
                                         //Record new transaction
-                                        Model.getInstance().getDatabaseDriver().newTransaction(finalRemetente, finalDestinatario, finalValor, "Transferencia", finalMensagem);
+                                        Model.getInstance().getDatabaseDriver().novaTransacaoContaPoupanca(finalRemetente, finalDestinatario, finalValor, "Transferencia", finalMensagem, finalCpf);
 
                                     } catch (Exception e) {
                                         lbl_erro.setText("Saldo insuficiente!");
@@ -266,7 +284,7 @@ public class DashboardController implements Initializable {
                                     }
 
                                     //Record new transaction
-                                    Model.getInstance().getDatabaseDriver().newTransaction(finalRemetente1, finalDestinatario1, finalValor1, "Transferencia", finalMensagem1);
+                                    Model.getInstance().getDatabaseDriver().novaTransacaoContaCorrente(finalRemetente1, finalDestinatario1, finalValor1, "Transferencia", finalMensagem1);
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -312,6 +330,7 @@ public class DashboardController implements Initializable {
                     status = resultSet.getString("status");
                     nome = resultSet.getString("nome");
                     sobrenome = resultSet.getString("sobrenome");
+                    cpf = resultSet.getString("clienteCpf");
                 }
 
             } catch (Exception e) {
@@ -335,6 +354,7 @@ public class DashboardController implements Initializable {
                             double finalLimite1 = limite;
                             String finalDestinatario2 = destinatario;
                             String finalMensagem2 = mensagem;
+                            String finalCpf1 = cpf;
                             result.ifPresent(password -> {
 
                                 try {
@@ -362,7 +382,7 @@ public class DashboardController implements Initializable {
                                     }
 
                                     //Record new transaction
-                                    Model.getInstance().getDatabaseDriver().newTransaction(finalRemetente2, finalDestinatario2, finalValor2, "Transferencia", finalMensagem2);
+                                    Model.getInstance().getDatabaseDriver().novaTransacaoContaPoupanca(finalRemetente2, finalDestinatario2, finalValor2, "Transferencia", finalMensagem2, finalCpf1);
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -415,7 +435,7 @@ public class DashboardController implements Initializable {
                                     checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
 
                                     //Record new transaction
-                                    Model.getInstance().getDatabaseDriver().newTransaction(finalRemetente3, finalDestinatario3, finalValor3, "Transferencia", finalMensagem3);
+                                    Model.getInstance().getDatabaseDriver().novaTransacaoContaCorrente(finalRemetente3, finalDestinatario3, finalValor3, "Transferencia", finalMensagem3);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

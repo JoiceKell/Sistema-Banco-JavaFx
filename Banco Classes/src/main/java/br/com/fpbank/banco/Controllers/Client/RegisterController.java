@@ -63,7 +63,9 @@ public class RegisterController implements Initializable {
     }
 
     public void abrirConta() {
+
         this.cliente = new Cliente("", "", "", 0,"", "", "", null, null, null, null);
+
         //Create Client
         this.cliente.nomeProperty().set(fld_name.getText());
         this.cliente.sobrenomeProperty().set(fld_lastName.getText());
@@ -87,19 +89,34 @@ public class RegisterController implements Initializable {
             fld_cpf.getStyleClass().setAll("register");
         }
 
+        if(fld_password.getText().length() < 8) {
+            fld_password.setText("");
+            fld_password.setPromptText("A senha inválida!!!");
+            fld_password.getStyleClass().setAll("erro");
+            lbl_error.setText("A senha deve ter no mínimo 8 digitos!");
+            return;
+        } else if(!(fld_password.getText().equals(fld_confirmPassword.getText()))) {
+            fld_password.setText("");
+            fld_confirmPassword.setText("");
+            fld_password.getStyleClass().setAll("erro");
+            fld_confirmPassword.getStyleClass().setAll("erro");
+            lbl_error.setText("As Senhas não conferem");
+            return;
+        } else {
+            this.cliente.senhaProperty().set(fld_password.getText());
+            fld_password.setText("");
+            fld_confirmPassword.setText("");
+            fld_password.setPromptText("Senha: ");
+            fld_confirmPassword.setPromptText("Confirmar Senha: ");
+            fld_cpf.getStyleClass().setAll("register");
+        }
+
         this.cliente.dtNascimentoProperty().set(dtp_birth.getValue());
         this.cliente.idadeProperty().set(calcularIdade(this.cliente.dtNascimentoProperty().get()));
         this.cliente.telefoneProperty().set(fld_phone.getText());
         this.cliente.emailProperty().set(fld_email.getText());
 
         this.cliente.obterEndereco(fld_zipCode.getText(), Integer.parseInt(fld_number.getText()), fld_street.getText(), fld_district.getText(), fld_city.getText(), fld_state.getText(), fld_addInfo.getText());
-
-        String password = fld_password.getText();
-        String confirmPassword = fld_confirmPassword.getText();
-
-        if(password.equals(confirmPassword)) {
-            this.cliente.senhaProperty().set(password);
-        }
 
         String endereco = this.cliente.getEndereco().ruaProperty().get()+ ", " +this.cliente.getEndereco().numProperty().get()+
                 ", "+this.cliente.getEndereco().cepProperty().get()+", "+this.cliente.getEndereco().complementoProperty().get()+
@@ -117,7 +134,7 @@ public class RegisterController implements Initializable {
 
         // Create Saving Account
         if(createSavingsAccountFlag) {
-            createAccount("Poupanca");
+            createAccount("Poupança");
         }
 
         lbl_error.setText("Cadastro Realizado com Sucesso!");
@@ -184,21 +201,46 @@ public class RegisterController implements Initializable {
 
     private void createAccount(String accountType) {
 
-        // Generate Account Number
-        String numConta = geradorNumConta();
-
         //Create the checking account
         if(accountType.equals("Corrente")) {
-            this.cliente.criarContaCorrenteEspecial(geradorNumConta(), Double.parseDouble(fld_checkingAccBal.getText()), "Corrente", 500.00, LocalDate.now());
-            Model.getInstance().getDatabaseDriver().createCheckingAccount(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().saldoProperty().get(), this.cliente.getContaCorrente().tipoContaProperty().get(), this.cliente.getContaCorrente().limiteProperty().get(), this.cliente.getContaCorrente().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
-            if (fld_checkingAccBal.getText() != "" || fld_checkingAccBal.getText() != "0" || fld_checkingAccBal.getText() != "0.00" ) {
-                Model.getInstance().getDatabaseDriver().newTransaction(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().numContaProperty().get(), Double.parseDouble(fld_checkingAccBal.getText()), "Depósito", null);
+
+            String[] parteDecimal = fld_checkingAccBal.getText().split(" ");
+            double valor = Double.parseDouble(parteDecimal[1].replace(",", "."));
+
+            if (valor > 0) {
+                this.cliente.criarContaCorrenteEspecial(geradorNumConta(), valor, "Corrente", 500.00, LocalDate.now());
+                Model.getInstance().getDatabaseDriver().createCheckingAccount(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().saldoProperty().get(), this.cliente.getContaCorrente().tipoContaProperty().get(), this.cliente.getContaCorrente().limiteProperty().get(), this.cliente.getContaCorrente().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
             }
-        } else {
-            this.cliente.criarContaPoupanca(geradorNumConta(), Double.parseDouble(fld_savingAccBal.getText()), "Poupança", LocalDate.now());
-            Model.getInstance().getDatabaseDriver().createSavingsAccount(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().saldoProperty().get(), this.cliente.getContaPoupanca().tipoContaProperty().get(), this.cliente.getContaPoupanca().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
-            if (fld_savingAccBal.getText() != "" || fld_savingAccBal.getText() != "0" || fld_savingAccBal.getText() != "0.00" ) {
-                Model.getInstance().getDatabaseDriver().newTransaction(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().numContaProperty().get(), Double.parseDouble(fld_savingAccBal.getText()), "Depósito", null);            }
+
+            if (valor == 0) {
+                this.cliente.criarContaCorrenteEspecial(geradorNumConta(), valor, "Corrente", 500.00, LocalDate.now());
+                Model.getInstance().getDatabaseDriver().createCheckingAccount(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().saldoProperty().get(), this.cliente.getContaCorrente().tipoContaProperty().get(), this.cliente.getContaCorrente().limiteProperty().get(), this.cliente.getContaCorrente().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
+            }
+
+            if (!(valor == 0)) {
+                Model.getInstance().getDatabaseDriver().novaTransacaoContaCorrente(this.cliente.getContaCorrente().numContaProperty().get(), this.cliente.getContaCorrente().numContaProperty().get(), valor, "Depósito", null);
+            }
+        }
+
+        if(accountType.equals("Poupança")) {
+
+            String[] parteDecimal = fld_savingAccBal.getText().split(" ");
+            double valor = Double.parseDouble(parteDecimal[1].replace(",", "."));
+
+            if (valor > 0) {
+                this.cliente.criarContaPoupanca(geradorNumConta(), valor, "Poupança", LocalDate.now());
+                Model.getInstance().getDatabaseDriver().createSavingsAccount(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().saldoProperty().get(), this.cliente.getContaPoupanca().tipoContaProperty().get(), this.cliente.getContaPoupanca().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
+            }
+
+            if (valor == 0) {
+                this.cliente.criarContaPoupanca(geradorNumConta(), valor, "Poupança", LocalDate.now());
+                Model.getInstance().getDatabaseDriver().createSavingsAccount(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().saldoProperty().get(), this.cliente.getContaPoupanca().tipoContaProperty().get(), this.cliente.getContaPoupanca().dtAberturaProperty().get(), this.cliente.cpfProperty().get());
+                fld_savingAccBal.getStyleClass().setAll("register");
+            }
+
+            if (!(valor == 0)) {
+                Model.getInstance().getDatabaseDriver().novaTransacaoContaPoupanca(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaPoupanca().numContaProperty().get(), valor, "Depósito", "", this.cliente.cpfProperty().get());
+            }
         }
     }
 

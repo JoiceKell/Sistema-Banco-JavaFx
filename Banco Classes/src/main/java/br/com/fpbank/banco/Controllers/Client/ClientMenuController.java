@@ -1,7 +1,12 @@
 package br.com.fpbank.banco.Controllers.Client;
 
+import br.com.fpbank.banco.Controllers.PrincipalController;
+import br.com.fpbank.banco.Main;
 import br.com.fpbank.banco.Models.Model;
 import br.com.fpbank.banco.Views.ClientMenuOptions;
+import br.com.fpbank.banco.Views.ViewFactory;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -9,8 +14,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClientMenuController implements Initializable {
+import static br.com.fpbank.banco.Controllers.Client.DashboardController.dashboardController;
 
+public class ClientMenuController implements Initializable {
+    public static ClientMenuController clientMenuController;
     public Button dashboard_btn;
     public Button statement_btn;
     public Button account_btn;
@@ -19,6 +26,7 @@ public class ClientMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        clientMenuController = this;
         addListeners();
     }
 
@@ -48,16 +56,10 @@ public class ClientMenuController implements Initializable {
     }
 
     private void onLogout() throws Exception {
-        // Get Stage
-        Stage stage = (Stage) dashboard_btn.getScene().getWindow();
-        // Close the client Window
-        Model.getInstance().getViewFactory().closeStage(stage);
-
-        // Show login Window
-        stage = new Stage();
-        Model.getInstance().getViewFactory().showMainMenu(stage);
-        // Set Client Login Succes Flag To False
+        Stage stage = (Stage) logout_btn.getScene().getWindow(); //Obtendo a janela atual
+        stage.close(); //Fechando o Stage
+        Model.getInstance().getViewFactory().showMainMenu(new Stage());
         Model.getInstance().setClientLoginSuccessFlag(false);
+        Platform.exit();
     }
-
 }

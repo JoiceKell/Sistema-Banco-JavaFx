@@ -298,7 +298,7 @@ public class DatabaseDriver {
     }
 
     // Creates and records new transaction
-    public void newTransaction(String remetente, String destinatario, double montante, String tipoMovimentacao, String mensagem) {
+    public void novaTransacaoContaCorrente(String remetente, String destinatario, double montante, String tipoMovimentacao, String mensagem) {
         Statement statement;
         try {
             statement = this.conexao.createStatement();
@@ -310,6 +310,30 @@ public class DatabaseDriver {
             e.printStackTrace();
         }
     }
+
+    public void novaTransacaoContaPoupanca(String remetente, String destinatario, double montante, String tipoMovimentacao, String mensagem, String cpf) {
+        Statement statement;
+        Statement statement2;
+        try {
+            statement = this.conexao.createStatement();
+            LocalDate dataTransacao = LocalDate.now();
+            statement.executeUpdate("insert into " +
+                    "Movimentacao(contaNumContaOrigem, contaNumContaDestino, montante, dtMovimentacao, tipoMovimentacao, mensagem) " +
+                    "values ('"+remetente+"', '"+destinatario+"', '"+montante+"', '"+dataTransacao+"', '"+tipoMovimentacao+"', '"+mensagem+"'); ");
+            statement.close();
+
+            statement2 = this.conexao.createStatement();
+            LocalDate diaTransacao = LocalDate.now();
+            int day = diaTransacao.getDayOfMonth();
+            System.out.println("Dia da Transacao: " + day);
+            statement2.executeUpdate("UPDATE Conta SET aniversario = '"+day+"', dtUltimAtu = '"+dataTransacao+"' WHERE (`numConta` = '"+destinatario+"') and (`clienteCpf` = '"+cpf+"');  ");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void createClient(String cpf, String nome, String sobrenome, int idade, LocalDate dtAniversario, String email, String telefone, String senha, String endereco) {
         Statement statement;
@@ -356,9 +380,19 @@ public class DatabaseDriver {
 
         try {
             statement = this.conexao.createStatement();
-            statement.executeUpdate("INSERT INTO " +
-                    "Conta (numConta, saldo, tipoConta, dtAbertura, clienteCpf)" +
-                    " VALUES ('"+numConta+"','"+valor+"', '"+tipoConta+"', '"+dtAbertura+"' ,'"+proprietario+"')");
+
+            LocalDate diaTransacao = LocalDate.now();
+            int day = diaTransacao.getDayOfMonth();
+
+            if(valor != 0) {
+                statement.executeUpdate("INSERT INTO " +
+                        "Conta (numConta, saldo, tipoConta, dtAbertura, aniversario, dtUltimAtu, clienteCpf)" +
+                        " VALUES ('" + numConta + "','" + valor + "', '" + tipoConta + "', '" + dtAbertura + "', '" + day + "', '" + diaTransacao + "', '" + proprietario + "')");
+            } else {
+                statement.executeUpdate("INSERT INTO " +
+                        "Conta (numConta, saldo, tipoConta, dtAbertura, clienteCpf)" +
+                        " VALUES ('" + numConta + "','" + valor + "', '" + tipoConta + "', '" + dtAbertura + "' ,'" + proprietario + "')");
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }

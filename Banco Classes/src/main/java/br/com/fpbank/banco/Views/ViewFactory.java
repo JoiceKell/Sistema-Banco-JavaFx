@@ -3,6 +3,7 @@ package br.com.fpbank.banco.Views;
 import br.com.fpbank.banco.Controllers.Admin.AdminController;
 import br.com.fpbank.banco.Controllers.Client.ClientController;
 import br.com.fpbank.banco.Controllers.Client.DashboardController;
+import br.com.fpbank.banco.Controllers.Client.LoginController;
 import br.com.fpbank.banco.Models.Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -24,7 +25,7 @@ import javafx.stage.Stage;
 
 
 public class ViewFactory {
-
+    public static ViewFactory view;
     private AccountType loginAccountType;
 
     // Client Views
@@ -39,6 +40,7 @@ public class ViewFactory {
     private AnchorPane relatorioMovimentacaoView;
 
     public ViewFactory() {
+        view = this;
         this.loginAccountType = AccountType.CLIENTE;
         this.clientSelectedMenuItem = new SimpleObjectProperty<>();
         this.adminSelectedMenuItem = new SimpleObjectProperty<>();
@@ -153,7 +155,7 @@ public class ViewFactory {
 
     }
 
-    private void createStage(FXMLLoader loader) {
+    public void createStage(FXMLLoader loader) {
         Scene scene = null;
         try {
             scene = new Scene(loader.load());

@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    public static LoginController login;
     public ChoiceBox<AccountType> acc_selector;
     public TextField cpf_fld;
     public TextField password_fld;
@@ -25,6 +26,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        login = this;
         acc_selector.setItems(FXCollections.observableArrayList(AccountType.CLIENTE, AccountType.ADMINISTRADOR));
         acc_selector.setValue(Model.getInstance().getViewFactory().getLoginAccountType());
         acc_selector.valueProperty().addListener(observable -> setAcc_selector());
@@ -33,7 +35,7 @@ public class LoginController implements Initializable {
 
     public void acessarConta() {
 
-        Stage stage = (Stage) error_lbl.getScene().getWindow();
+        Stage stage = (Stage) login_btn.getScene().getWindow();
 
         if(Model.getInstance().getViewFactory().getLoginAccountType() == AccountType.CLIENTE){
             //Model.getInstance().getViewFactory().showClientWindow();

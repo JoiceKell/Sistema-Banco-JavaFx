@@ -77,7 +77,7 @@
 /* Transactions View */
 
 .transaction_listview {
-    -fx-background-color: #4F4F4F;
+    -fx-background-color: #FFFFFF;
     -fx-background-radius: 10 10 10 10;
     -fx-effect: dropshadow(two-pass-box, #ff0760, 4, 4, 0, 0);
 }

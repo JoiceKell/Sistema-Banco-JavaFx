@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1050.0" styleClass="transactions_container" stylesheets="@../../Styles/Transactions.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.TransactionsController">
+<AnchorPane prefHeight="750.0" prefWidth="1050.0" styleClass="transactions_container" stylesheets="@../../Styles/Transactions.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.TransactionsController">
    <Text fill="#0b0b0b" layoutX="591.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EXTRATO" AnchorPane.leftAnchor="591.0" AnchorPane.topAnchor="46.0">
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Text>
-   <ListView fx:id="transactions_listview" layoutX="14.0" layoutY="84.0" prefHeight="700.0" prefWidth="1000.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0" />
+   <ListView fx:id="transactions_listview" layoutX="14.0" layoutY="84.0" prefHeight="700.0" prefWidth="1000.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0" />
 </AnchorPane>
