@@ -1,6 +1,6 @@
 package br.com.fpbank.banco.Views;
 
-public enum ClientMenuOptions {
+public enum OpcoesMenuCliente {
     DASHBOARD,
     STATEMENT,
     ACCOUNTS

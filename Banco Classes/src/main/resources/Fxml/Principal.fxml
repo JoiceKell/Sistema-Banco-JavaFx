@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="680.0" prefWidth="980.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.PrincipalController">
+<AnchorPane prefHeight="680.0" prefWidth="980.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.TelaPrincipalController">
    <children>
       <Pane layoutX="2.0" layoutY="140.0" prefHeight="440.0" prefWidth="1010.0" style="-fx-background-color: #262626; -fx-border-color: gold;">
          <children>

@@ -8,17 +8,17 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="830.0" minWidth="1285.0" prefHeight="830.0" prefWidth="1220.0" styleClass="dashboard" stylesheets="@../../Styles/Dashboard.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.DashboardController">
-   <Text fx:id="user_name" fill="#00fee5" layoutX="21.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="user_name" text="Olá, Nome" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="42.599998474121094" />
-   <Label fx:id="login_date" styleClass="date_lbl" text="Hoje, dd/mm/yyyy" textFill="WHITE" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="40.0" />
+   <Text fx:id="txt_usuario" fill="#00fee5" layoutX="21.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="user_name" text="Olá, Nome" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="42.599998474121094" />
+   <Label fx:id="lbl_dataLogin" styleClass="date_lbl" text="Hoje, dd/mm/yyyy" textFill="WHITE" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="40.0" />
    <HBox alignment="CENTER" layoutX="319.0" layoutY="143.0" prefHeight="180.0" prefWidth="629.0" styleClass="accounts_view" AnchorPane.leftAnchor="310.0" AnchorPane.topAnchor="143.0">
       <AnchorPane prefHeight="150.0" prefWidth="295.0">
          <styleClass>
             <String fx:value="account" />
             <String fx:value="account_gradient" />
          </styleClass>
-         <Label fx:id="savings_bal" layoutX="14.0" layoutY="23.0" styleClass="account_balance" text="R$ --" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />
+         <Label fx:id="lbl_contaPoupanca" layoutX="14.0" layoutY="23.0" styleClass="account_balance" text="R$ --" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />
          <Label layoutX="14.0" layoutY="82.0" styleClass="account_number" text="**** **** ****" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="14.0" />
-         <Label fx:id="savings_acc_num" layoutX="88.0" layoutY="118.0" styleClass="account_number" text="XXXXX-X" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="138.0" />
+         <Label fx:id="lbl_numContaPoupanca" layoutX="88.0" layoutY="118.0" styleClass="account_number" text="XXXXX-X" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="138.0" />
          <VBox layoutX="181.0" layoutY="15.0" prefHeight="100.0" prefWidth="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="14.0" />
          <FontAwesomeIconView glyphName="BANK" layoutX="258.0" layoutY="29.0" size="30" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
          <Text layoutX="14.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conta Poupança" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
@@ -28,9 +28,9 @@
             <String fx:value="account" />
             <String fx:value="account_gradient" />
          </styleClass>
-         <Label fx:id="checking_bal" layoutX="14.0" layoutY="23.0" styleClass="account_balance" text="R$ --" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />
+         <Label fx:id="lbl_contaCorrente" layoutX="14.0" layoutY="23.0" styleClass="account_balance" text="R$ --" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="25.0" />
          <Label layoutX="14.0" layoutY="82.0" styleClass="account_number" text="**** **** ****" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="14.0" />
-         <Label fx:id="checking_acc_num" layoutX="88.0" layoutY="118.0" styleClass="account_number" text="XXXXX-X" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="138.0" />
+         <Label fx:id="lbl_numContaCorrente" layoutX="88.0" layoutY="118.0" styleClass="account_number" text="XXXXX-X" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="138.0" />
          <VBox layoutX="181.0" layoutY="15.0" prefHeight="100.0" prefWidth="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="14.0" />
          <FontAwesomeIconView glyphName="BANK" layoutX="258.0" layoutY="29.0" size="30" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
          <Text layoutX="14.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conta Corrente" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" />
@@ -55,7 +55,7 @@
          </HBox>
       </children>
    </HBox>
-   <ListView fx:id="transaction_listview" layoutX="80.0" layoutY="415.0" prefHeight="366.0" prefWidth="728.0" styleClass="transaction_listview" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="467.4" AnchorPane.topAnchor="449.0" />
+   <ListView fx:id="listview_transferencias" layoutX="80.0" layoutY="415.0" prefHeight="366.0" prefWidth="728.0" styleClass="transaction_listview" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="467.4" AnchorPane.topAnchor="449.0" />
    <VBox alignment="CENTER" layoutX="881.0" layoutY="415.6" prefHeight="366.0" prefWidth="330.0" styleClass="new_trans_container" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="830.0" AnchorPane.rightAnchor="80.0">
       <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="286.0">
          <children>
@@ -81,11 +81,11 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <TextField fx:id="payee_fld" promptText="Numero da Conta - XXXXX-X" />
+      <TextField fx:id="fld_destinatario" promptText="Numero da Conta - XXXXX-X" />
       <Label text="Valor:" textFill="#00fee5" />
-      <TextField fx:id="amount_fld" promptText="Valor da Tranferência:" />
+      <TextField fx:id="fld_valor" promptText="Valor da Tranferência:" />
       <Label text="Messagem: (Opcional)" textFill="#00fee5" />
-      <TextArea fx:id="message_fld" prefHeight="70.0" prefWidth="200.0" style="-fx-text-fill: #00fee5; -fx-background-color: #3F3F3F;" />
+      <TextArea fx:id="fld_mensagem" prefHeight="70.0" prefWidth="200.0" style="-fx-text-fill: #00fee5; -fx-background-color: #3F3F3F;" />
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
             <Label id="erro" fx:id="lbl_erro" textFill="RED">
@@ -96,7 +96,7 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </Label>
-            <Button fx:id="send_money_btn" alignment="CENTER" maxWidth="118.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="118.0" text="TRANSFERIR" textFill="GOLD">
+            <Button fx:id="btn_transferir" alignment="CENTER" maxWidth="118.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="118.0" text="TRANSFERIR" textFill="GOLD">
                <font>
                   <Font name="System Bold" size="10.0" />
                </font>

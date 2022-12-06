@@ -1,6 +1,9 @@
+
+// Classe ManterContaAtuDesController
+// Mantem Conta nas opções de Atualizar dados, e-mail - telefone - endereço - senha, e Desativar conta
+
 package br.com.fpbank.banco.Controllers.Client;
 
-import br.com.fpbank.banco.Models.Entities.Cliente;
 import br.com.fpbank.banco.Models.Model;
 import br.com.fpbank.banco.Models.PasswordDialog;
 import javafx.application.Platform;
@@ -12,20 +15,20 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AccountsController implements Initializable {
-    public TextField phone_fld;
-    public TextField email_fld;
-    public TextField street_fld;
-    public TextField number_fld;
-    public TextField zipCode_fld;
-    public TextField city_fld;
-    public TextField state_fld;
-    public TextField district_fld;
-    public TextField password_fld;
-    public TextField confirmPassword_fld;
-    public TextField complemento_fld;
-    public Button bt_atualizar;
-    public Button bt_desativar;
+public class ManterContaAtuDesController implements Initializable {
+    public TextField fld_telefone;
+    public TextField fld_email;
+    public TextField fld_rua;
+    public TextField fld_numero;
+    public TextField fld_cep;
+    public TextField fld_cidade;
+    public TextField fld_estado;
+    public TextField fld_bairro;
+    public TextField fld_senha;
+    public TextField fld_confirmaSenha;
+    public TextField fld_complemento;
+    public Button btn_atualizar;
+    public Button btn_desativar;
     public CheckBox cb_dados;
     public CheckBox cb_endereco;
     public CheckBox cb_senha;
@@ -38,12 +41,11 @@ public class AccountsController implements Initializable {
     private boolean atualizarEnderecoFlag = false;
     private boolean atualizarSenhaFlag = false;
 
-    private Cliente cliente;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bt_atualizar.setOnAction(event -> alterarDados());
-        bt_desativar.setOnAction(event -> desativarConta());
+        btn_atualizar.setOnAction(event -> alterarDados());
+        btn_desativar.setOnAction(event -> desativarConta());
 
         cb_dados.selectedProperty().addListener((observableValue, oldVal, newVal) -> {
             if(newVal) {
@@ -81,6 +83,7 @@ public class AccountsController implements Initializable {
         }
     }
 
+    // Atualiza os dados de acordo com a seleção de escolha dentre as opções de Dados(Telefone e E-mail), Endereço e Senha
     public void atualizarDadosSelecionado(String checkBox) {
 
         String telefone = null;
@@ -99,33 +102,35 @@ public class AccountsController implements Initializable {
         if (checkBox.equals("Dados")) {
 
             try {
-                telefone = phone_fld.getText();
-                email = email_fld.getText();
+                telefone = fld_telefone.getText();
+                email = fld_email.getText();
 
                 Model.getInstance().getDatabaseDriver().atualizarDadosCampoDados(telefone, email, cpf);
+                limpaCampos();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (checkBox.equals("Endereço")) {
             try {
-                rua = street_fld.getText();
-                num = Integer.parseInt(number_fld.getText());
-                cep = zipCode_fld.getText();
-                cidade = city_fld.getText();
-                estado = state_fld.getText();
-                bairro = district_fld.getText();
-                complemento = complemento_fld.getText();
+                rua = fld_rua.getText();
+                num = Integer.parseInt(fld_numero.getText());
+                cep = fld_cep.getText();
+                cidade = fld_cidade.getText();
+                estado = fld_estado.getText();
+                bairro = fld_bairro.getText();
+                complemento = fld_complemento.getText();
 
                 String endereco = rua+ ", " +num+ ", "+cep+", "+complemento+ ", "+cidade+", "+estado+ ", "+bairro;
 
                 Model.getInstance().getDatabaseDriver().atualizarDadosEndereco(endereco, cpf);
+                limpaCampos();
             } catch (Exception e) {
                 lbl_erro.setText("Campo endereço não preenchido");
             }
         } else {
             try {
-                if (password_fld.getText().equals(confirmPassword_fld.getText())) {
-                    senha = password_fld.getText();
+                if (fld_senha.getText().equals(fld_confirmaSenha.getText())) {
+                    senha = fld_senha.getText();
 
                     if (senha.length() >= 8) {
                         Model.getInstance().getDatabaseDriver().atualizarDadosSenha(senha, cpf);
@@ -133,6 +138,7 @@ public class AccountsController implements Initializable {
                         lbl_erro.setText("A senha deve conter 8 digítos!");
                     }
                 }
+                limpaCampos();
             } catch (Exception e) {
                 lbl_erro.setText("Senhas não conferem");
             }
@@ -170,15 +176,11 @@ public class AccountsController implements Initializable {
                                 }
 
                                 try {
-                                    Stage stage = (Stage) bt_desativar.getScene().getWindow();
-                                    // Close the client Window
-                                    //Platform.exit();
-                                    Model.getInstance().getViewFactory().closeStage(stage);
-                                    // Show login Window
-                                    stage = new Stage();
-                                    Model.getInstance().getViewFactory().showMainMenu(stage);
-                                    // Set Client Login Succes Flag To False
-                                    //Model.getInstance().setClientLoginSuccessFlag(false);
+                                    Stage stage = (Stage) btn_desativar.getScene().getWindow(); //Obtendo a janela atual
+                                    stage.close(); //Fechando o Stage
+                                    Model.getInstance().getViewFactory().showMainMenu(new Stage());
+                                    Model.getInstance().setFlagSucessoLoginCliente(false);
+                                    Platform.exit();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -187,10 +189,9 @@ public class AccountsController implements Initializable {
                             }
                         });
                     } else {
-                        Model.getInstance().getViewFactory().getAccountsView();
+                        Model.getInstance().getViewFactory().getContaView();
                     }
                 } else {
-                    System.out.println("ENTROU NO BAGULHO");
                     alertaSaldo.setTitle("Erro de Desativacao - Saldo Deve estar Zerado");
                     alertaSaldo.setContentText("O SALDO DA CONTA DEVE ESTAR ZERADO PARA DESATIVAR!");
                     alertaSaldo.showAndWait();
@@ -221,17 +222,11 @@ public class AccountsController implements Initializable {
                                 }
 
                                 try {
-                                    Stage stage = (Stage) bt_desativar.getScene().getWindow();
-                                    // Desloga usuário
+                                    Stage stage = (Stage) btn_desativar.getScene().getWindow(); //Obtendo a janela atual
+                                    stage.close(); //Fechando o Stage
+                                    Model.getInstance().getViewFactory().showMainMenu(new Stage());
+                                    Model.getInstance().setFlagSucessoLoginCliente(false);
                                     Platform.exit();
-                                    Model.getInstance().getViewFactory().closeStage(stage);
-
-
-                                    // Apresenta Tela de Login
-                                    stage = new Stage();
-                                    Model.getInstance().getViewFactory().showMainMenu(stage);
-                                    // Set Client Login Succes Flag To False
-                                    Model.getInstance().setClientLoginSuccessFlag(false);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -240,10 +235,9 @@ public class AccountsController implements Initializable {
                             }
                         });
                     } else {
-                        Model.getInstance().getViewFactory().getAccountsView();
+                        Model.getInstance().getViewFactory().getContaView();
                     }
                 } else {
-                    System.out.println("ENTROU NO BAGULHO");
                     alertaSaldo.setTitle("Erro de Desativacao - Saldo Deve estar Zerado");
                     alertaSaldo.setContentText("O SALDO DA CONTA DEVE ESTAR ZERADO PARA DESATIVAR!");
                     alertaSaldo.showAndWait();
@@ -254,18 +248,18 @@ public class AccountsController implements Initializable {
         }
     }
 
-    private void emptyFields() {
-        phone_fld.setText("");
-        email_fld.setText("");
-        street_fld.setText("");
-        number_fld.setText("");
-        zipCode_fld.setText("");
-        city_fld.setText("");
-        state_fld.setText("");
-        district_fld.setText("");
-        complemento_fld.setText("");
-        password_fld.setText("");
-        confirmPassword_fld.setText("");
+    private void limpaCampos() {
+        fld_telefone.setText("");
+        fld_email.setText("");
+        fld_rua.setText("");
+        fld_numero.setText("");
+        fld_cep.setText("");
+        fld_cidade.setText("");
+        fld_estado.setText("");
+        fld_bairro.setText("");
+        fld_complemento.setText("");
+        fld_senha.setText("");
+        fld_confirmaSenha.setText("");
         lbl_erro.setText("");
     }
 

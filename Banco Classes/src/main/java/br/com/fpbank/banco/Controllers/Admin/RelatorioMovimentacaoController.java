@@ -1,3 +1,7 @@
+
+// Classe RelatorioMovimentacaoController
+// Apresenta todas movimentação realizadas armazenadas no banco
+
 package br.com.fpbank.banco.Controllers.Admin;
 
 import br.com.fpbank.banco.Models.Entities.Movimentacao;
@@ -11,19 +15,16 @@ import java.util.ResourceBundle;
 
 public class RelatorioMovimentacaoController implements Initializable {
 
-    public ListView<Movimentacao> movimentacao_listview;
+    public ListView<Movimentacao> listview_movimentacoes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initData();
-        System.out.println("1");
-        movimentacao_listview.setItems(Model.getInstance().getMovimentacoes());
-        System.out.println("5");
-        movimentacao_listview.setCellFactory(e -> new MovimentacaoCellFactory());
-        System.out.println("6");
+        inicData();
+        listview_movimentacoes.setItems(Model.getInstance().getMovimentacoes());
+        listview_movimentacoes.setCellFactory(e -> new MovimentacaoCellFactory());
     }
 
-    private void initData() {
+    private void inicData() {
         if (Model.getInstance().getMovimentacoes().isEmpty()) {
             Model.getInstance().setMovimentacoes();
         }

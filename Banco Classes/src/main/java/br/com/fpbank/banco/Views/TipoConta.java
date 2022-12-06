@@ -1,6 +1,6 @@
 package br.com.fpbank.banco.Views;
 
-public enum AccountType {
+public enum TipoConta {
     ADMINISTRADOR,
     CLIENTE
 }

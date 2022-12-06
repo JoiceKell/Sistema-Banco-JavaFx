@@ -1,3 +1,7 @@
+
+//Classe DatabaseDriver
+//Trata de estabelecer conexão com o Banco de Dados e gerenciar interações com o mesmo
+
 package br.com.fpbank.banco.Models;
 
 import java.sql.*;
@@ -10,18 +14,15 @@ public class DatabaseDriver {
         try {
             this.conexao = DriverManager.getConnection("jdbc:mysql://34.95.193.96/banco?" +
                     "user=root&password=FPB@261022");
-            System.out.println("Conexão realizada com sucesso.");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Client Section
-     */
+    //Métodos referentes ao Cliente
 
-    public ResultSet getClientData(String cpf, String senha) {
+    public ResultSet getDadosCliente(String cpf, String senha) {
 
         Statement statement;
         ResultSet resultSet = null;
@@ -34,12 +35,12 @@ public class DatabaseDriver {
         return resultSet;
     }
 
-    public ResultSet getTransactions(String numConta1, String numConta2) {
+    public ResultSet getTransacoes(String numConta1, String numConta2) {
         Statement statement;
         ResultSet resultSet = null;
         try {
             statement = this.conexao.createStatement();
-            resultSet = statement.executeQuery("select * from Movimentacao where contaNumContaOrigem = '"+numConta1+"' or contaNumContaOrigem = '"+numConta2+"' or contaNumContaDestino = '"+numConta1+"' or contaNumContaDestino = '"+numConta2+"' ");
+            resultSet = statement.executeQuery("select * from Movimentacao where contaNumContaOrigem = '"+numConta1+"' or contaNumContaOrigem = '"+numConta2+"' or contaNumContaDestino = '"+numConta1+"' or contaNumContaDestino = '"+numConta2+"' ORDER BY idMovimentacao desc ");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,8 +64,8 @@ public class DatabaseDriver {
         return numConta;
     }
 
-    //Method returns savings account balance
-    public double getSavingsAccountBalance(String numConta) {
+    //Retorna o saldo da Conta
+    public double getSaldoConta(String numConta) {
         Statement statement;
         ResultSet resultSet;
         double montante = 0;
@@ -80,8 +81,8 @@ public class DatabaseDriver {
         return montante;
     }
 
-    // Method to either add or subtract from balance given operation
-    public void updateBalanceContaPoupanca(String numConta, double montante, String operacao) {
+    //Método para somar ou subtrair valor do saldo de Conta Poupança, dependendo do parâmetro operacao
+    public void updateSaldoContaPoupanca(String numConta, double montante, String operacao) {
         Statement statement;
         ResultSet resultSet;
 
@@ -90,13 +91,43 @@ public class DatabaseDriver {
             resultSet = statement.executeQuery("Select * from Conta where tipoConta = 'Poupança' and numConta = '"+numConta+"' ");
             double novoSaldo = 0.00;
 
+            //Soma ao saldo
             if (operacao.equals("ADD")) {
                 if(resultSet.next()) {
                     novoSaldo = resultSet.getDouble("saldo") + montante;
                     statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "';");
                 }
+            //Subtrai do saldo
             } else {
                 if (resultSet.next() && resultSet.getDouble("saldo") >= montante) {
+                    novoSaldo = resultSet.getDouble("saldo") - montante;
+                    statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "' ;");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Método para somar ou subtrair valor do saldo de Conta Corrente, dependendo do parâmetro operacao
+    public void updateSaldoContaCorrente(String numConta, double montante, String operacao, double limite) {
+        Statement statement;
+        ResultSet resultSet;
+
+        try {
+            statement = this.conexao.createStatement();
+            resultSet = statement.executeQuery("Select * from Conta where tipoConta = 'Corrente' and numConta = '"+numConta+"' ");
+            double novoSaldo = 0.00;
+
+            //Soma ao saldo
+            if (operacao.equals("ADD")) {
+                if(resultSet.next()) {
+                    novoSaldo = resultSet.getDouble("saldo") + montante;
+                    statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "';");
+                }
+            //Subtrai do saldo
+            } else {
+                if (resultSet.next() && resultSet.getDouble("saldo") + limite >= montante) {
                     novoSaldo = resultSet.getDouble("saldo") - montante;
                     statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "' ;");
                 }
@@ -234,7 +265,7 @@ public class DatabaseDriver {
         return resultSet;
     }
 
-    public ResultSet getCheckingAccountData(String cpf) {
+    public ResultSet getDadosContaCorrente(String cpf) {
         Statement statement;
         ResultSet resultSet = null;
         try {
@@ -246,7 +277,7 @@ public class DatabaseDriver {
         return resultSet;
     }
 
-    public ResultSet getSavingsAccountData(String cpf) {
+    public ResultSet getDadosContaPoupanca(String cpf) {
         Statement statement;
         ResultSet resultSet = null;
         try {
@@ -258,7 +289,7 @@ public class DatabaseDriver {
         return resultSet;
     }
 
-    public ResultSet getEnderecoData(String cpf) {
+    public ResultSet getDadosEndereco(String cpf) {
         Statement statement;
         ResultSet resultSet = null;
         try {
@@ -270,34 +301,7 @@ public class DatabaseDriver {
         return resultSet;
     }
 
-    public void updateBalanceContaCorrente(String numConta, double montante, String operacao, double limite) {
-        Statement statement;
-        ResultSet resultSet;
-
-        try {
-            statement = this.conexao.createStatement();
-            resultSet = statement.executeQuery("Select * from Conta where tipoConta = 'Corrente' and numConta = '"+numConta+"' ");
-            double novoSaldo = 0.00;
-
-            if (operacao.equals("ADD")) {
-                if(resultSet.next()) {
-                    novoSaldo = resultSet.getDouble("saldo") + montante;
-                    statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "';");
-                }
-            } else {
-                System.out.println("O LIMITE TAQUI");
-                System.out.println(limite);
-                if (resultSet.next() && resultSet.getDouble("saldo") + limite >= montante) {
-                    novoSaldo = resultSet.getDouble("saldo") - montante;
-                    statement.executeUpdate("update Conta set saldo=" + novoSaldo + " where numConta='" + numConta + "' ;");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Creates and records new transaction
+    //Cria e registra nova Transação
     public void novaTransacaoContaCorrente(String remetente, String destinatario, double montante, String tipoMovimentacao, String mensagem) {
         Statement statement;
         try {
@@ -311,6 +315,7 @@ public class DatabaseDriver {
         }
     }
 
+    //Cria e registra nova Transação
     public void novaTransacaoContaPoupanca(String remetente, String destinatario, double montante, String tipoMovimentacao, String mensagem, String cpf) {
         Statement statement;
         Statement statement2;
@@ -325,7 +330,6 @@ public class DatabaseDriver {
             statement2 = this.conexao.createStatement();
             LocalDate diaTransacao = LocalDate.now();
             int day = diaTransacao.getDayOfMonth();
-            System.out.println("Dia da Transacao: " + day);
             statement2.executeUpdate("UPDATE Conta SET aniversario = '"+day+"', dtUltimAtu = '"+dataTransacao+"' WHERE (`numConta` = '"+destinatario+"') and (`clienteCpf` = '"+cpf+"');  ");
 
         } catch (SQLException e) {
@@ -333,20 +337,8 @@ public class DatabaseDriver {
         }
     }
 
-
-
-    public void createClient(String cpf, String nome, String sobrenome, int idade, LocalDate dtAniversario, String email, String telefone, String senha, String endereco) {
+    public void criaCliente(String cpf, String nome, String sobrenome, int idade, LocalDate dtAniversario, String email, String telefone, String senha, String endereco) {
         Statement statement;
-
-        System.out.println(cpf);
-        System.out.println(nome);
-        System.out.println(sobrenome);
-        System.out.println(idade);
-        System.out.println(dtAniversario);
-        System.out.println(email);
-        System.out.println(telefone);
-        System.out.println(senha);
-        System.out.println(endereco);
 
         try {
             statement = this.conexao.createStatement();
@@ -358,7 +350,7 @@ public class DatabaseDriver {
         }
     }
 
-    public void createCheckingAccount(String numConta, double valor, String tipoConta, double limite, LocalDate dtAbertura, String proprietario) {
+    public void criaContaCorrente(String numConta, double valor, String tipoConta, double limite, LocalDate dtAbertura, String proprietario) {
         Statement statement;
 
         String conta = "Corrente";
@@ -373,7 +365,7 @@ public class DatabaseDriver {
         }
     }
 
-    public void createSavingsAccount(String numConta, double valor, String tipoConta, LocalDate dtAbertura, String proprietario) {
+    public void criaContaPoupanca(String numConta, double valor, String tipoConta, LocalDate dtAbertura, String proprietario) {
         Statement statement;
 
         String conta = "Poupança";
@@ -398,11 +390,9 @@ public class DatabaseDriver {
         }
     }
 
-    /**
-     *  Admin Section
-     */
+    //Métodos referentes ao Administrador
 
-    public ResultSet getAdminData(String username, String senha) {
+    public ResultSet getDadosAdmin(String username, String senha) {
         Statement statement;
         ResultSet resultSet = null;
         try {
@@ -414,10 +404,9 @@ public class DatabaseDriver {
         return resultSet;
     }
 
-    /**
-     * Utility Methods
-     */
-    public ResultSet searchClient(String numConta) {
+    //Outros métodos
+
+    public ResultSet buscaCliente(String numConta) {
         Statement statement;
         ResultSet resultSet = null;
         try {

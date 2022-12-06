@@ -1,10 +1,7 @@
 package br.com.fpbank.banco.Views;
 
 import br.com.fpbank.banco.Controllers.Admin.AdminController;
-import br.com.fpbank.banco.Controllers.Client.ClientController;
-import br.com.fpbank.banco.Controllers.Client.DashboardController;
-import br.com.fpbank.banco.Controllers.Client.LoginController;
-import br.com.fpbank.banco.Models.Model;
+import br.com.fpbank.banco.Controllers.Client.ClienteController;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,107 +22,102 @@ import javafx.stage.Stage;
 
 public class ViewFactory {
     public static ViewFactory view;
-    private AccountType loginAccountType;
+    private TipoConta loginTipoConta;
 
-    // Client Views
-    private final ObjectProperty<ClientMenuOptions> clientSelectedMenuItem;
-    private AnchorPane dashboardView;
-    private AnchorPane statementView;
-    private AnchorPane accountsView;
+    //Views do Cliente
+    private final ObjectProperty<OpcoesMenuCliente> clientSelectedMenuItem;
+    private AnchorPane menuPrincipalView;
+    private AnchorPane historicoView;
+    private AnchorPane contaView;
 
-    // Admin Views
-    private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
-    private AnchorPane reportClientView;
-    private AnchorPane relatorioMovimentacaoView;
+    //Views do Administrador
+    private final ObjectProperty<OpcoesMenuAdmin> adminSelectedMenuItem;
+    private AnchorPane relatorioClientesView;
+    private AnchorPane relatorioMovimentacoesView;
 
     public ViewFactory() {
         view = this;
-        this.loginAccountType = AccountType.CLIENTE;
+        this.loginTipoConta = TipoConta.CLIENTE;
         this.clientSelectedMenuItem = new SimpleObjectProperty<>();
         this.adminSelectedMenuItem = new SimpleObjectProperty<>();
     }
 
-    public AccountType getLoginAccountType() {
-        return loginAccountType;
+    public TipoConta getLoginTipoConta() {
+        return loginTipoConta;
     }
 
-    public void setLoginAccountType(AccountType loginAccountType) {
-        this.loginAccountType = loginAccountType;
+    public void setLoginTipoConta(TipoConta loginTipoConta) {
+        this.loginTipoConta = loginTipoConta;
     }
 
-    /*
-        Client Views Section
-     */
+    //Métodos referentes ao Cliente
 
-    public ObjectProperty<ClientMenuOptions> getClientSelectedMenuItem() {
+    public ObjectProperty<OpcoesMenuCliente> getClientSelectedMenuItem() {
         return clientSelectedMenuItem;
     }
 
-    public AnchorPane getDashboardView() {
-        if(dashboardView == null) {
+    public AnchorPane getMenuPrincipalView() {
+        if(menuPrincipalView == null) {
             try {
-                dashboardView = new FXMLLoader(getClass().getResource("/Fxml/Client/Dashboard.fxml")).load();
+                menuPrincipalView = new FXMLLoader(getClass().getResource("/Fxml/Client/Dashboard.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return dashboardView;
+        return menuPrincipalView;
     }
 
-    public AnchorPane getStatementView() {
-        if(statementView == null){
+    public AnchorPane getHistoricoView() {
+        if(historicoView == null){
             try {
-                statementView = new FXMLLoader(getClass().getResource("/Fxml/Client/Statement.fxml")).load();
+                historicoView = new FXMLLoader(getClass().getResource("/Fxml/Client/Historico.fxml")).load();
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
-        return statementView;
+        return historicoView;
     }
 
-    public AnchorPane getAccountsView() {
-        if(accountsView == null){
+    public AnchorPane getContaView() {
+        if(contaView == null){
             try {
-                accountsView = new FXMLLoader(getClass().getResource("/Fxml/Client/Accounts.fxml")).load();
+                contaView = new FXMLLoader(getClass().getResource("/Fxml/Client/ManterContaAtuDes.fxml")).load();
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
-        return accountsView;
+        return contaView;
     }
 
     public void showClientWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Client/Client.fxml"));
-        ClientController clientController = new ClientController();
-        loader.setController(clientController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Client/Cliente.fxml"));
+        ClienteController clienteController = new ClienteController();
+        loader.setController(clienteController);
         createStage(loader);
     }
 
-    /*
-        Admin Views Section
-     */
+    //Métodos referentes ao Administrador
 
-    public AnchorPane getReportClientView() {
-        if(reportClientView == null) {
+    public AnchorPane getRelatorioClientesView() {
+        if(relatorioClientesView == null) {
             try {
-                reportClientView = new FXMLLoader(getClass().getResource("/Fxml/Admin/Clients.fxml")).load();
+                relatorioClientesView = new FXMLLoader(getClass().getResource("/Fxml/Admin/Clientes.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return reportClientView;
+        return relatorioClientesView;
     }
 
-    public AnchorPane getRelatorioMovimentacaoView() {
-        if(relatorioMovimentacaoView == null) {
+    public AnchorPane getRelatorioMovimentacoesView() {
+        if(relatorioMovimentacoesView == null) {
             try{
-                System.out.println("Entrou aqui");
-                relatorioMovimentacaoView = new FXMLLoader(getClass().getResource("/Fxml/Admin/RelatorioMovimentacao.fxml")).load();
+                relatorioMovimentacoesView = new FXMLLoader(getClass().getResource("/Fxml/Admin/RelatorioMovimentacao.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return relatorioMovimentacaoView;
+        return relatorioMovimentacoesView;
     }
 
     public void showAdminWindow() {
@@ -169,12 +160,12 @@ public class ViewFactory {
         stage.show();
     }
 
-    public ObjectProperty<AdminMenuOptions> getAdminSelectedMenuItem() {
+    public ObjectProperty<OpcoesMenuAdmin> getAdminSelectedMenuItem() {
         return  adminSelectedMenuItem;
     }
 
     public void showMainMenu(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/Fxml/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Principal.fxml"));
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);

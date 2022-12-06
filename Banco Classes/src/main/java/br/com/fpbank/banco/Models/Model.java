@@ -1,3 +1,7 @@
+
+// Classe Model
+// Seta e obtém dados, prepara a transação e verifica as credenciais do Cliente
+
 package br.com.fpbank.banco.Models;
 
 import br.com.fpbank.banco.Models.Entities.*;
@@ -14,14 +18,14 @@ public class Model {
     private final ViewFactory viewFactory;
     private final DatabaseDriver databaseDriver;
 
-    //Client Data Section
+    //Atributos para Cliente
     private final Cliente cliente;
-    private boolean clientLoginSuccessFlag;
-    private final ObservableList<Movimentacao> latestTransactions;
-    private final ObservableList<Movimentacao> allTransactions;
+    private boolean flagSucessoLoginCliente;
+    private final ObservableList<Movimentacao> transacoesRecentes;
+    private final ObservableList<Movimentacao> todasTransacoes;
 
-    //Admin Data Section
-    private boolean adminLoginSuccessFlag;
+    //Atributos para Administrador
+    private boolean flagSucessoLoginAdmin;
     private final ObservableList<Cliente> clientesPoupanca;
     private final ObservableList<Cliente> clientesCorrente;
     private final ObservableList<Movimentacao> movimentacoes;
@@ -29,15 +33,15 @@ public class Model {
     private Model() {
         this.viewFactory = new ViewFactory();
         this.databaseDriver = new DatabaseDriver();
-        //Client Data Section
-        this.clientLoginSuccessFlag = false;
+        //Parte do Cliente
+        this.flagSucessoLoginCliente = false;
         this.cliente = new Cliente("", "", "", 78, "", "", null, null, null, null, null);
 
-        this.latestTransactions = FXCollections.observableArrayList();
-        this.allTransactions = FXCollections.observableArrayList();
+        this.transacoesRecentes = FXCollections.observableArrayList();
+        this.todasTransacoes = FXCollections.observableArrayList();
 
-        //Admin Data Section
-        this.adminLoginSuccessFlag = false;
+        //Parte do Administrador
+        this.flagSucessoLoginAdmin = false;
         this.clientesPoupanca = FXCollections.observableArrayList();
         this.clientesCorrente = FXCollections.observableArrayList();
         this.movimentacoes = FXCollections.observableArrayList();
@@ -58,27 +62,25 @@ public class Model {
         return databaseDriver;
     }
 
-    /**
-     * Client Method Section
-     */
+    //Métodos referentes ao Cliente
 
     public boolean getClientLoginSuccesFlag() {
-        return this.clientLoginSuccessFlag;
+        return this.flagSucessoLoginCliente;
     }
 
-    public void setClientLoginSuccessFlag(boolean flag) {
-        this.clientLoginSuccessFlag = flag;
+    public void setFlagSucessoLoginCliente(boolean flag) {
+        this.flagSucessoLoginCliente = flag;
     }
 
     public Cliente getCliente() {
         return cliente;
     }
 
-    public void evaluateClientCred(String cpf, String senha) {
+    public void verificaCredenciaisCliente(String cpf, String senha) {
 
         String endereco = "";
 
-        ResultSet resultSet = databaseDriver.getClientData(cpf, senha);
+        ResultSet resultSet = databaseDriver.getDadosCliente(cpf, senha);
         try {
 
             if (resultSet.isBeforeFirst()) {
@@ -107,28 +109,27 @@ public class Model {
                 }
 
                 String[] end = endereco.split(", ");
-                System.out.println("Teste: " + end[0]);
 
                 this.cliente.obterEndereco(end[0], Integer.parseInt(end[1]), end[2], end[3], end[4], end[5], end[6]);
 
-                this.clientLoginSuccessFlag = true;
+                this.flagSucessoLoginCliente = true;
             }
         } catch (SQLException e) {
             imprimirSQLException(e);
         }
     }
 
-    private void prepareTransactions(ObservableList<Movimentacao> transactions) {
+    private void prepararTransacao(ObservableList<Movimentacao> transactions) {
 
         ResultSet resultSet = null;
 
         try {
-            resultSet = databaseDriver.getTransactions(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaCorrente().numContaProperty().get());
+            resultSet = databaseDriver.getTransacoes(this.cliente.getContaPoupanca().numContaProperty().get(), this.cliente.getContaCorrente().numContaProperty().get());
         } catch (Exception e) {
             try {
-                resultSet = databaseDriver.getTransactions(this.cliente.getContaPoupanca().numContaProperty().get(), null);
+                resultSet = databaseDriver.getTransacoes(this.cliente.getContaPoupanca().numContaProperty().get(), null);
             } catch (Exception k) {
-                resultSet = databaseDriver.getTransactions(this.cliente.getContaCorrente().numContaProperty().get(), null);
+                resultSet = databaseDriver.getTransacoes(this.cliente.getContaCorrente().numContaProperty().get(), null);
             }
         }
 
@@ -148,20 +149,20 @@ public class Model {
         }
     }
 
-    public void setLatestTransactions() {
-        prepareTransactions(this.latestTransactions);
+    public void setTransacoesRecentes() {
+        prepararTransacao(this.transacoesRecentes);
     }
 
-    public ObservableList<Movimentacao> getLatestTransactions() {
-        return latestTransactions;
+    public ObservableList<Movimentacao> getTransacoesRecentes() {
+        return transacoesRecentes;
     }
 
     public void setTodasTransacoes() {
-        prepareTransactions(this.allTransactions);
+        prepararTransacao(this.todasTransacoes);
     }
 
     public ObservableList<Movimentacao> getTodasTransacoes() {
-        return allTransactions;
+        return todasTransacoes;
     }
 
 
@@ -199,34 +200,30 @@ public class Model {
             return false;
         }
 
-        // X0Y32: Jar file already exists in schema
         if (sqlState.equalsIgnoreCase("X0Y32"))
             return true;
 
-        // 42Y55: Table already exists in schema
         if (sqlState.equalsIgnoreCase("42Y55"))
             return true;
 
         return false;
     }
 
-    /**
-     * Admin Method Section
-     */
+    //Métodos referentes ao Administrador
 
-    public boolean getAdminLoginSuccessFlag() {
-        return this.adminLoginSuccessFlag;
+    public boolean getFlagSucessoLoginAdmin() {
+        return this.flagSucessoLoginAdmin;
     }
 
-    public void setAdminLoginSuccessFlag(boolean adminLoginSuccessFlag) {
-        this.adminLoginSuccessFlag = adminLoginSuccessFlag;
+    public void setFlagSucessoLoginAdmin(boolean flagSucessoLoginAdmin) {
+        this.flagSucessoLoginAdmin = flagSucessoLoginAdmin;
     }
 
-    public void evaluateAdminCred(String username, String senha) {
-        ResultSet resultSet = databaseDriver.getAdminData(username, senha);
+    public void verificaCredenciaisAdministrador(String username, String senha) {
+        ResultSet resultSet = databaseDriver.getDadosAdmin(username, senha);
         try {
             if (resultSet.isBeforeFirst()) {
-                this.adminLoginSuccessFlag = true;
+                this.flagSucessoLoginAdmin = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -251,7 +248,7 @@ public class Model {
 
 
     public void setClientesPoupanca() {
-        ContaEspecial checkingAccount;
+        ContaCorrente checkingAccount;
         ContaPoupanca savingsAccount;
         Endereco endereco;
         ResultSet resultSet = Model.getInstance().databaseDriver.obterTodosClientesDadosPoupanca();
@@ -269,16 +266,9 @@ public class Model {
 
                 String nomeCompleto = nome + " " +sobrenome;
                 endereco = getEndereco(cpf);
-                //checkingAccount = getCheckingAccount(cpf);
-                savingsAccount = getSavingsAccount(cpf);
 
-                //if (checkingAccount != null){
-                    //this.clientes.add(new Cliente(cpf, nome, sobrenome, idade, email, telefone, dtNascimento, endereco));
-                    //clientes.add(new Cliente(cpf, nome, sobrenome, idade, email, telefone, dtNascimento, endereco, checkingAccount, null));
-                //}
-                //if(savingsAccount != null) {
+                savingsAccount = getContaPoupanca(cpf);
                     clientesPoupanca.add(new Cliente(cpf, nomeCompleto, idade, email, telefone, dtNascimento, endereco, null, savingsAccount));
-                //}
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -286,7 +276,7 @@ public class Model {
     }
 
     public void setClientesCorrente() {
-        ContaEspecial checkingAccount;
+        ContaCorrente checkingAccount;
         ContaPoupanca savingsAccount;
         Endereco endereco;
         ResultSet resultSet = Model.getInstance().databaseDriver.obterTodosClientesDadosCorrente();
@@ -304,16 +294,10 @@ public class Model {
 
                 String nomeCompleto = nome + " " +sobrenome;
                 endereco = getEndereco(cpf);
-                checkingAccount = getCheckingAccount(cpf);
-                //savingsAccount = getSavingsAccount(cpf);
+                checkingAccount = getContaCorrente(cpf);
 
-                //if (checkingAccount != null){
-                //this.clientes.add(new Cliente(cpf, nome, sobrenome, idade, email, telefone, dtNascimento, endereco));
                 clientesCorrente.add(new Cliente(cpf, nome, sobrenome, idade, email, telefone, dtNascimento, endereco, checkingAccount, null));
-                //}
-                //if(savingsAccount != null) {
-                //clientesPoupanca.add(new Cliente(cpf, nomeCompleto, idade, email, telefone, dtNascimento, endereco, null, savingsAccount));
-                //}
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -326,7 +310,7 @@ public class Model {
 
         Endereco endereco = null;
 
-        ResultSet resultSet = databaseDriver.getEnderecoData(cpf);
+        ResultSet resultSet = databaseDriver.getDadosEndereco(cpf);
 
         try {
             while (resultSet.next()) {
@@ -343,7 +327,7 @@ public class Model {
         return endereco;
     }
 
-    public ContaEspecial getCheckingAccount(String cpf) {
+    public ContaCorrente getContaCorrente(String cpf) {
 
         int agencia = 0;
         String numConta = null;
@@ -353,9 +337,9 @@ public class Model {
         LocalDate dtAbertura = null;
         double limite = 0.00;
 
-        ContaEspecial account = null;
+        ContaCorrente account = null;
 
-        ResultSet resultSet = databaseDriver.getCheckingAccountData(cpf);
+        ResultSet resultSet = databaseDriver.getDadosContaCorrente(cpf);
 
         try {
             while (resultSet.next()) {
@@ -368,7 +352,7 @@ public class Model {
                 dtAbertura = LocalDate.of(Integer.parseInt(dataParts[0]), Integer.parseInt(dataParts[1]), Integer.parseInt(dataParts[2]));
                 limite = resultSet.getDouble("limite");
             }
-            account = new ContaEspecial(agencia, numConta, saldo, tipoConta, status, dtAbertura, limite);
+            account = new ContaCorrente(agencia, numConta, saldo, tipoConta, status, dtAbertura, limite);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -378,7 +362,7 @@ public class Model {
             return null;
     }
 
-    public ContaPoupanca getSavingsAccount(String cpf) {
+    public ContaPoupanca getContaPoupanca(String cpf) {
 
         int agencia = 0;
         String numConta = null;
@@ -390,7 +374,7 @@ public class Model {
 
         ContaPoupanca account = null;
 
-        ResultSet resultSet = databaseDriver.getSavingsAccountData(cpf);
+        ResultSet resultSet = databaseDriver.getDadosContaPoupanca(cpf);
         try {
             while (resultSet.next()) {
                 agencia = resultSet.getInt("numAgencia");
@@ -418,7 +402,6 @@ public class Model {
     }
 
     public void setMovimentacoes() {
-        System.out.println("setMovimentacoes");
         ResultSet resultSet = databaseDriver.obterTodasMovimentacoes();
         try {
             while (resultSet.next()) {

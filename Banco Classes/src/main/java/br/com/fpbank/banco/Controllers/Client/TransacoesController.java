@@ -10,18 +10,18 @@ import javafx.scene.control.ListView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TransactionsController implements Initializable {
+public class TransacoesController implements Initializable {
 
-    public ListView<Movimentacao> transactions_listview;
+    public ListView<Movimentacao> listview_movimentacoes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initAllTransactions();
-        transactions_listview.setItems(Model.getInstance().getTodasTransacoes());
-        transactions_listview.setCellFactory(e -> new TransactionCellFactory());
+        emitirExtrato();
+        listview_movimentacoes.setItems(Model.getInstance().getTodasTransacoes());
+        listview_movimentacoes.setCellFactory(e -> new TransactionCellFactory());
     }
 
-    private void initAllTransactions() {
+    private void emitirExtrato() {
         if(Model.getInstance().getTodasTransacoes().isEmpty()) {
             Model.getInstance().setTodasTransacoes();
         }

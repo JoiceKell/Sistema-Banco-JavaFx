@@ -1,3 +1,6 @@
+
+// Classe Cliente
+
 package br.com.fpbank.banco.Models.Entities;
 
 import javafx.beans.property.*;
@@ -5,7 +8,6 @@ import java.time.LocalDate;
 
 public class Cliente {
 
-    // Atributos
     private final StringProperty cpf;
     private final StringProperty nome;
     private final StringProperty sobrenome;
@@ -15,10 +17,10 @@ public class Cliente {
     private final StringProperty telefone;
     private final ObjectProperty<LocalDate> dtNascimento;
     private final ObjectProperty<Endereco> endereco;
-    private final ObjectProperty<ContaEspecial> contaCorrente;
+    private final ObjectProperty<ContaCorrente> contaCorrente;
     private final ObjectProperty<ContaPoupanca> contaPoupanca;
 
-    public Cliente(String cpf, String nome, String sobrenome, int idade, String email, String senha, String telefone, LocalDate dtNascimento, Endereco endereco, ContaEspecial contaCorrente, ContaPoupanca contaPoupanca) {
+    public Cliente(String cpf, String nome, String sobrenome, int idade, String email, String senha, String telefone, LocalDate dtNascimento, Endereco endereco, ContaCorrente contaCorrente, ContaPoupanca contaPoupanca) {
         this.cpf = new SimpleStringProperty(this, "CPF", cpf);
         this.nome = new SimpleStringProperty(this, "Nome", nome);
         this.sobrenome = new SimpleStringProperty(this, "Sobrenome", sobrenome);
@@ -32,7 +34,7 @@ public class Cliente {
         this.contaPoupanca = new SimpleObjectProperty<>(this, "Conta Poupança", contaPoupanca);
     }
 
-    public Cliente(String cpf, String nome, int idade, String email, String telefone, LocalDate dtNascimento, Endereco endereco, ContaEspecial contaCorrente, ContaPoupanca contaPoupanca) {
+    public Cliente(String cpf, String nome, int idade, String email, String telefone, LocalDate dtNascimento, Endereco endereco, ContaCorrente contaCorrente, ContaPoupanca contaPoupanca) {
         this.cpf = new SimpleStringProperty(this, "CPF", cpf);
         this.nome = new SimpleStringProperty(this, "Nome", nome);
         this.sobrenome = new SimpleStringProperty(this, "Sobrenome", null);
@@ -46,7 +48,7 @@ public class Cliente {
         this.contaPoupanca = new SimpleObjectProperty<>(this, "Conta Poupança", contaPoupanca);
     }
 
-    public Cliente(String cpf, String nome, String sobrenome, int idade, String email, String telefone, LocalDate dtNascimento, Endereco endereco, ContaEspecial contaCorrente, ContaPoupanca contaPoupanca) {
+    public Cliente(String cpf, String nome, String sobrenome, int idade, String email, String telefone, LocalDate dtNascimento, Endereco endereco, ContaCorrente contaCorrente, ContaPoupanca contaPoupanca) {
         this.cpf = new SimpleStringProperty(this, "CPF", cpf);
         this.nome = new SimpleStringProperty(this, "Nome", nome);
         this.sobrenome = new SimpleStringProperty(this, "Sobrenome", sobrenome);
@@ -128,11 +130,11 @@ public class Cliente {
         return endereco;
     }
 
-    public ContaEspecial getContaCorrente() {
+    public ContaCorrente getContaCorrente() {
         return contaCorrente.get();
     }
 
-    public ObjectProperty<ContaEspecial> contaCorrenteProperty() {
+    public ObjectProperty<ContaCorrente> contaCorrenteProperty() {
         return contaCorrente;
     }
 
@@ -144,6 +146,7 @@ public class Cliente {
         return contaPoupanca;
     }
 
+    //Verifica se um CPF é válido
     public boolean validarCPF(String cpf) {
 
         String cpfResultante = "";
@@ -187,18 +190,21 @@ public class Cliente {
         return false;
     }
 
+    //Adiciona um endereço a um cliente
     public void obterEndereco(String cep, int num, String rua, String bairro, String cidade, String estado, String complemento) {
         this.enderecoProperty().set(new Endereco(cep, num, rua, bairro, cidade, estado, complemento));
     }
 
+    //Abre uma conta corrente a um cliente
     public void criarContaCorrenteEspecial(String numConta, double saldo, String tipoConta, double limite, LocalDate dtCriacao){
-        this.contaCorrenteProperty().set(new ContaEspecial(numConta, saldo, tipoConta, limite,  dtCriacao));
+        this.contaCorrenteProperty().set(new ContaCorrente(numConta, saldo, tipoConta, limite,  dtCriacao));
     }
 
     public void criarContaCorrenteEspecial(int numAgencia, String numConta, double saldo, String tipoConta, String status, double limite, LocalDate dtCriacao){
-        this.contaCorrenteProperty().set(new ContaEspecial(numAgencia, numConta, saldo, tipoConta, status, limite,  dtCriacao));
+        this.contaCorrenteProperty().set(new ContaCorrente(numAgencia, numConta, saldo, tipoConta, status, limite,  dtCriacao));
     }
 
+    //Abre uma conta poupanca a um cliente
     public void criarContaPoupanca(String numConta, double saldo, String tipoConta, LocalDate dtCriacao){
         this.contaPoupancaProperty().set(new ContaPoupanca(numConta, saldo, tipoConta, dtCriacao));
     }
@@ -206,5 +212,4 @@ public class Cliente {
     public void criarContaPoupanca(int numAgencia, String numConta, double saldo, String tipoConta, String status, LocalDate dtCriacao){
         this.contaPoupancaProperty().set(new ContaPoupanca(numAgencia, numConta, saldo, tipoConta, status,  dtCriacao));
     }
-
 }

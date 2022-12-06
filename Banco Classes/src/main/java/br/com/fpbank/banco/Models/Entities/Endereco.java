@@ -1,3 +1,6 @@
+
+// Classe Endereco
+
 package br.com.fpbank.banco.Models.Entities;
 
 import javafx.beans.property.IntegerProperty;

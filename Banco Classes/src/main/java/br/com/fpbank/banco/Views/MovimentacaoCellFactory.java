@@ -8,7 +8,6 @@ import javafx.scene.control.ListCell;
 public class MovimentacaoCellFactory extends ListCell<Movimentacao> {
     @Override
     protected void updateItem(Movimentacao movimentacao, boolean empty) {
-        System.out.println("updateItem");
         super.updateItem(movimentacao, empty);
         if (empty){
             setText(null);

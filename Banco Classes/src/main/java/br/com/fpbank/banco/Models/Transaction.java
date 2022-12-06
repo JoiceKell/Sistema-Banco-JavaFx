@@ -6,28 +6,28 @@ import java.time.LocalDate;
 
 public class Transaction {
 
-    private final StringProperty sender;
-    private final StringProperty receiver;
-    private final DoubleProperty amount;
-    private final ObjectProperty<LocalDate> date;
-    private final StringProperty message;
+    private final StringProperty remetente;
+    private final StringProperty destinatario;
+    private final DoubleProperty valor;
+    private final ObjectProperty<LocalDate> data;
+    private final StringProperty mensagem;
 
-    public Transaction(String sender, String receiver, double amount, LocalDate date, String message) {
-        this.sender = new SimpleStringProperty(this, "sender", sender);
-        this.receiver = new SimpleStringProperty(this, "Receiver", receiver);
-        this.amount = new SimpleDoubleProperty(this, "Amount", amount);
-        this.date = new SimpleObjectProperty<>(this, "Date", date);
-        this.message = new SimpleStringProperty(this, "Message", message);
+    public Transaction(String remetente, String destinatario, double valor, LocalDate data, String mensagem) {
+        this.remetente = new SimpleStringProperty(this, "Remetente", remetente);
+        this.destinatario = new SimpleStringProperty(this, "Destinatario", destinatario);
+        this.valor = new SimpleDoubleProperty(this, "Valor", valor);
+        this.data = new SimpleObjectProperty<>(this, "Data", data);
+        this.mensagem = new SimpleStringProperty(this, "Mensagem", mensagem);
     }
 
-    public StringProperty senderProperty() { return this.sender; }
+    public StringProperty remetenteProperty() { return this.remetente; }
 
-    public StringProperty receiverProperty() { return this.receiver; }
+    public StringProperty destinatarioProperty() { return this.destinatario; }
 
-    public DoubleProperty amountProperty() { return  this.amount; }
+    public DoubleProperty valorProperty() { return  this.valor; }
 
-    public ObjectProperty<LocalDate> dateProperty() { return this.date; }
+    public ObjectProperty<LocalDate> dataProperty() { return this.data; }
 
-    public StringProperty messageProperty() { return  this.message; }
+    public StringProperty mensagemProperty() { return  this.mensagem; }
 
 }

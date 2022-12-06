@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" minHeight="830.0" minWidth="-Infinity" prefHeight="830.0" prefWidth="250.0" styleClass="main_menu_container" stylesheets="@../../Styles/ClientMenu.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.ClientMenuController">
+<VBox maxHeight="-Infinity" minHeight="830.0" minWidth="-Infinity" prefHeight="830.0" prefWidth="250.0" styleClass="main_menu_container" stylesheets="@../../Styles/ClientMenu.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.ClienteBotoesMenuController">
    <AnchorPane maxWidth="250.0" prefHeight="820.0" prefWidth="186.0" styleClass="left_container">
       <VBox prefHeight="200.0" prefWidth="160.0" styleClass="title_container" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <ImageView fitHeight="110.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
@@ -23,14 +23,14 @@
             <VBox.margin>
                <Insets top="10.0" />
             </VBox.margin></Text>
-         <Text id="logomarca" opacity="0.5" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Seu banco Fácil, Rápido e Brasileiro" textAlignment="CENTER" wrappingWidth="209.1093578338623">
+         <Text id="logomarca" opacity="0.5" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Seu banco Fácil, Prático e Brasileiro" textAlignment="CENTER" wrappingWidth="209.1093578338623">
             <VBox.margin>
                <Insets top="5.0" />
             </VBox.margin>
          </Text>
       </VBox>
       <VBox alignment="CENTER_LEFT" styleClass="menu_container" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="250.0">
-         <Button fx:id="dashboard_btn" maxWidth="190.0" mnemonicParsing="false" text="Menu Principal">
+         <Button fx:id="btn_menuPrincipal" maxWidth="190.0" mnemonicParsing="false" text="Menu Principal">
             <graphic>
                <FontAwesomeIconView glyphName="HOME" size="20" />
             </graphic>
@@ -38,17 +38,17 @@
                <Insets />
             </VBox.margin>
          </Button>
-         <Button fx:id="statement_btn" maxWidth="200.0" mnemonicParsing="false" text="Histórico">
+         <Button fx:id="btn_historico" maxWidth="200.0" mnemonicParsing="false" text="Histórico">
             <graphic>
                <FontAwesomeIconView glyphName="HANDSHAKE_ALT" size="20" />
             </graphic>
          </Button>
-         <Button fx:id="account_btn" maxWidth="200.0" mnemonicParsing="false" text="Conta">
+         <Button fx:id="btn_conta" maxWidth="200.0" mnemonicParsing="false" text="Conta">
             <graphic>
                <FontAwesomeIconView glyphName="ADDRESS_BOOK_ALT" size="20" />
             </graphic>
          </Button>
-         <Button fx:id="logout_btn" maxWidth="200.0" mnemonicParsing="false" text="Sair">
+         <Button fx:id="btn_logout" maxWidth="200.0" mnemonicParsing="false" text="Sair">
             <graphic>
                <FontAwesomeIconView glyphName="EXTERNAL_LINK" size="20" />
             </graphic>

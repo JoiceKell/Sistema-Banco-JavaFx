@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="830.0" minWidth="1285.0" prefHeight="830.0" prefWidth="1230.0" styleClass="clients_container" stylesheets="@../../Styles/Clients.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Admin.RelatorioClientesController">
+   <children>
+      <Text layoutX="516.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CLIENTES CONTA POUPANÇA" AnchorPane.leftAnchor="516.0" AnchorPane.topAnchor="20.799999237060547" />
+      <ListView fx:id="listview_clientesContaPoupanca" layoutX="20.0" layoutY="54.0" prefHeight="350.0" prefWidth="1195.0" stylesheets="@../../Styles/Clients.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <ListView fx:id="listview_clientesContaCorrente" layoutX="20.0" layoutY="458.0" prefHeight="350.0" prefWidth="1195.0" stylesheets="@../../Styles/Clients.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <Text layoutX="529.0" layoutY="442.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CLIENTES CONTA CORRENTE" />
+   </children>
+</AnchorPane>

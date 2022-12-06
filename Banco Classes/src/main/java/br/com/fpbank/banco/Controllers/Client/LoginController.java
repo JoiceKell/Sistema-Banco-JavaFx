@@ -1,7 +1,10 @@
+// Classe AcessarConta
+// Faz-se a autenticação e acesso na Aplicação de acordo com a opção selecionada no choiceBox: CLIENTE ou ADMINISTRADOR
+
 package br.com.fpbank.banco.Controllers.Client;
 
 import br.com.fpbank.banco.Models.Model;
-import br.com.fpbank.banco.Views.AccountType;
+import br.com.fpbank.banco.Views.TipoConta;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,64 +19,63 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     public static LoginController login;
-    public ChoiceBox<AccountType> acc_selector;
-    public TextField cpf_fld;
-    public TextField password_fld;
-    public Button login_btn;
-    public Label error_lbl;
-    public Label usuario_lbl;
+    public ChoiceBox<TipoConta> acc_selector;
+    public TextField fld_cpf;
+    public TextField fld_senha;
+    public Button btn_login;
+    public Label lbl_erro;
+    public Label lbl_usuario;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         login = this;
-        acc_selector.setItems(FXCollections.observableArrayList(AccountType.CLIENTE, AccountType.ADMINISTRADOR));
-        acc_selector.setValue(Model.getInstance().getViewFactory().getLoginAccountType());
-        acc_selector.valueProperty().addListener(observable -> setAcc_selector());
-        login_btn.setOnAction(event -> acessarConta());
+        acc_selector.setItems(FXCollections.observableArrayList(TipoConta.CLIENTE, TipoConta.ADMINISTRADOR));
+        acc_selector.setValue(Model.getInstance().getViewFactory().getLoginTipoConta());
+        acc_selector.valueProperty().addListener(observable -> setAccSelector());
+        btn_login.setOnAction(event -> acessarConta());
     }
 
     public void acessarConta() {
 
-        Stage stage = (Stage) login_btn.getScene().getWindow();
+        Stage stage = (Stage) btn_login.getScene().getWindow();
 
-        if(Model.getInstance().getViewFactory().getLoginAccountType() == AccountType.CLIENTE){
-            //Model.getInstance().getViewFactory().showClientWindow();
-            // Evaluate Client Login Credencials
-            Model.getInstance().evaluateClientCred(cpf_fld.getText(), password_fld.getText());
+        if(Model.getInstance().getViewFactory().getLoginTipoConta() == TipoConta.CLIENTE){
+            //Verifica dados de Login do Cliente
+            Model.getInstance().verificaCredenciaisCliente(fld_cpf.getText(), fld_senha.getText());
             if (Model.getInstance().getClientLoginSuccesFlag()){
                 Model.getInstance().getViewFactory().showClientWindow();
-                // Close the login stage
+                //Verificação bem sucedida, fecha a tela de login
                 Model.getInstance().getViewFactory().closeStage(stage);
             } else {
-                cpf_fld.setText("");
-                password_fld.setText("");
-                error_lbl.setText("Credenciais de Login não encontradas!");
+                fld_cpf.setText("");
+                fld_senha.setText("");
+                lbl_erro.setText("Credenciais de Login não encontradas!");
             }
         } else {
-            // Evaluate Admin Login Credentials
-            Model.getInstance().evaluateAdminCred(cpf_fld.getText(), password_fld.getText());
-            if(Model.getInstance().getAdminLoginSuccessFlag()) {
+            //Verifica dados de Login do Administrador
+            Model.getInstance().verificaCredenciaisAdministrador(fld_cpf.getText(), fld_senha.getText());
+            if(Model.getInstance().getFlagSucessoLoginAdmin()) {
                 Model.getInstance().getViewFactory().showAdminWindow();
-                // Close the login stage
+                //Verificação bem sucedida, fecha a tela de login
                 Model.getInstance().getViewFactory().closeStage(stage);
             } else {
-                cpf_fld.setText("");
-                password_fld.setText("");
-                error_lbl.setText("Credenciais de Login não encontrada!");
+                fld_cpf.setText("");
+                fld_senha.setText("");
+                lbl_erro.setText("Credenciais de Login não encontradas!");
             }
         }
     }
 
-    private void setAcc_selector() {
-        Model.getInstance().getViewFactory().setLoginAccountType(acc_selector.getValue());
-        // Change usuario labek according
-        if(acc_selector.getValue() == AccountType.ADMINISTRADOR) {
-            usuario_lbl.setText("Usuário: ");
-            cpf_fld.setPromptText("Usuário");
+    private void setAccSelector() {
+        Model.getInstance().getViewFactory().setLoginTipoConta(acc_selector.getValue());
+        //Altera e informa se o login é para usuário do tipo Cliente ou Administrador
+        if(acc_selector.getValue() == TipoConta.ADMINISTRADOR) {
+            lbl_usuario.setText("Usuário: ");
+            fld_cpf.setPromptText("Usuário");
         } else {
-            usuario_lbl.setText("CPF: ");
-            cpf_fld.setPromptText("CPF");
+            lbl_usuario.setText("CPF: ");
+            fld_cpf.setPromptText("CPF");
         }
 
     }

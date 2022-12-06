@@ -1,3 +1,6 @@
+
+// Classe Movimentacao
+
 package br.com.fpbank.banco.Models.Entities;
 
 import javafx.beans.property.*;
@@ -6,7 +9,6 @@ import java.time.LocalDate;
 
 public class Movimentacao {
 
-    // Atributos
     private final ObjectProperty<LocalDate> dtMovimentacao;
     private final DoubleProperty montante;
     private final StringProperty tipoMovimentacao;

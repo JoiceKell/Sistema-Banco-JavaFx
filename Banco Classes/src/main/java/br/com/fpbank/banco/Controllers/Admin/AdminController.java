@@ -1,3 +1,7 @@
+
+// Classe AdminController
+// Direciona a navegação dos botões de menu da área do administrador
+
 package br.com.fpbank.banco.Controllers.Admin;
 
 import br.com.fpbank.banco.Models.Model;
@@ -15,8 +19,8 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Model.getInstance().getViewFactory().getAdminSelectedMenuItem().addListener(((observableValue, oldVal, newVal) -> {
             switch (newVal) {
-                case RELATORIO_MOVIMENTACAO -> admin_parent.setCenter(Model.getInstance().getViewFactory().getRelatorioMovimentacaoView());
-                case RELATORIO_CLIENTE -> admin_parent.setCenter(Model.getInstance().getViewFactory().getReportClientView());
+                case RELATORIO_MOVIMENTACAO -> admin_parent.setCenter(Model.getInstance().getViewFactory().getRelatorioMovimentacoesView());
+                case RELATORIO_CLIENTE -> admin_parent.setCenter(Model.getInstance().getViewFactory().getRelatorioClientesView());
             }
         }));
     }

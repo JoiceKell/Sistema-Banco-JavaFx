@@ -1,3 +1,7 @@
+
+// Classe RelatorioMovimentacaoCellController
+// Define todas as Movimentações armazenas no banco realizadas por todos os clientes
+
 package br.com.fpbank.banco.Controllers.Admin;
 
 import br.com.fpbank.banco.Models.Entities.Cliente;
@@ -10,13 +14,11 @@ import java.util.ResourceBundle;
 
 public class RelatorioMovimentacaoCellController implements Initializable {
     public Label lbl_nome;
-    public Label lbl_sobrenome;
     public Label lbl_contaOrigem;
     public Label lbl_contaDestino;
     public Label lbl_valor;
     public Label lbl_dtMovimentacao;
     public Label lbl_tipoMovimentacao;
-    public Label lbl_mensagem;
 
     private final Movimentacao movimentacao;
 

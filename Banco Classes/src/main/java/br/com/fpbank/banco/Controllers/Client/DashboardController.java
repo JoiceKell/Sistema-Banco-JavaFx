@@ -1,3 +1,7 @@
+
+// Classe DashboardController
+// Apresenta os Dados da Conta como Saldo e Nº da conta dos tipos de contas que o cliente possui, assim como as últimas transações e possibilidade de realizar uma transferência
+
 package br.com.fpbank.banco.Controllers.Client;
 
 import br.com.fpbank.banco.Models.Model;
@@ -18,110 +22,80 @@ import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
     public static DashboardController dashboardController;
-    public Text user_name;
-    public Label login_date;
-    public Label checking_bal;
-    public Label checking_acc_num;
-    public Label savings_bal;
-    public Label savings_acc_num;
-    public ListView transaction_listview;
-    public TextField payee_fld;
-    public TextField amount_fld;
-    public TextArea message_fld;
-    public Button send_money_btn;
+    public Text txt_usuario;
+    public Label lbl_dataLogin;
+    public Label lbl_contaCorrente;
+    public Label lbl_numContaCorrente;
+    public Label lbl_contaPoupanca;
+    public Label lbl_numContaPoupanca;
+    public ListView listview_transferencias;
+    public TextField fld_destinatario;
+    public TextField fld_valor;
+    public TextArea fld_mensagem;
+    public Button btn_transferir;
     public RadioButton rb_poupanca;
     public RadioButton rb_corrente;
     public Label lbl_erro;
 
-    //----------- Confirmar Transferência FXML
-    public Label lbl_cpf;
-    public Label lbl_nome;
-    public Label lbl_valor;
-    public Label lbl_numConta;
-    public PasswordField senha_fld;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bindData();
+        apresentarSaldo();
         dashboardController = this;
-        send_money_btn.setOnAction(event -> onTransferir());
-        initLatestTransactionsList();
-        transaction_listview.setItems(Model.getInstance().getLatestTransactions());
-        transaction_listview.setCellFactory(e -> new TransactionCellFactory());
+        btn_transferir.setOnAction(event -> onTransferir());
+        inicListaTransferenciasRecentes();
+        listview_transferencias.setItems(Model.getInstance().getTransacoesRecentes());
+        listview_transferencias.setCellFactory(e -> new TransactionCellFactory());
     }
 
-    public void bindData() {
+    public void apresentarSaldo() {
         String saldo = "";
 
-        System.out.println(Model.getInstance().getCliente().nomeProperty().get());
-        user_name.textProperty().bind(Bindings.concat("Olá, ").concat(Model.getInstance().getCliente().nomeProperty()));
-        login_date.setText("Hoje, " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txt_usuario.textProperty().bind(Bindings.concat("Olá, ").concat(Model.getInstance().getCliente().nomeProperty()));
+        lbl_dataLogin.setText("Hoje, " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         try {
-            System.out.println("Poupança: " + Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get());
-            System.out.println("Corrente: " + Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get());
 
             if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Ativa") && (Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Ativa"))) {
-//                System.out.println("Entrou 1");
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
-                savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
-                savings_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
+                lbl_contaPoupanca.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+                lbl_numContaPoupanca.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
-                checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
-                checking_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
+                lbl_contaCorrente.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+                lbl_numContaCorrente.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
             }
 
             if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Ativa") && Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Desativada")) {
-                System.out.println("Entrou 2");
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
-                savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
-                savings_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
+                lbl_contaPoupanca.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+                lbl_numContaPoupanca.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
             }
 
             if(Model.getInstance().getCliente().getContaPoupanca().statusContaProperty().get().equals("Desativada") && Model.getInstance().getCliente().getContaCorrente().statusContaProperty().get().equals("Ativa")) {
-                System.out.println("Entrou 3");
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
-                checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
-                checking_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
+                lbl_contaCorrente.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+                lbl_numContaCorrente.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
             }
         } catch (Exception e) {
             try {
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
-                savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
-                savings_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
+                lbl_contaPoupanca.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+                lbl_numContaPoupanca.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
             } catch (Exception a) {
                 saldo = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
-                checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
-                checking_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
+                lbl_contaCorrente.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
+                lbl_numContaCorrente.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
             }
         }
     }
 
-    public void padrao() {
-        String saldo = "";
-
-        System.out.println(Model.getInstance().getCliente().nomeProperty().get());
-        user_name.textProperty().bind(Bindings.concat("Olá, ").concat(Model.getInstance().getCliente().nomeProperty()));
-        login_date.setText("Hoje, " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-
-        try {
-            saldo = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
-            savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
-            savings_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaPoupanca().numContaProperty());
-        } catch (Exception a) {
-            saldo = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
-            checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo.replace(".", ",")));
-            checking_acc_num.textProperty().bind(Model.getInstance().getCliente().getContaCorrente().numContaProperty());
-        }
-
-    }
-
-    private void initLatestTransactionsList() {
-        if(Model.getInstance().getLatestTransactions().isEmpty()) {
-            Model.getInstance().setLatestTransactions();
+    // Apresenta as últimas transações
+    private void inicListaTransferenciasRecentes() {
+        if(Model.getInstance().getTransacoesRecentes().isEmpty()) {
+            Model.getInstance().setTransacoesRecentes();
         }
     }
 
+    // Transfere valor de acordo com a seleção da conta de transferência
     private void onTransferir() {
 
         if(rb_poupanca.isSelected()) {
@@ -133,6 +107,8 @@ public class DashboardController implements Initializable {
         }
     }
 
+    /* Método que faz a transferência do valor de acordo com as contas de origem e destino são corrente ou poupança, faz-se a verificação dentro das 4 opções:
+         Poupança p/ Poupança, Poupança p/ Corrente, Corrente p/ Poupança e Corrente para Corrente */
     private void transferirValor(String tipoConta) {
 
         lbl_erro.setText("");
@@ -155,13 +131,13 @@ public class DashboardController implements Initializable {
         confirma.setTitle("Confirmar Transferencia");
 
         if (tipoConta.equals("Poupanca")) {
-            destinatario = payee_fld.getText();
-            valor = Double.parseDouble(amount_fld.getText());
-            mensagem = message_fld.getText();
+            destinatario = fld_destinatario.getText();
+            valor = Double.parseDouble(fld_valor.getText());
+            mensagem = fld_mensagem.getText();
 
             remetente = Model.getInstance().getCliente().getContaPoupanca().numContaProperty().get();
             montanteRemetente = Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get();
-            ResultSet resultSet = Model.getInstance().getDatabaseDriver().searchClient(destinatario);
+            ResultSet resultSet = Model.getInstance().getDatabaseDriver().buscaCliente(destinatario);
 
             try {
                 while (resultSet.next()) {
@@ -180,10 +156,10 @@ public class DashboardController implements Initializable {
             if(status.equals("Ativa")) {
                 if (descobreConta.equals("Poupança")) {
 
-                    confirma.setContentText("Confira os Dados e Confirme a Transferencia\n\nConta Destinataria: "+payee_fld.getText()+"\nNome da(o) Beneficiaria(o): "+nome+" "+sobrenome+"\nValor da Transferencia: R$"+amount_fld.getText()+"\nMensagem: "+message_fld.getText()+"\n\n");
+                    confirma.setContentText("Confira os Dados e Confirme a Transferencia\n\nConta Destinataria: "+ fld_destinatario.getText()+"\nNome da(o) Beneficiaria(o): "+nome+" "+sobrenome+"\nValor da Transferencia: R$"+ fld_valor.getText()+"\nMensagem: "+ fld_mensagem.getText()+"\n\n");
                     Optional<ButtonType> confirmaOpcao = confirma.showAndWait();
 
-                    if(Double.parseDouble(amount_fld.getText())  <= montanteRemetente) {
+                    if(Double.parseDouble(fld_valor.getText())  <= montanteRemetente) {
                         if (confirmaOpcao.get() == ButtonType.OK) {
 
                             PasswordDialog pd = new PasswordDialog();
@@ -200,47 +176,49 @@ public class DashboardController implements Initializable {
                                 if (password.equals(Model.getInstance().getCliente().senhaProperty().get())) {
 
                                     try {
-                                        //Subtract from sender's saving account
-                                        Model.getInstance().getDatabaseDriver().updateBalanceContaPoupanca(finalRemetente, finalValor, "SUB");
-                                        Model.getInstance().getDatabaseDriver().updateBalanceContaPoupanca(finalDestinatario, finalValor, "ADD");
+                                        //Subtrai o valor da conta poupança do remetente e adiciona à conta poupança do destinatário
+                                        Model.getInstance().getDatabaseDriver().updateSaldoContaPoupanca(finalRemetente, finalValor, "SUB");
+                                        Model.getInstance().getDatabaseDriver().updateSaldoContaPoupanca(finalDestinatario, finalValor, "ADD");
 
-                                        //Update the savings account balance in the client object
-                                        Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalRemetente));
+                                        //Atualiza o saldo da conta poupança
+                                        Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalRemetente));
 
                                         saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
-                                        savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                        lbl_contaPoupanca.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
 
-                                        //Record new transaction
+                                        //Registra a movimentação
                                         Model.getInstance().getDatabaseDriver().novaTransacaoContaPoupanca(finalRemetente, finalDestinatario, finalValor, "Transferencia", finalMensagem, finalCpf);
 
+                                        //Informa sucesso da transferência
+                                        lbl_erro.setText("Transferencia Realizada Com Sucesso");
+                                        lbl_erro.setStyle("-fx-text-fill: #00fee5");
                                     } catch (Exception e) {
                                         lbl_erro.setText("Saldo insuficiente!");
                                     }
 
-                                    // Clear the fields
-                                    payee_fld.setText("");
-                                    amount_fld.setText("");
-                                    message_fld.setText("");
+                                    //Limpa os campos de texto
+                                    fld_destinatario.setText("");
+                                    fld_valor.setText("");
+                                    fld_mensagem.setText("");
+                                } else {
+                                    lbl_erro.setText("Senha Incorreta!");
+                                    lbl_erro.setStyle("-fx-text-fill: red");
                                 }
                             });
 
-                            lbl_erro.setText("Transferencia Realizada Com Sucesso");
-                            lbl_erro.setStyle("-fx-text-fill: #00fee5");
-
                         } else {
-                            Model.getInstance().getViewFactory().getDashboardView();
+                            Model.getInstance().getViewFactory().getMenuPrincipalView();
                         }
                     } else {
                         lbl_erro.setText("Saldo insuficiente!");
-                        System.out.println("Saldo insuficiente!");
                     }
 
                 } else {
 
-                    confirma.setContentText("Confira os Dados e Confirme a Transferencia\n\nConta Destinataria: "+payee_fld.getText()+"\nNome da(o) Beneficiaria(o): "+nome+" "+sobrenome+"\nValor da Transferencia: R$"+amount_fld.getText()+"\nMensagem: "+message_fld.getText()+"\n\n");
+                    confirma.setContentText("Confira os Dados e Confirme a Transferencia\n\nConta Destinataria: "+ fld_destinatario.getText()+"\nNome da(o) Beneficiaria(o): "+nome+" "+sobrenome+"\nValor da Transferencia: R$"+ fld_valor.getText()+"\nMensagem: "+ fld_mensagem.getText()+"\n\n");
                     Optional<ButtonType> confirmaOpcao = confirma.showAndWait();
 
-                    if(Double.parseDouble(amount_fld.getText())  <= montanteRemetente) {
+                    if(Double.parseDouble(fld_valor.getText())  <= montanteRemetente) {
                         if (confirmaOpcao.get() == ButtonType.OK) {
 
                             PasswordDialog pd = new PasswordDialog();
@@ -253,60 +231,63 @@ public class DashboardController implements Initializable {
                             String finalMensagem1 = mensagem;
                             result.ifPresent(password -> {
 
-                                try {
-                                    //Subtract from sender's saving account
-                                    Model.getInstance().getDatabaseDriver().updateBalanceContaPoupanca(finalRemetente1, finalValor1, "SUB");
-                                    Model.getInstance().getDatabaseDriver().updateBalanceContaCorrente(finalDestinatario1, finalValor1, "ADD", finalLimite);
+                                if (password.equals(Model.getInstance().getCliente().senhaProperty().get())) {
 
-                                    //Update the savings account balance in the client object
-                                    Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalRemetente1));
-                                    //Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(destinatario));
+                                    try {
+                                        //Subtrai o valor da conta poupança do remetente e adiciona à conta corrente do destinatário
+                                        Model.getInstance().getDatabaseDriver().updateSaldoContaPoupanca(finalRemetente1, finalValor1, "SUB");
+                                        Model.getInstance().getDatabaseDriver().updateSaldoContaCorrente(finalDestinatario1, finalValor1, "ADD", finalLimite);
 
-                                    numContaResultado[0] = Model.getInstance().getDatabaseDriver().verificarContas(Model.getInstance().getCliente().cpfProperty().get(), Model.getInstance().getCliente().getContaPoupanca().numContaProperty().get());
+                                        //Atualiza o saldo da conta poupança
+                                        Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalRemetente1));
 
-                                    if (numContaResultado[0] != null && numContaResultado[0].equals(finalDestinatario1)) {
+                                        numContaResultado[0] = Model.getInstance().getDatabaseDriver().verificarContas(Model.getInstance().getCliente().cpfProperty().get(), Model.getInstance().getCliente().getContaPoupanca().numContaProperty().get());
 
-                                        Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalRemetente1));
-                                        Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalDestinatario1));
+                                        if (numContaResultado[0] != null && numContaResultado[0].equals(finalDestinatario1)) {
 
-                                        saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
-                                        savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                            Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalRemetente1));
+                                            Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalDestinatario1));
 
-                                        saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
-                                        checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                            saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
+                                            lbl_contaPoupanca.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
 
-                                    } else {
+                                            saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
+                                            lbl_contaCorrente.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
 
-                                        Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalRemetente1));
+                                        } else {
 
-                                        saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
-                                        savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                            Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalRemetente1));
+
+                                            saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
+                                            lbl_contaPoupanca.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                        }
+
+                                        //Registra a movimentação
+                                        Model.getInstance().getDatabaseDriver().novaTransacaoContaCorrente(finalRemetente1, finalDestinatario1, finalValor1, "Transferencia", finalMensagem1);
+
+                                        //Informa sucesso da transferência
+                                        lbl_erro.setText("Transferencia Realizada Com Sucesso");
+                                        lbl_erro.setStyle("-fx-text-fill: #00fee5");
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-
-                                    //Record new transaction
-                                    Model.getInstance().getDatabaseDriver().novaTransacaoContaCorrente(finalRemetente1, finalDestinatario1, finalValor1, "Transferencia", finalMensagem1);
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                    //Limpa os campos de texto
+                                    fld_destinatario.setText("");
+                                    fld_valor.setText("");
+                                    fld_mensagem.setText("");
+                                } else {
+                                    lbl_erro.setText("Senha Incorreta!");
+                                    lbl_erro.setStyle("-fx-text-fill: red");
                                 }
                             });
 
-                            lbl_erro.setText("Transferencia Realizada Com Sucesso");
-                            lbl_erro.setStyle("-fx-text-fill: #00fee5");
-
                         } else {
-                            Model.getInstance().getViewFactory().getDashboardView();
+                            Model.getInstance().getViewFactory().getMenuPrincipalView();
                         }
                     } else {
                         lbl_erro.setText("Saldo insuficiente!");
-                        System.out.println("Saldo insuficiente!");
                     }
 
-                    // Clear the fields
-                    payee_fld.setText("");
-                    amount_fld.setText("");
-                    message_fld.setText("");
-                    System.out.println("9");
                 }
             } else {
                 lbl_erro.setText("Conta não encontrada!");
@@ -314,14 +295,14 @@ public class DashboardController implements Initializable {
 
         } else {
 
-            destinatario = payee_fld.getText();
-            valor = Double.parseDouble(amount_fld.getText());
-            mensagem = message_fld.getText();
+            destinatario = fld_destinatario.getText();
+            valor = Double.parseDouble(fld_valor.getText());
+            mensagem = fld_mensagem.getText();
 
             remetente = Model.getInstance().getCliente().getContaCorrente().numContaProperty().get();
             montanteRemetente = Model.getInstance().getCliente().getContaCorrente().saldoProperty().get();
             limite = Model.getInstance().getCliente().getContaCorrente().limiteProperty().get();
-            ResultSet resultSet = Model.getInstance().getDatabaseDriver().searchClient(destinatario);
+            ResultSet resultSet = Model.getInstance().getDatabaseDriver().buscaCliente(destinatario);
 
             try {
 
@@ -340,10 +321,10 @@ public class DashboardController implements Initializable {
             if (status.equals("Ativa")) {
                 if (descobreConta.equals("Poupança")) {
 
-                    confirma.setContentText("Confira os Dados e Confirme a Transferencia\n\nConta Destinataria: "+payee_fld.getText()+"\nNome da(o) Beneficiaria(o): "+nome+" "+sobrenome+"\nValor da Transferencia: R$"+amount_fld.getText()+"\nMensagem: "+message_fld.getText()+"\n\n");
+                    confirma.setContentText("Confira os Dados e Confirme a Transferencia\n\nConta Destinataria: "+ fld_destinatario.getText()+"\nNome da(o) Beneficiaria(o): "+nome+" "+sobrenome+"\nValor da Transferencia: R$"+ fld_valor.getText()+"\nMensagem: "+ fld_mensagem.getText()+"\n\n");
                     Optional<ButtonType> confirmaOpcao = confirma.showAndWait();
 
-                    if(Double.parseDouble(amount_fld.getText())  <= montanteRemetente + limite) {
+                    if(Double.parseDouble(fld_valor.getText())  <= montanteRemetente + limite) {
                         if (confirmaOpcao.get() == ButtonType.OK) {
 
                             PasswordDialog pd = new PasswordDialog();
@@ -357,60 +338,65 @@ public class DashboardController implements Initializable {
                             String finalCpf1 = cpf;
                             result.ifPresent(password -> {
 
-                                try {
-                                    //Subtract from sender's saving account
-                                    Model.getInstance().getDatabaseDriver().updateBalanceContaCorrente(finalRemetente2, finalValor2, "SUB", finalLimite1);
-                                    Model.getInstance().getDatabaseDriver().updateBalanceContaPoupanca(finalDestinatario2, finalValor2, "ADD");
+                                if (password.equals(Model.getInstance().getCliente().senhaProperty().get())) {
 
-                                    //Update the savings account balance in the client object
-                                    numContaResultado[0] = Model.getInstance().getDatabaseDriver().verificarContas(Model.getInstance().getCliente().cpfProperty().get(), Model.getInstance().getCliente().getContaCorrente().numContaProperty().get());
-                                    if (numContaResultado[0] != null && numContaResultado[0].equals(finalDestinatario2)) {
+                                    try {
+                                        //Subtrai o valor da conta corrente do remetente e adiciona à conta poupança do destinatário
+                                        Model.getInstance().getDatabaseDriver().updateSaldoContaCorrente(finalRemetente2, finalValor2, "SUB", finalLimite1);
+                                        Model.getInstance().getDatabaseDriver().updateSaldoContaPoupanca(finalDestinatario2, finalValor2, "ADD");
 
-                                        Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalRemetente2));
-                                        Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalDestinatario2));
+                                        //Atualiza o saldo da conta corrente
+                                        numContaResultado[0] = Model.getInstance().getDatabaseDriver().verificarContas(Model.getInstance().getCliente().cpfProperty().get(), Model.getInstance().getCliente().getContaCorrente().numContaProperty().get());
+                                        if (numContaResultado[0] != null && numContaResultado[0].equals(finalDestinatario2)) {
 
-                                        saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
-                                        savings_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                            Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalRemetente2));
+                                            Model.getInstance().getCliente().getContaPoupanca().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalDestinatario2));
 
-                                        saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
-                                        checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
-                                    } else {
-                                        Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalRemetente2));
+                                            saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaPoupanca().saldoProperty().get());
+                                            lbl_contaPoupanca.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
 
-                                        saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
-                                        checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                            saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
+                                            lbl_contaCorrente.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                        } else {
+                                            Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalRemetente2));
+
+                                            saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
+                                            lbl_contaCorrente.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                        }
+
+                                        //Registra a movimentação
+                                        Model.getInstance().getDatabaseDriver().novaTransacaoContaPoupanca(finalRemetente2, finalDestinatario2, finalValor2, "Transferencia", finalMensagem2, finalCpf1);
+
+                                        //Informa sucesso da transferência
+                                        lbl_erro.setText("Transferencia Realizada Com Sucesso");
+                                        lbl_erro.setStyle("-fx-text-fill: #00fee5");
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-
-                                    //Record new transaction
-                                    Model.getInstance().getDatabaseDriver().novaTransacaoContaPoupanca(finalRemetente2, finalDestinatario2, finalValor2, "Transferencia", finalMensagem2, finalCpf1);
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                    //Limpa os campos de texto
+                                    fld_destinatario.setText("");
+                                    fld_valor.setText("");
+                                    fld_mensagem.setText("");
+                                } else {
+                                    lbl_erro.setText("Senha Incorreta!");
+                                    lbl_erro.setStyle("-fx-text-fill: red");
                                 }
                             });
 
-                            lbl_erro.setText("Transferencia Realizada Com Sucesso");
-                            lbl_erro.setStyle("-fx-text-fill: #00fee5");
 
                         } else {
-                            Model.getInstance().getViewFactory().getDashboardView();
+                            Model.getInstance().getViewFactory().getMenuPrincipalView();
                         }
                     } else {
                         lbl_erro.setText("Saldo insuficiente!");
-                        System.out.println("Saldo insuficiente!");
                     }
-
-                    // Clear the fields
-                    payee_fld.setText("");
-                    amount_fld.setText("");
-                    message_fld.setText("");
 
                 } else {
 
-                    confirma.setContentText("Confira os Dados e Confirme a Transferencia\n\nConta Destinataria: "+payee_fld.getText()+"\nNome da(o) Beneficiaria(o): "+nome+" "+sobrenome+"\nValor da Transferencia: R$"+amount_fld.getText()+"\nMensagem: "+message_fld.getText()+"\n\n");
+                    confirma.setContentText("Confira os Dados e Confirme a Transferencia\n\nConta Destinataria: "+ fld_destinatario.getText()+"\nNome da(o) Beneficiaria(o): "+nome+" "+sobrenome+"\nValor da Transferencia: R$"+ fld_valor.getText()+"\nMensagem: "+ fld_mensagem.getText()+"\n\n");
                     Optional<ButtonType> confirmaOpcao = confirma.showAndWait();
 
-                    if(Double.parseDouble(amount_fld.getText())  <= montanteRemetente + limite) {
+                    if(Double.parseDouble(fld_valor.getText())  <= montanteRemetente + limite) {
                         if (confirmaOpcao.get() == ButtonType.OK) {
 
                             PasswordDialog pd = new PasswordDialog();
@@ -423,40 +409,45 @@ public class DashboardController implements Initializable {
                             String finalMensagem3 = mensagem;
                             result.ifPresent(password -> {
 
-                                try {
-                                    //Subtract from sender's saving account
-                                    Model.getInstance().getDatabaseDriver().updateBalanceContaCorrente(finalRemetente3, finalValor3, "SUB", finalLimite2);
-                                    Model.getInstance().getDatabaseDriver().updateBalanceContaCorrente(finalDestinatario3, finalValor3, "ADD", finalLimite2);
+                                if (password.equals(Model.getInstance().getCliente().senhaProperty().get())) {
 
-                                    //Update the savings account balance in the client object
-                                    Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSavingsAccountBalance(finalRemetente3));
+                                    try {
+                                        //Subtrai o valor da conta corrente do remetente e adiciona à conta corrente do destinatário
+                                        Model.getInstance().getDatabaseDriver().updateSaldoContaCorrente(finalRemetente3, finalValor3, "SUB", finalLimite2);
+                                        Model.getInstance().getDatabaseDriver().updateSaldoContaCorrente(finalDestinatario3, finalValor3, "ADD", finalLimite2);
 
-                                    saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
-                                    checking_bal.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+                                        //Atualiza o saldo da conta corrente
+                                        Model.getInstance().getCliente().getContaCorrente().setSaldo(Model.getInstance().getDatabaseDriver().getSaldoConta(finalRemetente3));
 
-                                    //Record new transaction
-                                    Model.getInstance().getDatabaseDriver().novaTransacaoContaCorrente(finalRemetente3, finalDestinatario3, finalValor3, "Transferencia", finalMensagem3);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                        saldo[0] = String.valueOf(Model.getInstance().getCliente().getContaCorrente().saldoProperty().get());
+                                        lbl_contaCorrente.textProperty().bind(Bindings.concat("R$").concat(saldo[0].replace(".", ",")));
+
+                                        //Registra a movimentação
+                                        Model.getInstance().getDatabaseDriver().novaTransacaoContaCorrente(finalRemetente3, finalDestinatario3, finalValor3, "Transferencia", finalMensagem3);
+
+                                        //Informa sucesso da transferencia
+                                        lbl_erro.setText("Transferencia Realizada Com Sucesso");
+                                        lbl_erro.setStyle("-fx-text-fill: #00fee5");
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    //Limpa os campos de texto
+                                    fld_destinatario.setText("");
+                                    fld_valor.setText("");
+                                    fld_mensagem.setText("");
+                                } else {
+                                    lbl_erro.setText("Senha Incorreta!");
+                                    lbl_erro.setStyle("-fx-text-fill: red");
                                 }
                             });
 
-                            lbl_erro.setText("Transferencia Realizada Com Sucesso");
-                            lbl_erro.setStyle("-fx-text-fill: #00fee5");
-
                         } else {
-                            Model.getInstance().getViewFactory().getDashboardView();
+                            Model.getInstance().getViewFactory().getMenuPrincipalView();
                         }
                     } else {
                         lbl_erro.setText("Saldo insuficiente!");
-                        System.out.println("Saldo insuficiente!");
                     }
 
-
-                    // Clear the fields
-                    payee_fld.setText("");
-                    amount_fld.setText("");
-                    message_fld.setText("");
                 }
             } else {
                 lbl_erro.setText("Conta não encontrada!");

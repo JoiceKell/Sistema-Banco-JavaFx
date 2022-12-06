@@ -1,6 +1,6 @@
 package br.com.fpbank.banco.Views;
 
-public enum AdminMenuOptions {
+public enum OpcoesMenuAdmin {
     RELATORIO_CLIENTE,
     RELATORIO_MOVIMENTACAO
 }

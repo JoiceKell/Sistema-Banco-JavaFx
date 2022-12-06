@@ -7,6 +7,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="830.0" minWidth="1285.0" prefHeight="830.0" prefWidth="1230.0" styleClass="clients_container" stylesheets="@../../Styles/Clients.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Admin.RelatorioMovimentacaoController">
    <children>
       <Text layoutX="570.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIMENTAÇÕES" AnchorPane.leftAnchor="570.0" AnchorPane.topAnchor="47.0" />
-      <ListView fx:id="movimentacao_listview" layoutX="14.0" layoutY="31.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../../Styles/Clients.css" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="100.0" />
+      <ListView fx:id="listview_movimentacoes" layoutX="14.0" layoutY="31.0" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../../Styles/Clients.css" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="100.0" />
    </children>
 </AnchorPane>

@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="550.0" style="-fx-background-color: #2F2F2F; -fx-border-color: gold;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.RegisterController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="550.0" style="-fx-background-color: #2F2F2F; -fx-border-color: gold;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fpbank.banco.Controllers.Client.CadastrarClienteController">
    <children>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="fld_name" maxWidth="227.0" prefHeight="26.0" prefWidth="227.0" promptText="Nome" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_nome" maxWidth="227.0" prefHeight="26.0" prefWidth="227.0" promptText="Nome" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -18,7 +18,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="fld_lastName" prefHeight="26.0" prefWidth="222.0" promptText="Sobrenome" styleClass="textFild1" stylesheets="@../Styles/Register.css">
+            <TextField fx:id="fld_sobrenome" prefHeight="26.0" prefWidth="222.0" promptText="Sobrenome" styleClass="textFild1" stylesheets="@../Styles/Register.css">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -46,7 +46,7 @@
                      <VBox.margin>
                         <Insets right="5.0" />
                      </VBox.margin></Label>
-                  <DatePicker fx:id="dtp_birth" prefHeight="26.0" prefWidth="230.0" style="-fx-color: gold; -fx-color-text: black;" stylesheets="@../Styles/Register.css">
+                  <DatePicker fx:id="dtp_nascimento" prefHeight="26.0" prefWidth="230.0" style="-fx-color: gold; -fx-color-text: black;" stylesheets="@../Styles/Register.css">
                      <effect>
                         <SepiaTone level="0.0" />
                      </effect>
@@ -60,7 +60,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="fld_phone" maxWidth="228.0" prefHeight="26.0" prefWidth="199.0" promptText="Telefone" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_telefone" maxWidth="228.0" prefHeight="26.0" prefWidth="199.0" promptText="Telefone" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -94,7 +94,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="fld_street" maxWidth="332.0" prefHeight="26.0" prefWidth="332.0" promptText="Rua" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_rua" maxWidth="332.0" prefHeight="26.0" prefWidth="332.0" promptText="Rua" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -102,7 +102,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="fld_number" maxWidth="210.0" prefHeight="26.0" prefWidth="117.0" promptText="Nº" styleClass="textFild1" stylesheets="@../Styles/Register.css">
+            <TextField fx:id="fld_numero" maxWidth="210.0" prefHeight="26.0" prefWidth="117.0" promptText="Nº" styleClass="textFild1" stylesheets="@../Styles/Register.css">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -110,7 +110,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="fld_zipCode" maxWidth="200.0" prefHeight="26.0" prefWidth="215.0" promptText="CEP" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_cep" maxWidth="200.0" prefHeight="26.0" prefWidth="215.0" promptText="CEP" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -118,7 +118,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="fld_addInfo" maxWidth="250.0" prefHeight="26.0" prefWidth="250.0" promptText="Complemento" styleClass="textFild1" stylesheets="@../Styles/Register.css">
+            <TextField fx:id="fld_complemento" maxWidth="250.0" prefHeight="26.0" prefWidth="250.0" promptText="Complemento" styleClass="textFild1" stylesheets="@../Styles/Register.css">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -126,7 +126,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="fld_city" maxWidth="201.0" prefHeight="26.0" prefWidth="201.0" promptText="Cidade" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
+            <TextField fx:id="fld_cidade" maxWidth="201.0" prefHeight="26.0" prefWidth="201.0" promptText="Cidade" styleClass="textFild1" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -134,7 +134,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="fld_state" maxWidth="210.0" prefHeight="26.0" prefWidth="66.0" promptText="UF" styleClass="textFild1" stylesheets="@../Styles/Register.css">
+            <TextField fx:id="fld_estado" maxWidth="210.0" prefHeight="26.0" prefWidth="66.0" promptText="UF" styleClass="textFild1" stylesheets="@../Styles/Register.css">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -142,7 +142,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="fld_district" maxWidth="210.0" prefHeight="26.0" prefWidth="171.0" promptText="Bairro" styleClass="textFild1" stylesheets="@../Styles/Register.css">
+            <TextField fx:id="fld_bairro" maxWidth="210.0" prefHeight="26.0" prefWidth="171.0" promptText="Bairro" styleClass="textFild1" stylesheets="@../Styles/Register.css">
                <font>
                   <Font size="14.0" />
                </font></TextField>
@@ -175,7 +175,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <CheckBox fx:id="cb_savingAcc" mnemonicParsing="false" text="Add Conta Poupança" textFill="GOLD" HBox.hgrow="ALWAYS">
+                  <CheckBox fx:id="cb_contaPoupanca" mnemonicParsing="false" text="Add Conta Poupança" textFill="GOLD" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -187,7 +187,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <CheckBox fx:id="cb_checkingA" mnemonicParsing="false" text="Add Conta Corrente Especial" textFill="#ffd400" />
+                  <CheckBox fx:id="cb_contaCorrente" mnemonicParsing="false" text="Add Conta Corrente Especial" textFill="#ffd400" />
                </children>
                <HBox.margin>
                   <Insets />
@@ -202,7 +202,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField fx:id="fld_savingAccBal" alignment="CENTER" maxWidth="148.0" prefHeight="26.0" prefWidth="148.0" promptText="R$ Poupança" style="-fx-background-color: transparent; -fx-border-color: #77ffc0; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" text="R$ 0,00" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="fld_saldoContaPoupanca" alignment="CENTER" maxWidth="148.0" prefHeight="26.0" prefWidth="148.0" promptText="R$ Poupança" style="-fx-background-color: transparent; -fx-border-color: #77ffc0; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" text="R$ 0,00" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -214,7 +214,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <TextField fx:id="fld_checkingAccBal" alignment="CENTER" maxWidth="162.0" prefHeight="26.0" prefWidth="186.0" promptText="R$ Corrente" style="-fx-background-color: transparenttransparent; -fx-border-color: #77ffc0; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" text="R$ 0,00">
+                  <TextField fx:id="fld_saldoContaCorrente" alignment="CENTER" maxWidth="162.0" prefHeight="26.0" prefWidth="186.0" promptText="R$ Corrente" style="-fx-background-color: transparenttransparent; -fx-border-color: #77ffc0; -fx-border-width: 0px 0px 1px 0px; -fx-font-weight: 800; -fx-text-fill: #00fee5;" text="R$ 0,00">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -228,7 +228,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <PasswordField fx:id="fld_password" alignment="CENTER" maxWidth="200.0" promptText="Senha" styleClass="register" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
+            <PasswordField fx:id="fld_senha" alignment="CENTER" maxWidth="200.0" promptText="Senha" styleClass="register" stylesheets="@../Styles/Register.css" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -236,7 +236,7 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <PasswordField fx:id="fld_confirmPassword" alignment="CENTER" maxWidth="200.0" promptText="Confirme a Senha" styleClass="register" stylesheets="@../Styles/Register.css">
+            <PasswordField fx:id="fld_confirmaSenha" alignment="CENTER" maxWidth="200.0" promptText="Confirme a Senha" styleClass="register" stylesheets="@../Styles/Register.css">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -246,11 +246,11 @@
             <Insets top="10.0" />
          </VBox.margin>
       </HBox>
-      <Label fx:id="lbl_error" textFill="RED">
+      <Label fx:id="lbl_erro" textFill="RED">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin></Label>
-      <Button fx:id="bt_Register" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: gold; -fx-border-color: gold;" text="CADASTRA-SE" textFill="#77ffc0">
+      <Button fx:id="btn_cadastrar" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: gold; -fx-border-color: gold;" text="CADASTRA-SE" textFill="#77ffc0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
